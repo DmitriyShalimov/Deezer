@@ -1,4 +1,4 @@
-package com.deezer.webconfig;
+package com.deezer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,10 +9,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.deezer")
+@ComponentScan(basePackages = "com.deezer.web.controller")
 public class WebConfig {
 
     @Bean
@@ -26,7 +27,7 @@ public class WebConfig {
     ViewResolver viewResolver() {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
-
+        resolver.setCharacterEncoding("UTF-8");
         return resolver;
     }
 
@@ -35,7 +36,7 @@ public class WebConfig {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML5");
+        resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
 }
