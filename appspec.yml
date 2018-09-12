@@ -3,16 +3,3 @@ os: linux
 files:
   - source: /build/libs/deezer-1.0-SNAPSHOT.war
     destination: /tmp/codedeploy-deployment-staging-area/
-  - source: /scripts/configure_http_port.xsl
-    destination: /tmp/codedeploy-deployment-staging-area/
-hooks:
-  ApplicationStop:
-    - location: scripts/stop_application
-      timeout: 300
-  BeforeInstall:
-    - location: scripts/install_dependencies
-      timeout: 300
-  ApplicationStart:
-    - location: scripts/write_codedeploy_config.sh
-    - location: scripts/start_application
-      timeout: 300
