@@ -1,4 +1,8 @@
 #!/bin/bash
 
 systemctl stop tomcat
-rm -f /opt/tomcat/webapps/deezer-1.0-SNAPSHOT.war
+if [ -e /opt/tomcat/webapps/deezer-1.0-SNAPSHOT.war ]
+then
+    rm -f /opt/tomcat/webapps/deezer-1.0-SNAPSHOT.war
+fi
+
