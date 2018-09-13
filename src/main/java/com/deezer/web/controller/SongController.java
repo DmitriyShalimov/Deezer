@@ -16,6 +16,7 @@ public class SongController {
     @RequestMapping(method = RequestMethod.GET)
     public String getSong(ModelMap model) {
         model.addAttribute("audio", songService.getSong(1).getUrl());
+        model.addAttribute("test_env_var", System.getenv("DB_URL"));
         return "hello";
     }
 }
