@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 @Repository
 public class DefaultUserDao implements UserDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -30,10 +32,10 @@ public class DefaultUserDao implements UserDao {
     }
 
     @Override
-    public User get(String login) {
+    public Optional<User> get(String login) {
         logger.info("start receiving a user by name and password");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", login);
-        return namedParameterJdbcTemplate.queryForObject(GET_USER_BY_LOGIN, params, USER_ROW_MAPPER);
+        return Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(GET_USER_BY_LOGIN, params, USER_ROW_MAPPER));
     }
 }

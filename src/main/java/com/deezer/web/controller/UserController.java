@@ -2,18 +2,16 @@ package com.deezer.web.controller;
 
 import com.deezer.entity.User;
 import com.deezer.security.SecurityService;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -26,9 +24,10 @@ public class UserController {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody String json, HttpSession session) {
-        User user = securityService.authenticate(getName(json), getPassword(json));
-        if (user != null) {
+    public ResponseEntity login(@RequestParam String login, @RequestParam String password, HttpSession session) {
+        Optional<User> optionalUser = securityService.authenticate(login, password);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             session.setAttribute("loggedUser", user);
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -47,36 +46,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ResponseEntity addUser(@RequestBody String json, HttpSession session) {
-        User user = new User(getName(json), getPassword(json));
+    public ResponseEntity addUser(@RequestParam String login, @RequestParam String password, HttpSession session) {
+        User user = new User(login,password);
         securityService.add(user);
         session.setAttribute("loggedUser", user);
         return new ResponseEntity(HttpStatus.OK);
-
-    }
-
-    private String getName(String json) {
-        JSONParser parser = new JSONParser();
-        try {
-            Object object = parser.parse(json);
-
-            JSONObject jsonObject = (JSONObject) object;
-            return String.valueOf(jsonObject.get("login"));
-        } catch (ParseException e) {
-            throw new RuntimeException("Error occurred while get login from json ", e);
-        }
-
-    }
-
-    private String getPassword(String json) {
-        JSONParser parser = new JSONParser();
-        try {
-            Object object = parser.parse(json);
-            JSONObject jsonObject = (JSONObject) object;
-            return String.valueOf(jsonObject.get("password"));
-        } catch (ParseException e) {
-            throw new RuntimeException("Error occurred while get password from json", e);
-        }
-
     }
 }

@@ -6,17 +6,18 @@ import com.deezer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DefaultUserService implements UserService {
-   @Autowired
+    @Autowired
     private UserDao userDao;
 
     public void add(User user) {
         userDao.add(user);
     }
 
-    public User get(String login) {
-        User user = userDao.get(login);
-        return user;
+    public Optional<User> get(String login) {
+        return userDao.get(login);
     }
 }

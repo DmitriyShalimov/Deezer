@@ -8,35 +8,14 @@
     <title>Deezer</title>
 </head>
 <body>
-<div >
-    <input type="text" placeholder="name" name="registrationName" id="registrationName"
-           required><br><br>
-    <input type="password" placeholder="password" name="registrationPassword" id="registrationPassword"
-           required><br><br>
-    <button onclick="registration()" >Registration</button>
+<div>
+    <form action="/registration" method="post">
+        <input type="text" placeholder="login" name="login" id="login"
+               required><br><br>
+        <input type="password" placeholder="password" name="password" id="password"
+               required><br><br>
+        <button type="submit">Registration</button>
+    </form>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    function registration() {
-        var login = $("#registrationName").val();
-        var password = $("#registrationPassword").val();
-        var json = '{"login" :"' + login +
-            '", "password" :"' + password + '"}';
-        $.ajax({
-            url: '/registration',
-            type: 'POST',
-            data: json,
-            contentType: "application/json",
-            success: function () {
-                location.reload();
-            },
-            error: function () {
-                alert("Invalid username or password.");
-            }
-        })
-    }
-</script>
-
 </body>
 </html>

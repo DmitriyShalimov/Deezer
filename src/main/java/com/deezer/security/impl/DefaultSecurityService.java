@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,16 +23,18 @@ public class DefaultSecurityService implements SecurityService {
         userService.add(user);
     }
 
-    public User authenticate(String login, String password) {
-        User user = userService.get(login);
-        String expectedPassword = DigestUtils.sha1Hex(password + user.getSalt());
-        if (user.getPassword().equals(expectedPassword)) {
-            user.setPassword(null);
-            user.setSalt(null);
-            return user;
-        } else
-            return null;
+    public Optional<User> authenticate(String login, String password) {
+        Optional<User> optionalUser = userService.get(login);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            String expectedPassword = DigestUtils.sha1Hex(password + user.getSalt());
+            if (user.getPassword().equals(expectedPassword)) {
+                user.setPassword(null);
+                user.setSalt(null);
+                return optionalUser;
+            } else
+                return Optional.empty();
+        }
+        return optionalUser;
     }
-
-
 }

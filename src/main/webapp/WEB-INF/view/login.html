@@ -9,35 +9,15 @@
 </head>
 <body>
 <div>
-    <div >
-        <input type="text" placeholder="name" required name="name" id="loginName"><br><br>
-        <input type="password" placeholder="password" required name="password" id="loginPassword"><br><br>
-        <button  onclick="login()">Login</button>
-    </div>
+    <form action="/login" method="post">
+        <input type="text" placeholder="login" required name="login" id="login"><br><br>
+        <input type="password" placeholder="password" required name="password" id="password"><br><br>
+        <button type="submit">Login</button>
+    </form>
     <p>You are not registered yet?
     </p>
     <a data-toggle="modal" href="/registration">Registration</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    function login() {
-        var login = $("#loginName").val();
-        var password = $("#loginPassword").val();
-        var json = '{"login" :"' + login +
-            '", "password" :"' + password + '"}';
-        $.ajax({
-            url: '/login',
-            type: 'POST',
-            data: json,
-            contentType: "application/json",
-            success: function () {
-                location.reload();
-            },
-            error: function () {
-                alert("Invalid username or password.");
-            }
-        })
-    }
-</script>
+
 </body>
 </html>
