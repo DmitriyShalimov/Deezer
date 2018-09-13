@@ -3,8 +3,8 @@ version: 0.1
 phases:
   build:
     commands:
-      - echo Build completed on `date`
       - gradle build
+      - echo Build completed on `date`
 
 artifacts:
   files:

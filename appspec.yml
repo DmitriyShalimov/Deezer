@@ -2,4 +2,11 @@ version: 0.0
 os: linux
 files:
   - source: /build/libs/deezer-1.0-SNAPSHOT.war
-    destination: /tmp/codedeploy-deployment-staging-area/
+    destination: /opt/tomcat/webapps
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_application
+      timeout: 300
+  ApplicationStart:
+    - location: scripts/start_application
+      timeout: 300
