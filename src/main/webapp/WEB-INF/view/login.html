@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deezer</title>
+</head>
+<body>
+<div>
+    <div >
+        <input type="text" placeholder="name" required name="name" id="loginName"><br><br>
+        <input type="password" placeholder="password" required name="password" id="loginPassword"><br><br>
+        <button  onclick="login()">Login</button>
+    </div>
+    <p>You are not registered yet?
+    </p>
+    <a data-toggle="modal" href="/registration">Registration</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function login() {
+        var login = $("#loginName").val();
+        var password = $("#loginPassword").val();
+        var json = '{"login" :"' + login +
+            '", "password" :"' + password + '"}';
+        $.ajax({
+            url: '/login',
+            type: 'POST',
+            data: json,
+            contentType: "application/json",
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                alert("Invalid username or password.");
+            }
+        })
+    }
+</script>
+</body>
+</html>
