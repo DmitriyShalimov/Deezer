@@ -1,15 +1,14 @@
 package com.deezer.config;
 
 
+
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
 @ComponentScan(basePackages = "com.deezer",
@@ -20,13 +19,17 @@ public class RootConfig implements WebMvcConfigurer {
 
     @Bean
     NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
-        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource());
-        return namedParameterJdbcTemplate;
+        return new NamedParameterJdbcTemplate(dataSource());
     }
 
     @Bean
     PGSimpleDataSource dataSource() {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        dataSource.setPassword("deezerroot");
+        dataSource.setPortNumber(5432);
+        dataSource.setUser("deezer");
+        dataSource.setDatabaseName("deezer");
+        dataSource.setServerName("deezerinstance.c5emamd5bxnb.us-east-1.rds.amazonaws.com");
         return dataSource;
     }
 }

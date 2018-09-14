@@ -17,7 +17,7 @@ public class DefaultUserDao implements UserDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
     private static final String ADD_NEW_USER_SQL = "INSERT INTO user (login,password,salt) VALUES(:login, :password, :salt);";
-    private static final String GET_USER_BY_LOGIN = "SELECT login, password,salt FROM user  WHERE login=:login";
+    private static final String GET_USER_BY_LOGIN = "SELECT id,login, password,salt FROM user  WHERE login=:login";
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -33,7 +33,7 @@ public class DefaultUserDao implements UserDao {
 
     @Override
     public Optional<User> get(String login) {
-        logger.info("start receiving a user by name and password");
+        logger.info("start receiving a user by login");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", login);
         return Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(GET_USER_BY_LOGIN, params, USER_ROW_MAPPER));
