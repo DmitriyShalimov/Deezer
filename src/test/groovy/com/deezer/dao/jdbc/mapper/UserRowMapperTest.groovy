@@ -16,21 +16,16 @@ class UserRowMapperTest {
 //    before
     void testMapRow() throws SQLException {
         ResultSet resultSet = mock(ResultSet.class)
+        when(resultSet.getInt("id")).thenReturn(1)
         when(resultSet.getString("login")).thenReturn("login")
         when(resultSet.getString("password")).thenReturn("password")
         when(resultSet.getString("salt")).thenReturn("salt")
-        User expectedUser = new User()
-        expectedUser.setPassword("password")
-        expectedUser.setLogin("login")
-        expectedUser.setSalt("salt")
-
+        def expectedUser = new User(id:1, password: "password", login: "login", salt: "salt")
         //when
         UserRowMapper userRowMapper = new UserRowMapper()
 
         //then
-        User actualResult = userRowMapper.mapRow(resultSet)
-        assertEquals(expectedUser.getPassword(), actualResult.getPassword())
-        assertEquals(expectedUser.getSalt(), actualResult.getSalt())
-        assertEquals(expectedUser.getLogin(), actualResult.getLogin())
+        def actualResult = userRowMapper.mapRow(resultSet)
+        assertEquals(expectedUser, actualResult)
     }
 }

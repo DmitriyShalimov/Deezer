@@ -25,13 +25,16 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
-    runtime 'javax.servlet:jstl:1.2'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     testCompile(
             'junit:junit:4.12',
             'org.mockito:mockito-all:1.10.19',
             'org.codehaus.groovy:groovy-all:2.4.11',
-            'org.spockframework:spock-core:1.1-groovy-2.4'
+            'org.springframework:spring-test:5.0.9.RELEASE',
+            group: "org.dbunit", name: "dbunit", version: "2.4.7",
+            "com.h2database:h2:1.4.179",
     )
+
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
@@ -45,4 +48,5 @@ test {
     useJUnit {
         includeCategories 'com.deezer.UnitTest'
     }
+
 }

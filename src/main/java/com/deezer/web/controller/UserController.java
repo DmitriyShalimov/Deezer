@@ -25,13 +25,13 @@ public class UserController {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
+    public String showLogin() {
+        return "login.html";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(@RequestParam String login, @RequestParam String password, HttpSession session) {
+    public String doLogin(@RequestParam String login, @RequestParam String password, HttpSession session) {
         Optional<User> optionalUser = securityService.authenticate(login, password);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -50,12 +50,12 @@ public class UserController {
 
     @RequestMapping(path = "/registration", method = RequestMethod.GET)
     public String registration() {
-        return "registration";
+        return "registration.html";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
-    public String addUser(@RequestParam String login, @RequestParam String password, HttpSession session) {
+    public String register(@RequestParam String login, @RequestParam String password, HttpSession session) {
         User user = new User(login, password);
         boolean registered = securityService.register(user);
         if(registered) {

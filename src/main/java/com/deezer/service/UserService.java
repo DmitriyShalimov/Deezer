@@ -5,7 +5,7 @@ import com.deezer.entity.User;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> get(String login);
+    Optional<User> getByLogin(String login);
 
     void add(User user);
 

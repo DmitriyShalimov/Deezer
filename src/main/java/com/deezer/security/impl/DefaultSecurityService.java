@@ -35,7 +35,7 @@ public class DefaultSecurityService implements SecurityService {
     }
 
     public Optional<User> authenticate(String login, String password) {
-        Optional<User> optionalUser = userService.get(login);
+        Optional<User> optionalUser = userService.getByLogin(login);
         return optionalUser.map(user -> checkPassword(user, password));
     }
 

@@ -23,11 +23,11 @@ public class DefaultUserService implements UserService {
 
     @Override
     public boolean isLoginUnique(String login) {
-        Optional<User> user = get(login);
+        Optional<User> user = getByLogin(login);
         return !user.isPresent();
     }
 
-    public Optional<User> get(String login) {
-        return userDao.get(login);
+    public Optional<User> getByLogin(String login) {
+        return userDao.getByLogin(login);
     }
 }

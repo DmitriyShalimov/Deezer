@@ -38,7 +38,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> get(String login) {
+    public Optional<User> getByLogin(String login) {
         logger.info("Start getting user {}", login);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", login);
