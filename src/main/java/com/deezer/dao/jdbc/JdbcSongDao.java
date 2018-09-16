@@ -15,12 +15,16 @@ public class JdbcSongDao implements SongDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final SongRowMapper SONG_ROW_MAPPER = new SongRowMapper();
     private static final String GET_SONG_BY_LOGIN = "SELECT  id,title ,track_url FROM song  WHERE id=:id";
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public JdbcSongDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public Song getSong(int id) {
-        logger.info("start receiving a song by id");
+        logger.info("Start receiving song with id {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
         return namedParameterJdbcTemplate.queryForObject(GET_SONG_BY_LOGIN, params, SONG_ROW_MAPPER);

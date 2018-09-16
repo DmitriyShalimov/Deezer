@@ -1,13 +1,16 @@
 package com.deezer.dao.jdbc.mapper
 
+import com.deezer.UnitTest
 import com.deezer.entity.User
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import java.sql.ResultSet
 import java.sql.SQLException
 import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 import static org.junit.Assert.*
 
+@Category(UnitTest.class)
 class UserRowMapperTest {
     @Test
 //    before

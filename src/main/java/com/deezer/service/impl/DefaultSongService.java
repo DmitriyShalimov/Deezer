@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultSongService implements SongService {
+    private final SongDao songDao;
+
     @Autowired
-    private SongDao songDao;
+    public DefaultSongService(SongDao songDao) {
+        this.songDao = songDao;
+    }
 
     @Override
     public Song getSong(int id) {

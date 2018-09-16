@@ -8,4 +8,6 @@ public interface UserService {
     Optional<User> get(String login);
 
     void add(User user);
+
+    boolean isLoginUnique(String login);
 }

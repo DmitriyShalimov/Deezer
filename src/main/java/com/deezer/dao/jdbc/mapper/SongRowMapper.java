@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SongRowMapper implements RowMapper<Song> {
-    public Song mapRow(ResultSet resultSet) throws SQLException {
-        return mapRow(resultSet, 0);
-    }
 
     @Override
     public Song mapRow(ResultSet resultSet, int i) throws SQLException {
