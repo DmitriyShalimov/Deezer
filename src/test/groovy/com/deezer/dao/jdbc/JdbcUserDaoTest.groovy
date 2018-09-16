@@ -17,10 +17,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 import static org.junit.Assert.*
 
-@Category(UnitTest.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = [AppTestConfig.class])
-class JdbcUserDaoTest {
+class JdbcUserDaoITest {
     static final String PROPERTY_FILE_PATH = "/properties/test.application.properties"
     static final String SCHEMA_FILE_PATH = "/db/schema.sql"
     static final String DATASET_FILE_PATH = "/db/dataset/user-data.xml"
