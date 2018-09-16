@@ -27,8 +27,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute(LOGGED_USER_ATTRIBUTE);
         if (loggedUser == null) {
-            removeCookiesByDomain(request.getCookies(), GOOGLE_DOMAIN, response);
-            removeCookiesByDomain(request.getCookies(), FACEBOOK_DOMAIN, response);
             logger.info("User in not logged. Redirecting to login");
             response.sendRedirect(REDIRECT_URI);
             return false;
@@ -46,15 +44,5 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-    }
-
-    private void removeCookiesByDomain(Cookie[] cookies, String domain, HttpServletResponse response) {
-        for (Cookie cookie : cookies) {
-            if (domain.equals(cookie.getDomain())) {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-        }
-
     }
 }
