@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface UserDao {
     void add(User user);
 
-    Optional<User> get(String login);
+    Optional<User> getByLogin(String login);
 }

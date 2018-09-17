@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class SongController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final SongService songService;
+
     @Autowired
-    private SongService songService;
+    public SongController(SongService songService) {
+        this.songService = songService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getSong(ModelMap model) {

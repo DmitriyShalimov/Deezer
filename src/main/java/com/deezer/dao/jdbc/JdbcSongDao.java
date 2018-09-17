@@ -23,12 +23,17 @@ public class JdbcSongDao implements SongDao {
             "LEFT OUTER JOIN genre AS g\n" +
             "ON sg.genre=g.id\n" +
             "WHERE g.id=:genreId";
+
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public JdbcSongDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public Song getSong(int id) {
-        logger.info("start receiving a song by id");
+        logger.info("Start receiving song with id {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
         return namedParameterJdbcTemplate.queryForObject(GET_SONG_BY_LOGIN, params, SONG_ROW_MAPPER);
@@ -36,7 +41,7 @@ public class JdbcSongDao implements SongDao {
 
     @Override
     public List<Song> getSongByGenre(int genreId) {
-        logger.info("start receiving a songs by genre id");
+        logger.info("start receiving a songs by genre with id {}", genreId);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("genreId", genreId);
         return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_GENRE_SQL, params, SONG_ROW_MAPPER);

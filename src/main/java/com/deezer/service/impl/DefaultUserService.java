@@ -10,14 +10,24 @@ import java.util.Optional;
 
 @Service
 public class DefaultUserService implements UserService {
+    private final UserDao userDao;
+
     @Autowired
-    private UserDao userDao;
+    public DefaultUserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public void add(User user) {
         userDao.add(user);
     }
 
-    public Optional<User> get(String login) {
-        return userDao.get(login);
+    @Override
+    public boolean isLoginUnique(String login) {
+        Optional<User> user = getByLogin(login);
+        return !user.isPresent();
+    }
+
+    public Optional<User> getByLogin(String login) {
+        return userDao.getByLogin(login);
     }
 }
