@@ -59,13 +59,10 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", artist=" + artist +
-                ", album=" + album +
-                ", url='" + url + '\'' +
-                ", likeCount=" + likeCount +
-                '}';
+        return "{" +
+                "\"id\":" + id +
+                ", \"title\":\"" + title + '\"' +
+                ", \"url\":\"" + url + '\"' +
+                "};";
     }
 }
