@@ -22,7 +22,7 @@ public class SongController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getSong(ModelMap model) {
-        model.addAttribute("audio", songService.getSong(23).getUrl());
-        return "hello";
+        model.addAttribute("songs", songService.getSongByGenre(1));
+        return "main";
     }
 }

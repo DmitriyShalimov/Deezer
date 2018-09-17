@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deezer</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <div>
+            <div>
+                <span id="action">Paused...</span>
+                <span id="title"></span>
+            </div>
+            <div id="audiowrap">
+                <div id="first" th:vaue="${songs}">
+                    <audio preload id="audio" controls="controls"/>
+                </div>
+                <div>
+                    <a id="btnPrev">&laquo;</a>
+                    <a id="btnNext">&raquo;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="playlist"></div>
+</div>
+<script src="/assets/jquery/jquery.min.js"></script>
+
+    <script  src="/assets/js/playlist.js"></script>
+
+</body>
+</html>
