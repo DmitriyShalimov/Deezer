@@ -1,15 +1,15 @@
 package com.deezer.entity;
 
-public class Album {
+public class Genre {
     private int id;
     private String title;
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -18,13 +18,5 @@ public class Album {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "\"id\":" + id +
-                ", \"title\":\"" + title + '\"' +
-                "};";
     }
 }

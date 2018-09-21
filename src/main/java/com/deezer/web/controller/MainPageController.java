@@ -1,6 +1,6 @@
 package com.deezer.web.controller;
 
-import com.deezer.service.SongService;
+import com.deezer.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
-public class SongController {
+public class MainPageController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final SongService songService;
+    private final GenreService genreService;
+    private final ArtistService artistService;
 
     @Autowired
-    public SongController(SongService songService) {
-        this.songService = songService;
+    public MainPageController(GenreService genreService, ArtistService artistService) {
+        this.genreService = genreService;
+        this.artistService = artistService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getSong(ModelMap model) {
-        model.addAttribute("songs", songService.getSongByGenre(1));
+        model.addAttribute("genres", genreService.getGenres());
+        model.addAttribute("artists", artistService.getAll());
         return "main";
     }
 }

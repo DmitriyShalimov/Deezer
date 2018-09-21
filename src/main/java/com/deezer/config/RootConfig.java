@@ -25,5 +25,4 @@ public class RootConfig implements WebMvcConfigurer {
         dataSource.setPassword(password);
         return new NamedParameterJdbcTemplate(dataSource);
     }
-
 }

@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface SongService {
     Song getSong(int id);
-    List<Song> getSongByGenre(int genreId);
+    List<Song> getSongsByGenre(int genreId);
+    List<Song> getSongsByArtist(int artistId);
+    List<Song> getSongsByAlbum(int albumId);
+    List<Song> getSongsByPlayList(int playListId);
 }

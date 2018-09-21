@@ -23,7 +23,22 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
-    public List<Song> getSongByGenre(int genreId) {
-        return songDao.getSongByGenre(genreId);
+    public List<Song> getSongsByArtist(int artistId) {
+        return songDao.getSongsByArtist(artistId);
+    }
+
+    @Override
+    public List<Song> getSongsByAlbum(int albumId) {
+        return songDao.getSongsByAlbum(albumId);
+    }
+
+    @Override
+    public List<Song> getSongsByPlayList(int playListId) {
+        return songDao.getSongsByPlayList(playListId);
+    }
+
+    @Override
+    public List<Song> getSongsByGenre(int genreId) {
+        return songDao.getSongsByGenre(genreId);
     }
 }
