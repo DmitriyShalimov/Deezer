@@ -7,6 +7,25 @@
     <title>Deezer</title>
 </head>
 <body>
+<form id="genreSection">
+    <select id="genre">
+        <option value=""> genres </option>
+        <option th:each="genre : ${genres}"
+                th:value="${genre.id}"
+                th:utext="${genre.title}"/>
+        <!--<option value="/?status=A" th:selected="${active}">Show only active lots</option>-->
+    </select>
+</form>
+<form id="artistSection">
+    <select  id="artist" >
+        <option value=""> artists </option>
+        <option th:each="artist : ${artists}"
+        th:value="${artist.id}"
+        th:utext="${artist.name}"/>
+    </select>
+</form>
+<div id="albums"></div>
+
 <div class="container">
     <div>
         <div>

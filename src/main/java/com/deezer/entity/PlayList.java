@@ -1,6 +1,6 @@
 package com.deezer.entity;
 
-public class Album {
+public class PlayList {
     private int id;
     private String title;
 
@@ -18,13 +18,5 @@ public class Album {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "\"id\":" + id +
-                ", \"title\":\"" + title + '\"' +
-                "};";
     }
 }
