@@ -21,6 +21,15 @@
     margin-bottom: 0;
 }
 
+.fi-arrow-right {
+    display: none;
+}
+
+.logout p {
+    margin-bottom: 0;
+    line-height: 1;
+}
+
 .top-bar-right {
     margin-right: 2em;
 }
@@ -267,7 +276,6 @@ main {
 }
 
 .track {
-    position: relative;
     width: 5%;
     align-self: flex-start;
 }
@@ -283,7 +291,7 @@ p#track__title {
 
 .track__time {
     position: absolute;
-    top: 5px;
+    top: 15px;
     right: 0;
 }
 
@@ -484,9 +492,14 @@ i[class^='fi-'] {
     .ap__item > .ap__controls {
         flex: 1;
     }
+
+    .card-playlist-hover-icons {
+        top: 50%;
+        left: 50%;
+    }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 600px) {
     .ap {
         min-width: 250px;
     }
@@ -510,6 +523,23 @@ i[class^='fi-'] {
     .ap__item--settings {
         flex: 1 1 50%;
         order: 2;
+    }
+
+    .track__picture {
+        display: none;
+    }
+
+    .top-bar .top-bar-left,
+    .top-bar .top-bar-right {
+        flex: 0;
+    }
+
+    .fi-arrow-right {
+        display: flex;
+    }
+
+    .logout p {
+        display: none;
     }
 }
 

@@ -4,6 +4,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/foundation.css">
     <link rel="stylesheet" href="/assets/css/foundation-icons.css">
@@ -31,14 +32,11 @@
                                    class="search-form">
                         </div>
                     </li>
-                    <li>
-                        <button type="button" class="button">Search</button>
-                    </li>
                 </ul>
             </div>
 
             <div class="top-bar-right">
-                <button class="button hollow logout">Log out</button>
+                <button class="button hollow logout"><p>Log out</p><i class="fi-arrow-right"></i></button>
 
             </div>
         </div>
@@ -143,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="ap__controls ap__controls--playlist">
+                <button class="ap__controls ap__controls--playlist" id="showPlaylist">
                     <i class="fi-music"></i>
                 </button>
                 <section class="playlist__section">

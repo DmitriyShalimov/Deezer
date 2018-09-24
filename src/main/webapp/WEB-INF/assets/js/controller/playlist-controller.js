@@ -5,7 +5,12 @@ export default class PlayListController {
         $(this.view).on('genre', (event, id) => this.changeGenre(id));
         $(this.view).on('artist', (event, id) => this.changeArtist(id));
         $(this.view).on('albumSongs', (event, id) => this.changeAlbumSongs(id));
+        $(this.view).on('logout', ()=> this.logout());
 
+    }
+
+    logout(){
+        $.get('/logout', null, $(location).attr('pathname', '/login'));
     }
 
     changeAlbumSongs(id) {
