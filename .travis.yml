@@ -14,7 +14,7 @@ addons:
 
 script:
 #- "gradle wrapper"
-- "gradle sonarqube -X \
+- "gradle sonarqube \
      -Dsonar.projectKey=DmitriyShalimov_Deezer \
      -Dsonar.organization=dmitriyshalimov-github \
      -Dsonar.host.url=https://sonarcloud.io \
