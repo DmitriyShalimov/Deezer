@@ -5,6 +5,17 @@ install: true
 
 sudo: false
 
+addons:
+  sonarcloud:
+    organization: "dmitriyshalimov-github"
+    token:
+      secure: 72dba8810cb4a1d6aa235045731da925a13d26b3
+script:
+
+- sonar-scanner
+
+
+
 notifications:
   email:
     recipient:
