@@ -1,5 +1,6 @@
 export default class PlayListView {
     constructor() {
+        $(".logout").click(()=> $(this).trigger('logout'));
         this.volumeBar = $('.volume__bar');
         this.volume = $('.volume');
         this.volumeIconOff = $('.icon-volume-off');
@@ -15,7 +16,7 @@ export default class PlayListView {
         this.trackPicture = $('.track__picture');
         $(this.trackPicture).hide();
         this.playlist = $('.playlist__section');
-        $('.ap__controls--playlist').click(() => this.handlePlaylist());
+        $('#showPlaylist').click(() => this.handlePlaylist());
         $(this.genre).each(i =>
             $(this.genre[i]).click(
                 () => this.handleGenreChange($(this.genre[i]).val())
@@ -146,8 +147,10 @@ export default class PlayListView {
     playAudio() {
         this.audio.volume = parseInt($(this.volumeBar).css('height')) / 100;
         $('#track__title').text(this.currentTrack.title);
-        $(this.trackPicture).attr("src", this.currentTrack.picture);
-        $(this.trackPicture).show();
+        if ($(window).width() > 600) {
+            $(this.trackPicture).attr("src", this.currentTrack.picture);
+            $(this.trackPicture).show();
+        }
         $('#album-artist__title').text(`${this.currentTrack.album.title} - ${this.currentTrack.artist.name}`);
         console.log("play " + this.currentTrack.id);
         $(`[track=${this.currentTrack.id}play]`).hide();
