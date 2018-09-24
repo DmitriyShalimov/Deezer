@@ -24,6 +24,7 @@ public class MainPageController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getSong(ModelMap model) {
+        logger.info("Start loading main page");
         model.addAttribute("genres", genreService.getGenres());
         model.addAttribute("artists", artistService.getAll());
         return "main";
