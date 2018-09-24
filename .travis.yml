@@ -14,7 +14,9 @@ jdk: oraclejdk8
 
 
 script:
-- ./gradlew sonarqube
+- sonar-scanner
+
+
 
 notifications:
   email:
