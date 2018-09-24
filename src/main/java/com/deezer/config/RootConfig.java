@@ -1,7 +1,6 @@
 package com.deezer.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

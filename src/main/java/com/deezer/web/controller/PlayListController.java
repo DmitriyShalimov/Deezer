@@ -52,7 +52,7 @@ public class PlayListController {
         return songs;
     }
 
-    @RequestMapping(value = "/add/playlist", method = RequestMethod.POST)
+    @PostMapping(value = "/add/playlist")
     @ResponseBody
     public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
@@ -63,7 +63,7 @@ public class PlayListController {
         return "error";
     }
 
-    @RequestMapping(value = "/add/song", method = RequestMethod.POST)
+    @PostMapping(value = "/add/song")
     @ResponseBody
     public String addSongToPlaylist(@RequestParam int playlistId, @RequestParam int songId) {
 
