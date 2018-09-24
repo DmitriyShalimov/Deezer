@@ -1,5 +1,4 @@
 language: java
-jdk: oraclejdk8
 
 install: true
 
@@ -9,12 +8,13 @@ addons:
   sonarcloud:
     organization: "dmitriyshalimov-github"
     token:
-      secure: 72dba8810cb4a1d6aa235045731da925a13d26b3
+      secure: "72dba8810cb4a1d6aa235045731da925a13d26b3"
+
+jdk: oraclejdk8
+
+
 script:
-
-- sonar-scanner
-
-
+- ./gradlew sonarqube
 
 notifications:
   email:
