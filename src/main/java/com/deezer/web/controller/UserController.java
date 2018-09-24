@@ -43,9 +43,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    @ResponseBody
-    public void logout(HttpSession session) {
+    public String logout(HttpSession session) {
         session.removeAttribute("loggedUser");
+        return "redirect:/login";
     }
 
     @RequestMapping(path = "/registration", method = RequestMethod.GET)
