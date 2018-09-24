@@ -1,6 +1,8 @@
 package com.deezer.dao.jdbc.mapper
 
 import com.deezer.UnitTest
+import com.deezer.entity.Album
+import com.deezer.entity.Artist
 import com.deezer.entity.Song
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -19,7 +21,7 @@ class SongRowMapperTest {
         when(resultSet.getInt("id")).thenReturn(1)
         when(resultSet.getString("title")).thenReturn("title")
         when(resultSet.getString("track_url")).thenReturn("track_url")
-        def expectedSong = new Song(id: 1, title: 'title', url: 'track_url')
+        def expectedSong = new Song(id: 1, title: 'title', url: 'track_url', artist: new Artist(id:0), album: new Album(id:0))
 
         //when
         SongRowMapper songRowMapper = new SongRowMapper()
