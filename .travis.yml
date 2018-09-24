@@ -13,8 +13,8 @@ addons:
 
 
 script:
-- "gradle wrapper"
-- "./gradlew sonarqube \
+#- "gradle wrapper"
+- "gradle sonarqube -X \
      -Dsonar.projectKey=DmitriyShalimov_Deezer \
      -Dsonar.organization=dmitriyshalimov-github \
      -Dsonar.host.url=https://sonarcloud.io \
