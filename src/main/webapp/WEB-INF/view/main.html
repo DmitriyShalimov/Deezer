@@ -4,52 +4,167 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/foundation.css">
+    <link rel="stylesheet" href="/assets/css/foundation-icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <title>Deezer</title>
 </head>
 <body>
-<form id="genreSection">
-    <select id="genre">
-        <option value=""> genres </option>
-        <option th:each="genre : ${genres}"
-                th:value="${genre.id}"
-                th:utext="${genre.title}"/>
-        <!--<option value="/?status=A" th:selected="${active}">Show only active lots</option>-->
-    </select>
-</form>
-<form id="artistSection">
-    <select  id="artist" >
-        <option value=""> artists </option>
-        <option th:each="artist : ${artists}"
-        th:value="${artist.id}"
-        th:utext="${artist.name}"/>
-    </select>
-</form>
-<div id="albums"></div>
-
-<div class="container">
-    <div>
-        <div>
-            <div>
-                <span id="action">Paused...</span>
-                <span id="title"></span>
-            </div>
-            <div id="audiowrap">
-                <div id="first" th:vaue="${songs}">
-                    <audio preload id="audio" controls="controls"/>
-                </div>
-                <div>
-                    <a id="btnPrev">&laquo;</a>
-                    <a id="btnNext">&raquo;</a>
+<header class="top-bar-container" data-sticky-container>
+    <div class="sticky sticky-topbar top-bar-section" data-sticky
+         data-options="anchor: page; marginTop: 0; stickyOn: small;">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <div class="logo">
+                    <img class="menu-text" src="assets/img/logo.png" alt="">
+                    <p class="menu-text">Deezer</p>
                 </div>
             </div>
+            <div class="top-bar-center">
+                <ul class="menu">
+                    <li class="menu-search">
+                        <div class="search-icon-form"><i class="fi-magnifying-glass"></i>
+                            <input type="search"
+                                   name="search"
+                                   placeholder="Search.."
+                                   class="search-form">
+                        </div>
+                    </li>
+                    <li>
+                        <button type="button" class="button">Search</button>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="top-bar-right">
+                <button class="button hollow logout">Log out</button>
+
+            </div>
         </div>
     </div>
-    <div id="playlist"></div>
-</div>
+</header>
+<main class="grid-container">
+    <h3>Genres</h3>
+    <div class="underline"></div>
+    <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="genre">
+        <div class="cell" th:each="genre : ${genres}">
+            <div class="card card-playlist-hover">
+                <img th:src="${genre.picture}"
+                     alt="genre logo">
+                <div class="card-playlist-hover-icons">
+                    <button th:value="${genre.id}"><i class="fi-play-circle"></i></button>
+
+                </div>
+                <div class="card-playlist-hover-details">
+                    <h4 class="card-playlist-hover-title" th:utext="${genre.title}"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3>Artists</h3>
+    <div class="underline"></div>
+    <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="artist">
+        <div class="cell" th:each="artist : ${artists}" th:value="${artist.id}">
+            <div class="card card-playlist-hover">
+                <img th:src="${artist.picture}"
+                     alt="artist photo">
+                <div class="card-playlist-hover-icons">
+                    <button th:value="${artist.id}"><i class="fi-play-circle"></i></button>
+
+                </div>
+                <div class="card-playlist-hover-details">
+                    <h4 class="card-playlist-hover-title" th:utext="${artist.name}"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="audiowrap">
+        <div id="first" th:vaue="${songs}">
+            <audio preload="metadata" id="audio" controls="controls"/>
+        </div>
+    </div>
+    </div>
+</main>
+<footer>
+    <div class="ap" id="ap">
+        <div class="ap__item ap__item--track">
+
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress__bar"></div>
+                    <div class="progress__preload"></div>
+                </div>
+            </div>
+            <div class="track">
+                <div class="track__time">
+                    <span class="track__time--current">0:00</span>
+                    <span> / </span>
+                    <span class="track__time--duration">0:00</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="ap__inner">
+            <div class="ap__item ap__item--title">
+                <img class="track__picture" src="" alt="">
+                <div class="track__info"><p id="track__title"></p>
+                    <p id="album-artist__title"></p></div>
+
+            </div>
+            <div class="ap__item ap__item--playback">
+                <button class="ap__controls ap__controls--prev" id="btnPrev">
+                    <i class="fi-previous"></i>
+                </button>
+                <button class="ap__controls ap__controls--toggle btnPlay">
+                    <i class="fi-play main-play"></i>
+                    <i class="fi-pause main-pause"></i>
+                </button>
+                <button class="ap__controls ap__controls--next" id="btnNext">
+                    <i class="fi-next"></i>
+                </button>
+            </div>
+
+            <div class="ap__item ap__item--settings">
+                <button class="ap__controls ap__controls--playlist">
+                    <i class="fi-heart"></i>
+                </button>
+                <button class="ap__controls ap__controls--playlist">
+                    <i class="fi-plus"></i>
+                </button>
+                <div class="ap__controls volume-container">
+                    <button class="volume-btn">
+                        <i class="fi-volume icon-volume-on"></i>
+                        <i class="fi-volume-strike icon-volume-off"></i>
+                    </button>
+                    <div class="volume">
+                        <div class="volume__track">
+                            <div class="volume__bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="ap__controls ap__controls--playlist">
+                    <i class="fi-music"></i>
+                </button>
+                <section class="playlist__section">
+                    <table class="hover">
+                        <thead>
+                        <tr>
+                            <th width="200"></th>
+                            <th>Track</th>
+                            <th width="150"><i class="fi-clock"></i></th>
+                            <th width="150"><i class="fi-heart"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</footer>
 <script src="/assets/jquery/jquery.min.js"></script>
-
-    <script  src="/assets/js/playlist.js"></script>
-
+<script type="module" src="/assets/js/playlist-main.js"></script>
 </body>
 </html>

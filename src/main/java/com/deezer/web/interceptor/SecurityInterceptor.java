@@ -15,8 +15,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     private static final String LOGGED_USER_ATTRIBUTE = "loggedUser";
     private static final String USER_KEY = "username";
     private static final String REDIRECT_URI = "/login";
-    private static final String GOOGLE_DOMAIN = "google.com";
-    private static final String FACEBOOK_DOMAIN = "facebook.com";
     private static final long MAX_INACTIVE_SESSION_TIME = 24 * 60 * 60 * 1000;// 24 hours
 
     private final Logger logger = LoggerFactory.getLogger(getClass());

@@ -18,19 +18,27 @@ public class JdbcSongDao implements SongDao {
     private static final SongRowMapper SONG_ROW_MAPPER = new SongRowMapper();
     private static final String GET_SONG_BY_ID = "SELECT  id,title ,track_url FROM song  WHERE id=:id";
 
-    private static final String GET_ALL_SONGS_BY_GENRE_SQL = "SELECT  s.id ,s.title , s.track_url FROM song AS s " +
-            "LEFT OUTER JOIN song_genre As sg " +
-            "ON s.id=sg.song " +
-            "LEFT OUTER JOIN genre AS g " +
-            "ON sg.genre=g.id " +
-            "WHERE g.id=:genreId";
-    private static final String GET_ALL_SONGS_BY_ARTIST_SQL = "SELECT  s.id ,s.title , s.track_url FROM song AS s " +
-            "LEFT OUTER JOIN album As al " +
-            "ON s.album=al.id " +
-            "LEFT OUTER JOIN artist As ar " +
-            "ON ar.id=al.artist " +
-            "WHERE ar.id=:artistId";
-    private static final String GET_ALL_SONGS_BY_ALBUM_SQL="SELECT id ,title , track_url FROM song WHERE album=:albumId";
+    private static final String GET_ALL_SONGS_BY_GENRE_SQL = "select s.id ,s.title , " +
+            "s.track_url,s.picture_link, " +
+            "al.title as album_title, art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "join song_genre sg on sg.song = s.id "+
+            "WHERE sg.genre=:genreId";
+    private static final String GET_ALL_SONGS_BY_ARTIST_SQL = "select s.id " +
+            ",s.title, s.track_url" +
+            ",s.picture_link, al.title as album_title" +
+            ",art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "WHERE art.id=:artistId";
+    private static final String GET_ALL_SONGS_BY_ALBUM_SQL="select s.id " +
+            ",s.title, s.track_url" +
+            ",s.picture_link, al.title as album_title" +
+            ",art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "WHERE al.id=:albumId";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

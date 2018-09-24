@@ -6,6 +6,7 @@ import com.deezer.entity.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +15,8 @@ import java.util.List;
 public class JdbcGenreDao implements GenreDao {
     private  final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final GenreRowMapper GENRE_ROW_MAPPER=new GenreRowMapper();
-    private static final String GET_ALL_GENRES_SQL = "SELECT id,title FROM genre";
+    private static final RowMapper<Genre> GENRE_ROW_MAPPER=new GenreRowMapper();
+    private static final String GET_ALL_GENRES_SQL = "SELECT id,title, picture_link FROM genre";
     @Autowired
     public JdbcGenreDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;

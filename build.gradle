@@ -24,6 +24,7 @@ dependencies {
     compile 'commons-codec:commons-codec:1.11'
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     runtime 'javax.servlet:jstl:1.2'

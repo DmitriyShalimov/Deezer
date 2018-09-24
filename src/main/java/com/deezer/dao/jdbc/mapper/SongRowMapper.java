@@ -1,5 +1,7 @@
 package com.deezer.dao.jdbc.mapper;
 
+import com.deezer.entity.Album;
+import com.deezer.entity.Artist;
 import com.deezer.entity.Song;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -14,6 +16,9 @@ public class SongRowMapper implements RowMapper<Song> {
         song.setId(resultSet.getInt("id"));
         song.setTitle(resultSet.getString("title"));
         song.setUrl(resultSet.getString("track_url"));
+        song.setAlbum(new Album(resultSet.getString("album_title")));
+        song.setPicture(resultSet.getString("picture_link"));
+        song.setArtist(new Artist(resultSet.getString("artist_name")));
         return song;
     }
 }

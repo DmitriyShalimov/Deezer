@@ -12,6 +12,7 @@ public class ArtistRowMapper implements RowMapper<Artist> {
         Artist artist=new Artist();
         artist.setId(resultSet.getInt("id"));
         artist.setName(resultSet.getString("name"));
+        artist.setPicture(resultSet.getString("picture"));
         return artist;
     }
 }
