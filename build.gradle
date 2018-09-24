@@ -6,14 +6,6 @@ plugins {
     id 'groovy'
     id "org.sonarqube" version "2.6"
 }
-sonarqube {
-    properties {
-        property "Dsonar.projectKey", "DmitriyShalimov_Deezer"
-        property "Dsonar.organization", "dmitriyshalimov-github"
-        property "Dsonar.host.url", "https://sonarcloud.io"
-        property "Dsonar.login", "72dba8810cb4a1d6aa235045731da925a13d26b3"
-    }
-}
 
 
 group 'com.deezer'
