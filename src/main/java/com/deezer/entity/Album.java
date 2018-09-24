@@ -4,6 +4,13 @@ public class Album {
     private int id;
     private String title;
 
+    public Album() {
+    }
+
+    public Album(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }

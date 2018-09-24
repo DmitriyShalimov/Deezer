@@ -5,5 +5,5 @@ import com.deezer.entity.Album;
 import java.util.List;
 
 public interface AlbumService {
-    List<Album> getAlbums(int artistId);
+    List<Album> getAlbumsByArtistId(int artistId);
 }

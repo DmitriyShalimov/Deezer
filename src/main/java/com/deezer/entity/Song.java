@@ -8,24 +8,8 @@ public class Song {
     private Artist artist;
     private Album album;
     private String url;
+    private String picture;
     private int likeCount;
-
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
 
     public int getId() {
         return id;
@@ -33,6 +17,14 @@ public class Song {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Artist getArtist() {
@@ -59,6 +51,22 @@ public class Song {
         this.url = url;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,21 +77,26 @@ public class Song {
                 Objects.equals(title, song.title) &&
                 Objects.equals(artist, song.artist) &&
                 Objects.equals(album, song.album) &&
-                Objects.equals(url, song.url);
+                Objects.equals(url, song.url) &&
+                Objects.equals(picture, song.picture);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, artist, album, url, likeCount);
+        return Objects.hash(id, title, artist, album, url, picture, likeCount);
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "\"id\":" + id +
-                ", \"title\":\"" + title + '\"' +
-                ", \"url\":\"" + url + '\"' +
-                "};";
+        return "Song{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", artist=" + artist +
+                ", album=" + album +
+                ", url='" + url + '\'' +
+                ", picture='" + picture + '\'' +
+                ", likeCount=" + likeCount +
+                '}';
     }
 }
