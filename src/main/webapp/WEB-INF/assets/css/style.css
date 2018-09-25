@@ -3,6 +3,9 @@
 }
 
 /* header */
+.sticky.sticky-topbar.top-bar-section{
+    z-index: 2;
+}
 .logo img {
     width: 50px;
     height: 50px;
@@ -10,6 +13,7 @@
 
 .logo {
     display: flex;
+    cursor: pointer;
 }
 
 .logo p {
@@ -67,7 +71,8 @@ li .button {
 }
 
 .top-bar .search-form {
-    max-width: 95%
+    max-width: 100%;
+    padding-left: 40px;
 }
 
 .search-icon-form {
@@ -79,11 +84,9 @@ li .button {
     top: 10px;
     left: 20px;
     font-size: 20px;
+    z-index: 1;
 }
 
-.search-icon-form input::placeholder {
-    padding-left: 40px;
-}
 
 .logout {
     margin: 0;
@@ -198,6 +201,12 @@ main {
     margin: 12px 0;
 }
 
+.songs-playlist{
+    display: none;
+}
+.album-playlists{
+    display: none;
+}
 /*player*/
 .ap {
     position: fixed;

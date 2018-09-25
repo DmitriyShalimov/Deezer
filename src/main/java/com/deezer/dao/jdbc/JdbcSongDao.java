@@ -16,7 +16,12 @@ import java.util.List;
 public class JdbcSongDao implements SongDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final SongRowMapper SONG_ROW_MAPPER = new SongRowMapper();
-    private static final String GET_SONG_BY_ID = "SELECT  id,title ,track_url FROM song  WHERE id=:id";
+    private static final String GET_SONG_BY_ID = "select s.id ,s.title, " +
+            "s.track_url,s.picture_link, " +
+            "al.title as album_title, art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "WHERE s.id = :id";
 
     private static final String GET_ALL_SONGS_BY_GENRE_SQL = "select s.id ,s.title , " +
             "s.track_url,s.picture_link, " +
@@ -39,6 +44,13 @@ public class JdbcSongDao implements SongDao {
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "WHERE al.id=:albumId";
+    private static final String GET_ALL_SONGS_BY_MASK_SQL = "select s.id " +
+            ",s.title, s.track_url," +
+            "s.picture_link, al.title as album_title, " +
+            "art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id \n" +
+            "WHERE lower(s.title) like lower(:mask);";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -85,5 +97,13 @@ public class JdbcSongDao implements SongDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("playListId", playListId);
         return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_GENRE_SQL, params, SONG_ROW_MAPPER);
+    }
+
+    @Override
+    public List<Song> getSongsByMask(String mask) {
+        logger.info("start receiving songs by mask {}", mask);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("mask", "%"+mask+"%");
+        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_MASK_SQL, params, SONG_ROW_MAPPER);
     }
 }

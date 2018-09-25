@@ -21,4 +21,9 @@ public class DefaultArtistService implements ArtistService {
     public List<Artist> getAll() {
         return artistDao.getAll();
     }
+
+    @Override
+    public List<Artist> getArtistsByMask(String mask) {
+        return artistDao.getArtistsByMask(mask);
+    }
 }

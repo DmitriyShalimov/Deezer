@@ -17,13 +17,18 @@ public class AlbumController {
         this.albumService = albumService;
     }
 
-    @RequestMapping(value = "/album/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/album/artist/{id}")
     @ResponseBody
     List<Album> getAlbumsByArtist(@PathVariable Integer id) {
         logger.info("Start retrieving albums of artist {}", id);
         List<Album> albums = albumService.getAlbumsByArtistId(id);
         logger.info("Albums of artist {} are {}", id, albums);
         return albums;
-
+    }
+    @GetMapping(value = "/album/search/{mask}")
+    @ResponseBody
+    List<Album> getAlbumsByMask(@PathVariable String mask) {
+        logger.info("Start retrieving albums by mask {}", mask);
+        return albumService.getAlbumsByMask(mask);
     }
 }

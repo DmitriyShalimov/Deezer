@@ -2,7 +2,7 @@ package com.deezer.entity;
 
 import java.util.Objects;
 
-public class Song {
+public class Song implements SearchResult{
     private int id;
     private String title;
     private Artist artist;

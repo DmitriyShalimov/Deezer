@@ -1,60 +1,77 @@
 export default class PlayListController {
-    constructor(view) {
-        this.view = view;
+    constructor(playListView) {
+        this.playlistView = playListView;
 
-        $(this.view).on('genre', (event, id) => this.changeGenre(id));
-        $(this.view).on('artist', (event, id) => this.changeArtist(id));
-        $(this.view).on('albumSongs', (event, id) => this.changeAlbumSongs(id));
-        $(this.view).on('logout', ()=> this.logout());
-
+        $(this.playlistView).on('genre', (event, id) => this.changeGenre(id));
+        $(this.playlistView).on('artist', (event, id) => this.changeArtist(id));
+        $(this.playlistView).on('album', (event, id) => this.changeAlbum(id));
+        $(this.playlistView).on('logout', ()=> this.logout());
+        $(this.playlistView).on('load', ()=>{
+            this.loadGenres();
+            this.loadArtists();
+        })
     }
 
     logout(){
         $.get('/logout', null, $(location).attr('pathname', '/login'));
     }
-
-    changeAlbumSongs(id) {
+    loadGenres(){
         $.ajax({
             type: "GET",
-            url: "/albumsongs/" + id,
+            url: "/genres",
+            headers: {
+                Accept: 'application/json'
+            },
+            success: data => this.playlistView.showGenres(data)
+        });
+    }
+    loadArtists(){
+        $.ajax({
+            type: "GET",
+            url: "/artists",
+            headers: {
+                Accept: 'application/json'
+            },
+            success: data => this.playlistView.showArtists(data)
+        });
+    }
+
+    changeAlbum(id) {
+        $.ajax({
+            type: "GET",
+            url: "/album/" + id,
             headers: {
                 Accept: 'application/json'
             }
-            , success: data => this.view.createPlayer(data)
+            , success: data => this.playlistView.createPlayer(data)
         });
     }
 
     changeGenre(id) {
-        console.log('genre ' + id);
         $.ajax({
             type: "GET",
             url: "/genre/" + id,
             headers: {
                 Accept: 'application/json'
             },
-            success: data => this.view.createPlayer(data)
+            success: data => {
+                console.log(data);
+                this.playlistView.createPlayer(data)
+            }
         });
     }
 
     changeArtist(id) {
         $.ajax({
             type: "GET",
-            url: "/album/" + id,
-            headers: {
-                Accept: 'application/json'
-            },
-            success: data =>
-                this.view.createAlbums(data)
-        });
-
-        $.ajax({
-            type: "GET",
             url: "/artist/" + id,
             headers: {
                 Accept: 'application/json'
             },
-            success: data => this.view.createPlayer(data)
+            success: data => this.playlistView.createPlayer(data)
         });
     }
+
+
 
 }

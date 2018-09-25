@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AlbumDao {
     List<Album> getAlbums(int artistId);
+
+    List<Album> getAlbumsByMask(String mask);
 }
