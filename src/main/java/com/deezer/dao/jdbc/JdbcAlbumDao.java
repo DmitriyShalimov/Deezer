@@ -30,7 +30,7 @@ public class JdbcAlbumDao implements AlbumDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
     @Override
-    public List<Album> getAlbums(int artistId) {
+    public List<Album> getAlbumsByArtistId(int artistId) {
         logger.info("start receiving albums by artist with id {}", artistId);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("artistId", artistId);

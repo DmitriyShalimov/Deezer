@@ -1,3 +1,5 @@
+import DeezerUtil from "../deezer-util.js";
+
 export default class PlayListController {
     constructor(playListView) {
         this.playlistView = playListView;
@@ -22,7 +24,7 @@ export default class PlayListController {
             headers: {
                 Accept: 'application/json'
             },
-            success: data => this.playlistView.showGenres(data)
+            success: data => DeezerUtil.showGenres(data, this.playlistView)
         });
     }
     loadArtists(){
@@ -32,7 +34,7 @@ export default class PlayListController {
             headers: {
                 Accept: 'application/json'
             },
-            success: data => this.playlistView.showArtists(data)
+            success: data => DeezerUtil.showArtists(data, this.playlistView)
         });
     }
 

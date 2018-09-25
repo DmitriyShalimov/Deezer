@@ -25,6 +25,7 @@ public class AlbumController {
         logger.info("Albums of artist {} are {}", id, albums);
         return albums;
     }
+
     @GetMapping(value = "/album/search/{mask}")
     @ResponseBody
     List<Album> getAlbumsByMask(@PathVariable String mask) {

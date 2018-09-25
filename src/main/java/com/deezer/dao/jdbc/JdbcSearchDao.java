@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public class JdbcSearchDao implements SearchDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());

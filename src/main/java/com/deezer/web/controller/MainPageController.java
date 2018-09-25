@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class MainPageController {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final GenreService genreService;
     private final ArtistService artistService;
 

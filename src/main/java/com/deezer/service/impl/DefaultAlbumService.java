@@ -19,7 +19,7 @@ public class DefaultAlbumService implements AlbumService {
 
     @Override
     public List<Album> getAlbumsByArtistId(int artistId) {
-        return albumDao.getAlbums(artistId);
+        return albumDao.getAlbumsByArtistId(artistId);
     }
 
     @Override

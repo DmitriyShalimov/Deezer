@@ -38,7 +38,7 @@ public class JdbcArtistDao implements ArtistDao {
     public List<Artist> getArtistsByMask(String mask) {
         logger.info("start receiving songs by mask {}", mask);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("mask", "%"+mask+"%");
+        params.addValue("mask", "%" + mask + "%");
         return namedParameterJdbcTemplate.query(GET_ARTISTS_BY_MASK_SQL, params, ARTIST_ROW_MAPPER);
     }
 }

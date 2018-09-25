@@ -1,4 +1,4 @@
-import DeezerUtil from "../helpers.js";
+import DeezerUtil from "../deezer-util.js";
 
 export default class SearchView {
     constructor(playlistView) {
@@ -94,30 +94,5 @@ export default class SearchView {
             }
         });
 
-    }
-
-    showArtists(artists) {
-        if (artists.length === 0) return;
-        DeezerUtil.createArtistsCards(artists);
-        $('.artists-playlists').show();
-        let artist = $("#artist button");
-        $(artist).each(i =>
-            $(artist[i]).click(
-                () => this.playlistView.handleArtistChange(($(artist[i]).val()))
-            )
-        );
-    }
-
-
-    showAlbums(albums) {
-        if (albums.length === 0) return;
-        DeezerUtil.createAlbumsCards(albums);
-        $('.album-playlists').show();
-        let album = $("#album button");
-        $(album).each(i =>
-            $(album[i]).click(
-                () => this.playlistView.handleAlbumChange(($(album[i]).val()))
-            )
-        );
     }
 }

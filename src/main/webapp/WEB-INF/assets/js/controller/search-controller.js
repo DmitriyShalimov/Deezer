@@ -1,3 +1,5 @@
+import DeezerUtil from "../deezer-util.js";
+
 export default class SearchController {
     constructor(view) {
         this.view = view;
@@ -27,7 +29,7 @@ export default class SearchController {
             headers: {
                 Accept: 'application/json'
             },
-            success: result => this.view.showArtists(result)
+            success: result => DeezerUtil.showArtists(result, this.view.playlistView)
         });
         $.ajax({
             type: "GET",
@@ -35,7 +37,7 @@ export default class SearchController {
             headers: {
                 Accept: 'application/json'
             },
-            success: result => this.view.showAlbums(result)
+            success: result => DeezerUtil.showAlbums(result, this.view.playlistView)
         });
     }
 

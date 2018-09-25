@@ -88,4 +88,41 @@ export default class DeezerUtil {
             $(genrePlaylist).append(genreHtml);
         });
     }
+
+    static showGenres(genres, view){
+        if (genres.length === 0) return;
+        DeezerUtil.createGenresCards(genres);
+        $('.genres-playlists').show();
+        let genre = $("#genre button");
+        $(genre).each(i =>
+            $(genre[i]).unbind('click').click(
+                () => view.handleGenreChange(($(genre[i]).val()))
+            )
+        );
+    }
+
+    static showArtists(artists, view) {
+        if (artists.length === 0) return;
+        DeezerUtil.createArtistsCards(artists);
+        $('.artists-playlists').show();
+        let artist = $("#artist button");
+        $(artist).each(i =>
+            $(artist[i]).unbind('click').click(
+                () => view.handleArtistChange(($(artist[i]).val()))
+            )
+        );
+    }
+
+    static showAlbums(albums, view) {
+        if (albums.length === 0) return;
+        DeezerUtil.createAlbumsCards(albums);
+        $('.album-playlists').show();
+        let album = $("#album button");
+        $(album).each(i =>
+            $(album[i]).click(
+                () => view.handleAlbumChange(($(album[i]).val()))
+            )
+        );
+    }
+
 }

@@ -1,4 +1,4 @@
-import DeezerUtil from "../helpers.js";
+import DeezerUtil from "../deezer-util.js";
 
 export default class PlayListView {
     constructor() {
@@ -308,29 +308,6 @@ export default class PlayListView {
         this.audio = $(audio).get(0);
     }
 
-    showGenres(genres){
-        if (genres.length === 0) return;
-        DeezerUtil.createGenresCards(genres);
-        $('.genres-playlists').show();
-        let genre = $("#genre button");
-        $(genre).each(i =>
-            $(genre[i]).unbind('click').click(
-                () => this.handleGenreChange(($(genre[i]).val()))
-            )
-        );
-    }
-
-    showArtists(artists) {
-        if (artists.length === 0) return;
-        DeezerUtil.createArtistsCards(artists);
-        $('.artists-playlists').show();
-        let artist = $("#artist button");
-        $(artist).each(i =>
-            $(artist[i]).unbind('click').click(
-                () => this.handleArtistChange(($(artist[i]).val()))
-            )
-        );
-    }
 
 
 }

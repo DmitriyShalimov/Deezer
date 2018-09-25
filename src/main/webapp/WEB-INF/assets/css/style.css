@@ -3,9 +3,10 @@
 }
 
 /* header */
-.sticky.sticky-topbar.top-bar-section{
+.sticky.sticky-topbar.top-bar-section {
     z-index: 2;
 }
+
 .logo img {
     width: 50px;
     height: 50px;
@@ -86,7 +87,6 @@ li .button {
     font-size: 20px;
     z-index: 1;
 }
-
 
 .logout {
     margin: 0;
@@ -201,12 +201,14 @@ main {
     margin: 12px 0;
 }
 
-.songs-playlist{
+.songs-playlist {
     display: none;
 }
-.album-playlists{
+
+.album-playlists {
     display: none;
 }
+
 /*player*/
 .ap {
     position: fixed;

@@ -28,7 +28,7 @@ public class JdbcSongDao implements SongDao {
             "al.title as album_title, art.name as artist_name " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
-            "join song_genre sg on sg.song = s.id "+
+            "join song_genre sg on sg.song = s.id " +
             "WHERE sg.genre=:genreId";
     private static final String GET_ALL_SONGS_BY_ARTIST_SQL = "select s.id " +
             ",s.title, s.track_url" +
@@ -37,7 +37,7 @@ public class JdbcSongDao implements SongDao {
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "WHERE art.id=:artistId";
-    private static final String GET_ALL_SONGS_BY_ALBUM_SQL="select s.id " +
+    private static final String GET_ALL_SONGS_BY_ALBUM_SQL = "select s.id " +
             ",s.title, s.track_url" +
             ",s.picture_link, al.title as album_title" +
             ",art.name as artist_name " +
@@ -103,7 +103,7 @@ public class JdbcSongDao implements SongDao {
     public List<Song> getSongsByMask(String mask) {
         logger.info("start receiving songs by mask {}", mask);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("mask", "%"+mask+"%");
+        params.addValue("mask", "%" + mask + "%");
         return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_MASK_SQL, params, SONG_ROW_MAPPER);
     }
 }
