@@ -9238,21 +9238,21 @@ Reveal.defaults = {
    */
   hOffset: 'auto',
   /**
-   * Allows the modal to be fullscreen, completely blocking out the rest of the view. JS checks for this as well.
+   * Allows the modal to be fullscreen, completely blocking out the rest of the playlistView. JS checks for this as well.
    * @option
    * @type {boolean}
    * @default false
    */
   fullScreen: false,
   /**
-   * Percentage of screen height the modal should push up from the bottom of the view.
+   * Percentage of screen height the modal should push up from the bottom of the playlistView.
    * @option
    * @type {number}
    * @default 10
    */
   btmOffsetPct: 10,
   /**
-   * Allows the modal to generate an overlay div, which will cover the view when modal opens.
+   * Allows the modal to generate an overlay div, which will cover the playlistView when modal opens.
    * @option
    * @type {boolean}
    * @default true
@@ -10349,7 +10349,7 @@ var Sticky = function (_Plugin) {
       __WEBPACK_IMPORTED_MODULE_0_jquery___default()(window).off(scrollListener);
 
       /**
-       * Fires when the plugin is paused due to resize event shrinking the view.
+       * Fires when the plugin is paused due to resize event shrinking the playlistView.
        * @event Sticky#pause
        * @private
        */
@@ -10615,7 +10615,7 @@ Sticky.defaults = {
    */
   container: '<div data-sticky-container></div>',
   /**
-   * Location in the view the element sticks to. Can be `'top'` or `'bottom'`.
+   * Location in the playlistView the element sticks to. Can be `'top'` or `'bottom'`.
    * @option
    * @type {string}
    * @default 'top'
@@ -11226,7 +11226,7 @@ var Tooltip = function (_Positionable) {
     }
 
     /**
-     * Destroys an instance of tooltip, removes template element from the view.
+     * Destroys an instance of tooltip, removes template element from the playlistView.
      * @function
      */
 
@@ -11252,14 +11252,14 @@ Tooltip.defaults = {
    */
   hoverDelay: 200,
   /**
-   * Time, in ms, a tooltip should take to fade into view.
+   * Time, in ms, a tooltip should take to fade into playlistView.
    * @option
    * @type {number}
    * @default 150
    */
   fadeInDuration: 150,
   /**
-   * Time, in ms, a tooltip should take to fade out of view.
+   * Time, in ms, a tooltip should take to fade out of playlistView.
    * @option
    * @type {number}
    * @default 150

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ArtistService {
     List<Artist> getAll();
+
+    List<Artist> getArtistsByMask(String mask);
 }

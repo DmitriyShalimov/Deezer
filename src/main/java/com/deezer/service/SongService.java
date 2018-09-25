@@ -10,4 +10,5 @@ public interface SongService {
     List<Song> getSongsByArtist(int artistId);
     List<Song> getSongsByAlbum(int albumId);
     List<Song> getSongsByPlayList(int playListId);
+    List<Song> getSongsByMask(String mask);
 }

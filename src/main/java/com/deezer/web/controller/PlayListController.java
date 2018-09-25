@@ -20,7 +20,7 @@ public class PlayListController {
         this.songService = songService;
     }
 
-    @RequestMapping(value = "/albumsongs/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/album/{id}")
     @ResponseBody
     List<Song> getSongsByAlbum(@PathVariable Integer id) {
         logger.info("Retrieving songs of album {}", id);
@@ -29,7 +29,7 @@ public class PlayListController {
         return songsByAlbum;
     }
 
-    @RequestMapping(value = "/genre/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/genre/{id}")
     @ResponseBody
     List<Song> getSongsByGenre(@PathVariable Integer id) {
         logger.info("Retrieving songs of genre {}", id);
@@ -38,7 +38,8 @@ public class PlayListController {
         return songsByGenre;
     }
 
-    @RequestMapping(value = "/artist/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+
+    @GetMapping(value = "/artist/{id}")
     @ResponseBody List<Song> getSongsByArtist(@PathVariable Integer id) {
         logger.info("Retrieving songs of artist {}", id);
         List<Song> songs = songService.getSongsByArtist(id);

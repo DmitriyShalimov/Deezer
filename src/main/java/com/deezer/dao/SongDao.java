@@ -13,4 +13,6 @@ public interface SongDao {
     List<Song> getSongsByAlbum(int albumId);
 
     List<Song> getSongsByPlayList(int playListId);
+
+    List<Song> getSongsByMask(String mask);
 }

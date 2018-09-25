@@ -1,13 +1,15 @@
+import DeezerUtil from "../deezer-util.js";
+
 export default class PlayListView {
     constructor() {
+        $(".logout").click(() => $(this).trigger('logout'));
+        $(".logo").click(() => this.loadMainPage());
         this.volumeBar = $('.volume__bar');
         this.volume = $('.volume');
         this.volumeIconOff = $('.icon-volume-off');
         this.volumeIconOn = $('.icon-volume-on');
         this.genre = $("#genre  button");
         this.artist = $("#artist button");
-        //TODO:album handler
-        this.albums = $('#albums');
         this.index = 0;
         this.title = $('#title');
         this.play = $('.main-play');
@@ -76,6 +78,13 @@ export default class PlayListView {
         this.getAudio();
     }
 
+    loadMainPage() {
+        $('.songs-playlist').hide();
+        $('.album-playlists').hide();
+        $(this).trigger('load');
+
+    }
+
     handlePlaylist() {
         if ($(this.playlist).is(':hidden')) {
             $(this.playlist).show('fast');
@@ -138,6 +147,7 @@ export default class PlayListView {
     }
 
     pauseAudio() {
+        if (!this.currentTrack) return;
         console.log("pause " + this.currentTrack.id);
         $(`[track=${this.currentTrack.id}pause]`).hide();
         $(`[track=${this.currentTrack.id}play]`).show();
@@ -177,8 +187,8 @@ export default class PlayListView {
 
     }
 
-    handlePlayAlbum(e) {
-        $(this).trigger('albumSongs', e.currentTarget.id);
+    handleAlbumChange(id) {
+        $(this).trigger('album', id);
     }
 
     handleGenreChange(id) {
@@ -190,7 +200,7 @@ export default class PlayListView {
     }
 
     handlePlaySong(playId) {
-        if (this.currentTrack.id !== parseInt(playId)) {
+        if (!this.currentTrack || this.currentTrack.id !== parseInt(playId)) {
             let id = -1;
             this.tracks.forEach((song) => {
                 id++;
@@ -204,35 +214,30 @@ export default class PlayListView {
         }
     }
 
-    createPlayer(tracks) {
+    createPlayer(tracks, play = true) {
+        this.pauseAudio();
         this.tracks = tracks;
         this.index = 0;
-        let tbody = $("tbody");
-        $(tbody).empty();
-        $(tracks).each((i) => {
-            let track = tracks[i];
-            console.log(track);
-            let trHtml = `<tr>
-                            <td class="btnPlay" id="${track.id}"><i class="fi-play" track="${track.id}play" ></i>
-                                <i class="fi-pause" track="${track.id}pause" ></i></td>
-                            <td>${track.title}<br>${track.album.title}-${track.artist.name}</td>
-                            <td> <span track="${track.id}track__time--current">--</span>
-                    <span> / </span>
-                    <span track="${track.id}track__time--duration">--</span></td>
-                            <td>like</td>
-                        </tr>`;
-            $(tbody).append(trHtml);
-
-        });
+        let tbody = $("#playlistBody");
+        console.log("new playlist");
+        console.log(tracks);
+        DeezerUtil.createPlaylistTable(tracks, tbody);
         $('.btnPlay').unbind('click').click((e) => {
-            if (e.currentTarget.id) {
+            if ($(e.currentTarget).attr("search")) {
+                $(this).trigger('checkPlaylist');
+            }
+            let playId = $(e.currentTarget).attr('trackId');
+            if (playId) {
                 this.pauseAudio();
-                this.handlePlaySong(e.currentTarget.id)
+                this.handlePlaySong(playId)
             } else {
                 this.handleAudio();
             }
         });
-        this.playTrack(this.tracks[0]);
+        if (play) {
+            this.playTrack(this.tracks[0]);
+        }
+        this.currentPlayList = tracks;
     }
 
 
@@ -301,12 +306,5 @@ export default class PlayListView {
         this.audio = $(audio).get(0);
     }
 
-    createAlbums(albums) {
-        this.albums.empty();
-        console.log(albums);
-        this.albums.append(albums.map((album) => {
-            return '<button class="play-album-button" id="' + album.id + '">' + album.title + '</button><br>';
-        }).join(''));
-        $('.play-album-button').click((e) => this.handlePlayAlbum(e));
-    }
+
 }

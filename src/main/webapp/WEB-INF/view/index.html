@@ -4,9 +4,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/foundation.css">
     <link rel="stylesheet" href="/assets/css/foundation-icons.css">
+    <link rel="stylesheet" href="/assets/jquery/easy-autocomplete.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <title>Deezer</title>
 </head>
@@ -31,59 +33,83 @@
                                    class="search-form">
                         </div>
                     </li>
-                    <li>
-                        <button type="button" class="button">Search</button>
-                    </li>
                 </ul>
             </div>
 
             <div class="top-bar-right">
-                <button class="button hollow logout">Log out</button>
+                <button class="button hollow logout"><p>Log out</p><i class="fi-arrow-right"></i></button>
 
             </div>
         </div>
     </div>
 </header>
 <main class="grid-container">
-    <h3>Genres</h3>
-    <div class="underline"></div>
-    <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="genre">
-        <div class="cell" th:each="genre : ${genres}">
-            <div class="card card-playlist-hover">
-                <img th:src="${genre.picture}"
-                     alt="genre logo">
-                <div class="card-playlist-hover-icons">
-                    <button th:value="${genre.id}"><i class="fi-play-circle"></i></button>
+    <section id="playlist-section">
+        <div class="genres-playlists">
+            <h3>Genres</h3>
+            <div class="underline"></div>
+            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="genre">
+                <div class="cell" th:each="genre : ${genres}">
+                    <div class="card card-playlist-hover">
+                        <img th:src="${genre.picture}"
+                             alt="genre logo">
+                        <div class="card-playlist-hover-icons">
+                            <button th:value="${genre.id}"><i class="fi-play-circle"></i></button>
 
-                </div>
-                <div class="card-playlist-hover-details">
-                    <h4 class="card-playlist-hover-title" th:utext="${genre.title}"></h4>
+                        </div>
+                        <div class="card-playlist-hover-details">
+                            <h4 class="card-playlist-hover-title" th:utext="${genre.title}"></h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <h3>Artists</h3>
-    <div class="underline"></div>
-    <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="artist">
-        <div class="cell" th:each="artist : ${artists}" th:value="${artist.id}">
-            <div class="card card-playlist-hover">
-                <img th:src="${artist.picture}"
-                     alt="artist photo">
-                <div class="card-playlist-hover-icons">
-                    <button th:value="${artist.id}"><i class="fi-play-circle"></i></button>
+        <div class="artists-playlists">
+            <h3>Artists</h3>
+            <div class="underline"></div>
+            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="artist">
+                <div class="cell" th:each="artist : ${artists}" th:value="${artist.id}">
+                    <div class="card card-playlist-hover">
+                        <img th:src="${artist.picture}"
+                             alt="artist photo">
+                        <div class="card-playlist-hover-icons">
+                            <button th:value="${artist.id}"><i class="fi-play-circle"></i></button>
 
-                </div>
-                <div class="card-playlist-hover-details">
-                    <h4 class="card-playlist-hover-title" th:utext="${artist.name}"></h4>
+                        </div>
+                        <div class="card-playlist-hover-details">
+                            <h4 class="card-playlist-hover-title" th:utext="${artist.name}"></h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="songs-playlist">
+            <h3>Songs</h3>
+            <div class="underline"></div>
+            <table class="hover">
+                <thead>
+                <tr>
+                    <th width="200"></th>
+                    <th>Track</th>
+                    <th width="150"><i class="fi-clock"></i></th>
+                    <th width="150"><i class="fi-heart"></i></th>
+                </tr>
+                </thead>
+                <tbody id="songsBody">
+                </tbody>
+            </table>
+        </div>
+        <div class="album-playlists">
+            <h3>Albums</h3>
+            <div class="underline"></div>
+            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="album">
+            </div>
+        </div>
+    </section>
     <div id="audiowrap">
         <div id="first" th:vaue="${songs}">
             <audio preload="metadata" id="audio" controls="controls"/>
         </div>
-    </div>
     </div>
 </main>
 <footer>
@@ -143,7 +169,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="ap__controls ap__controls--playlist">
+                <button class="ap__controls ap__controls--playlist" id="showPlaylist">
                     <i class="fi-music"></i>
                 </button>
                 <section class="playlist__section">
@@ -156,7 +182,7 @@
                             <th width="150"><i class="fi-heart"></i></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="playlistBody">
                         </tbody>
                     </table>
                 </section>
@@ -165,6 +191,7 @@
     </div>
 </footer>
 <script src="/assets/jquery/jquery.min.js"></script>
+<script src="/assets/jquery/jquery.easy-autocomplete.min.js"></script>
 <script type="module" src="/assets/js/playlist-main.js"></script>
 </body>
 </html>
