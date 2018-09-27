@@ -21,7 +21,7 @@ export default class SearchController {
                 Accept: 'application/json'
             },
             success: result =>
-                this.view.showSongs(result)
+                this.view.showSongs(result, true)
         });
         $.ajax({
             type: "GET",
@@ -29,7 +29,7 @@ export default class SearchController {
             headers: {
                 Accept: 'application/json'
             },
-            success: result => DeezerUtil.showArtists(result, this.view.playlistView)
+            success: result => DeezerUtil.showArtists(result, this.view.playlistView, true)
         });
         $.ajax({
             type: "GET",
@@ -48,7 +48,7 @@ export default class SearchController {
             headers: {
                 Accept: 'application/json'
             },
-            success: result => this.view.playSearchResult(data.type, result)
+            success: result => this.view.playSearchResult(data.type, result, data)
         });
     }
 }

@@ -28,8 +28,14 @@ public class SongController {
 
     @GetMapping(value = "/song/search/{mask}")
     @ResponseBody
-    List<Song> getSongsByMask(@PathVariable String mask){
+    List<Song> getSongsByMask(@PathVariable String mask) {
         return songService.getSongsByMask(mask);
+    }
+
+    @GetMapping(value = "/random")
+    @ResponseBody
+    List<Song> getRandomSongs() {
+        return songService.getRandomSongs();
     }
 
 }

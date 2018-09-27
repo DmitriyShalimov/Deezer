@@ -1,8 +1,13 @@
 package com.deezer.dao.jdbc;
 
 import com.deezer.dao.SearchDao;
-import com.deezer.dao.jdbc.mapper.SearchResultRowMapper;
+import com.deezer.dao.jdbc.mapper.AlbumRowMapper;
+import com.deezer.dao.jdbc.mapper.ArtistRowMapper;
+import com.deezer.dao.jdbc.mapper.SongRowMapper;
+import com.deezer.entity.Album;
+import com.deezer.entity.Artist;
 import com.deezer.entity.SearchResult;
+import com.deezer.entity.Song;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +15,24 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class JdbcSearchDao implements SearchDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final RowMapper<SearchResult> SEARCH_RESULT_ROW_MAPPER = new SearchResultRowMapper();
-    private static String GET_SEARCH_OPTIONS = "select s.id, s.title, 'song' as search_type from song s " +
-            "union all " +
-            "select a.id, a.title, 'album' as search_type from album a " +
-            "union all " +
-            "select ar.id, ar.name, 'artist' as search_type from artist ar;";
+    private final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
+    private final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();
+    private final RowMapper<Artist> ARTIST_ROW_MAPPER = new ArtistRowMapper();
+     private static final String GET_SONGS = "select s.id ,s.title, " +
+            "s.track_url,s.picture_link, " +
+            "al.title as album_title, art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id;";
+    private static final String GET_ALBUMS = "SELECT  al.id ,al.title, " +
+            "al.picture_link, ar.name as artist_name " +
+            "FROM album al join artist ar on al.artist = ar.id;";
+    private static final String GET_ARTISTS = "SELECT id,name, picture FROM artist";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -30,7 +42,13 @@ public class JdbcSearchDao implements SearchDao {
 
     @Override
     public List<SearchResult> getSearchResults() {
-        logger.info("Getting search results");
-        return namedParameterJdbcTemplate.query(GET_SEARCH_OPTIONS, SEARCH_RESULT_ROW_MAPPER);
+        List<SearchResult> searchResults = new ArrayList<>();
+        logger.info("Getting songs");
+        searchResults.addAll(namedParameterJdbcTemplate.query(GET_SONGS, SONG_ROW_MAPPER));
+        logger.info("Getting albums");
+        searchResults.addAll(namedParameterJdbcTemplate.query(GET_ALBUMS, ALBUM_ROW_MAPPER));
+        logger.info("Getting artists");
+        searchResults.addAll(namedParameterJdbcTemplate.query(GET_ARTISTS, ARTIST_ROW_MAPPER));
+        return searchResults;
     }
 }

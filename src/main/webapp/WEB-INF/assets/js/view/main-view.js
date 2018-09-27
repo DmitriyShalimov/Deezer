@@ -1,9 +1,13 @@
 import DeezerUtil from "../deezer-util.js";
 
-export default class PlayListView {
+export default class MainView {
     constructor() {
+        this.trackPicture = $('.track__picture');
+        $(this.trackPicture).fadeTo("fast", 0);
+        DeezerUtil.adjustUI();
         $(".logout").click(() => $(this).trigger('logout'));
         $(".logo").click(() => this.loadMainPage());
+        $(".random__song").click(() => $(this).trigger('random'));
         this.volumeBar = $('.volume__bar');
         this.volume = $('.volume');
         this.volumeIconOff = $('.icon-volume-off');
@@ -14,22 +18,8 @@ export default class PlayListView {
         this.title = $('#title');
         this.play = $('.main-play');
         this.pause = $('.main-pause');
-        this.trackPicture = $('.track__picture');
-        $(this.trackPicture).hide();
         this.playlist = $('.playlist__section');
-        $('.ap__controls--playlist').click(() => this.handlePlaylist());
-        $(this.genre).each(i =>
-            $(this.genre[i]).click(
-                () => this.handleGenreChange($(this.genre[i]).val())
-            )
-        );
-
-        $(this.artist).each(i =>
-            $(this.artist[i]).click(
-                () => this.handleArtistChange(($(this.artist[i]).val()))
-            )
-        );
-
+        $('#showPlaylist').click(() => this.handlePlaylist());
         $('#btnPrev').click(() => this.playPrevious());
         $('#btnNext').click(() => this.playNext());
         //TODO: wheel handler
@@ -81,6 +71,7 @@ export default class PlayListView {
     loadMainPage() {
         $('.songs-playlist').hide();
         $('.album-playlists').hide();
+        $('.artists-playlists').hide();
         $(this).trigger('load');
 
     }
@@ -88,10 +79,10 @@ export default class PlayListView {
     handlePlaylist() {
         if ($(this.playlist).is(':hidden')) {
             $(this.playlist).show('fast');
-            $('.fi-music').css('color', '#ff5722');
+            $('.fa-music').css('color', '#ff5722');
         } else {
             $(this.playlist).hide('fast');
-            $('.fi-music').css('color', 'black');
+            $('.fa-music').css('color', 'black');
         }
 
     }
@@ -155,10 +146,10 @@ export default class PlayListView {
 
     playAudio() {
         this.audio.volume = parseInt($(this.volumeBar).css('height')) / 100;
-        $('#track__title').text(this.currentTrack.title);
+        $('.track__title').text(this.currentTrack.title);
         $(this.trackPicture).attr("src", this.currentTrack.picture);
-        $(this.trackPicture).show();
-        $('#album-artist__title').text(`${this.currentTrack.album.title} - ${this.currentTrack.artist.name}`);
+        $(this.trackPicture).fadeTo("fast", 1);
+        $('.album-artist__title').text(`${this.currentTrack.album.title} - ${this.currentTrack.artist.name}`);
         console.log("play " + this.currentTrack.id);
         $(`[track=${this.currentTrack.id}play]`).hide();
         $(`[track=${this.currentTrack.id}pause]`).show();
@@ -187,16 +178,17 @@ export default class PlayListView {
 
     }
 
-    handleAlbumChange(id) {
-        $(this).trigger('album', id);
+    handleAlbumChange(album) {
+        console.log(album);
+        $(this).trigger('album', album);
     }
 
-    handleGenreChange(id) {
-        $(this).trigger('genre', id);
+    handleGenreChange(genre) {
+        $(this).trigger('genre', genre);
     }
 
-    handleArtistChange(id) {
-        $(this).trigger('artist', id);
+    handleArtistChange(artist) {
+        $(this).trigger('artist', artist);
     }
 
     handlePlaySong(playId) {
@@ -214,14 +206,13 @@ export default class PlayListView {
         }
     }
 
-    createPlayer(tracks, play = true) {
+    createPlayer(tracks, playlistMeta, play = true) {
         this.pauseAudio();
         this.tracks = tracks;
         this.index = 0;
-        let tbody = $("#playlistBody");
-        console.log("new playlist");
-        console.log(tracks);
-        DeezerUtil.createPlaylistTable(tracks, tbody);
+        $('.ap').addClass('active');
+        console.log(playlistMeta);
+        DeezerUtil.createMiniPlaylist(tracks, playlistMeta);
         $('.btnPlay').unbind('click').click((e) => {
             if ($(e.currentTarget).attr("search")) {
                 $(this).trigger('checkPlaylist');
@@ -305,6 +296,4 @@ export default class PlayListView {
         });
         this.audio = $(audio).get(0);
     }
-
-
 }

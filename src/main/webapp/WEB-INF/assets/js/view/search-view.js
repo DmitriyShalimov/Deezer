@@ -4,45 +4,81 @@ export default class SearchView {
     constructor(playlistView) {
         this.playlistView = playlistView;
         this.searchInput = $('.search-form');
-        this.searchButton = $('.fi-magnifying-glass');
-
+        this.searchButton = $('.fa-search');
         $(this.searchButton).click(() => this.handleSearch($(this.searchInput).val()));
         $(this.playlistView).on('checkPlaylist', () => this.checkPlaylist());
     }
-    checkPlaylist(){
+
+    checkPlaylist() {
         if (this.playlistView.currentPlayList !== this.tracks) {
-            this.playlistView.createPlayer(this.tracks, false);
+            this.playlistView.createPlayer(this.tracks, {picture:this.tracks[0].picture, title : "Search"});
         }
     }
+
     setOptions(data) {
-        let ar = this.getDataForOptions(data);
+        let ar = SearchView.getDataForOptions(data);
+        console.log(ar);
+        let clicked = false;
         this.options = {
             data: ar,
             getValue: "title",
             list: {
-                maxNumberOfElements: 8,
+                maxNumberOfElements: 5,
                 match: {
                     enabled: true
                 },
-                sort: {
-                    enabled: true
-                },
-                onClickEvent: () => {
+                onLoadEvent: () => $('.search-value-play button').click(() => {
+                    clicked = true;
                     let itemToSearch = $(this.searchInput).getSelectedItemData();
-                    $(this).trigger('typeSearch', {type: itemToSearch.type, id: itemToSearch.id});
+                    console.log(itemToSearch);
+                    $(this).trigger('typeSearch', {
+                        type: itemToSearch.type, id: itemToSearch.id
+                        , title: itemToSearch.title, picture: itemToSearch.picture
+                    });
+                }),
+                onChooseEvent: () => {
+                    if (!clicked) {
+                        this.handleSearch($(this.searchInput).val())
+                    }
+                    clicked = false;
                 }
             },
             template: {
-                type: "description",
-                fields: {
-                    description: "type"
+                type: "custom",
+                method: function (value, item) {
+                    return `<div class="search-suggestion">
+                                <div class="search-contentWrapper">
+                                        <img alt="" class="search-img" src=${item.picture}>
+                                        <div class="suggestion-details">
+                                            <div class="suggestion-title">${value}</div>
+                                            <div class="suggestion-subtitle">${SearchView.handleSearchResult(item)}</div>
+                                        </div>
+                                        <div class="search-value-play">
+                                    <button>
+                                    <i class="fas fa-play search-play-icon"></i>
+                                    </button>
+                                </div>
+                                </div>
+                </div>`
                 }
-            }
+            },
+            highlightPhrase: false
         };
         $(this.searchInput).easyAutocomplete(this.options);
+        $(this.searchInput).keypress((e) => {
+            if (e.keyCode === 13) {
+                this.handleSearch($(this.searchInput).val());
+                return false;
+            }
+        });
+
     }
 
-    getDataForOptions(data) {
+    static handleSearchResult(item) {
+        return item.type + ((item.type !== 'artist') ? ` by ${item.artist.name}` : '');
+    }
+
+    static getDataForOptions(data) {
         return data.map(d => {
             !d.title ? d.title = d.name : d.title;
             if (d.hasOwnProperty('artist')) {
@@ -58,15 +94,19 @@ export default class SearchView {
         });
     }
 
-    playSearchResult(type, result) {
+    playSearchResult(type, result, playlist) {
+        $(this.searchInput).val('');
         if (!Array.isArray(result)) {
             result = [result];
         }
-        this.playlistView.createPlayer(result);
+        this.playlistView.createPlayer(result, playlist);
     }
 
     handleSearch(str) {
-        if (str) $(this).trigger('generalSearch', str);
+        if (str) {
+            $(this).trigger('generalSearch', str);
+        }
+        $(this.searchInput).val('');
     }
 
     hideMainPlaylists() {
@@ -74,16 +114,15 @@ export default class SearchView {
         $('.artists-playlists').hide();
     }
 
-    showSongs(tracks) {
+    showSongs(tracks, search) {
         if (tracks.length === 0) return;
         this.tracks = tracks;
-        DeezerUtil.createPlaylistTable(tracks, $('#songsBody'), true);
+        DeezerUtil.createPlaylist(tracks, search);
         $('.songs-playlist').show();
-
         $('.btnPlay').unbind('click').click((e) => {
             if ($(e.currentTarget).attr("search")
                 && this.playlistView.currentPlayList !== this.tracks) {
-                this.playlistView.createPlayer(this.tracks, false);
+                this.playlistView.createPlayer(this.tracks, {title: 'Search', picture: this.tracks[0].picture});
             }
             let playId = $(e.currentTarget).attr('trackId');
             if (playId) {

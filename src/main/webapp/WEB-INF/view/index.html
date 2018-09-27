@@ -6,16 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/foundation.css">
-    <link rel="stylesheet" href="/assets/css/foundation-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/jquery/easy-autocomplete.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <title>Deezer</title>
 </head>
 <body>
-<header class="top-bar-container" data-sticky-container>
-    <div class="sticky sticky-topbar top-bar-section" data-sticky
-         data-options="anchor: page; marginTop: 0; stickyOn: small;">
+<header class="top-bar-container">
+    <div class="top-bar-section">
         <div class="top-bar">
             <div class="top-bar-left">
                 <div class="logo">
@@ -24,93 +25,86 @@
                 </div>
             </div>
             <div class="top-bar-center">
-                <ul class="menu">
-                    <li class="menu-search">
-                        <div class="search-icon-form"><i class="fi-magnifying-glass"></i>
-                            <input type="search"
-                                   name="search"
-                                   placeholder="Search.."
-                                   class="search-form">
-                        </div>
-                    </li>
-                </ul>
+                <div class="search-icon-form"><i class="fas fa-search"></i>
+                    <input name="search"
+                           placeholder="Search"
+                           class="search-form">
+                </div>
+
             </div>
 
             <div class="top-bar-right">
-                <button class="button hollow logout"><p>Log out</p><i class="fi-arrow-right"></i></button>
-
+                <i class="logout fas fa-sign-out-alt top has-tip"
+                   data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Logout"></i>
             </div>
         </div>
     </div>
 </header>
-<main class="grid-container">
-    <section id="playlist-section">
-        <div class="genres-playlists">
-            <h3>Genres</h3>
-            <div class="underline"></div>
-            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="genre">
-                <div class="cell" th:each="genre : ${genres}">
-                    <div class="card card-playlist-hover">
-                        <img th:src="${genre.picture}"
-                             alt="genre logo">
-                        <div class="card-playlist-hover-icons">
-                            <button th:value="${genre.id}"><i class="fi-play-circle"></i></button>
 
-                        </div>
-                        <div class="card-playlist-hover-details">
-                            <h4 class="card-playlist-hover-title" th:utext="${genre.title}"></h4>
-                        </div>
-                    </div>
+<main>
+    <aside class="random__song left has-tip"
+           data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Play something"><i
+            class="fas fa-dice-three"></i></aside>
+    <div class="grid-container">
+        <section id="playlist-section">
+            <div class="genres-playlists">
+                <h3>Explore by genre</h3>
+                <div class="outline-pagination">
+                    <div class="underline"></div>
+                    <div id="pagination-container-genre"></div>
+                </div>
+                <div class="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="genre">
                 </div>
             </div>
-        </div>
-        <div class="artists-playlists">
-            <h3>Artists</h3>
-            <div class="underline"></div>
-            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="artist">
-                <div class="cell" th:each="artist : ${artists}" th:value="${artist.id}">
-                    <div class="card card-playlist-hover">
-                        <img th:src="${artist.picture}"
-                             alt="artist photo">
-                        <div class="card-playlist-hover-icons">
-                            <button th:value="${artist.id}"><i class="fi-play-circle"></i></button>
-
-                        </div>
-                        <div class="card-playlist-hover-details">
-                            <h4 class="card-playlist-hover-title" th:utext="${artist.name}"></h4>
-                        </div>
-                    </div>
+            <div class="artists-playlists">
+                <h3>Artists</h3>
+                <div class="outline-pagination">
+                    <div class="underline"></div>
+                    <div id="pagination-container-artist"></div>
+                </div>
+                <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="artist">
                 </div>
             </div>
-        </div>
-        <div class="songs-playlist">
-            <h3>Songs</h3>
-            <div class="underline"></div>
-            <table class="hover">
-                <thead>
-                <tr>
-                    <th width="200"></th>
-                    <th>Track</th>
-                    <th width="150"><i class="fi-clock"></i></th>
-                    <th width="150"><i class="fi-heart"></i></th>
-                </tr>
-                </thead>
-                <tbody id="songsBody">
-                </tbody>
-            </table>
-        </div>
-        <div class="album-playlists">
-            <h3>Albums</h3>
-            <div class="underline"></div>
-            <div class="grid-x grid-padding-x small-up-2 medium-up-3" id="album">
+            <div class="album-playlists">
+                <h3>Albums</h3>
+                <div class="outline-pagination">
+                    <div class="underline"></div>
+                    <div id="pagination-container-album"></div>
+                </div>
+                <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="album">
+                </div>
             </div>
-        </div>
-    </section>
+            <div class="songs-playlist">
+                <table class="hover unstriped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Track</th>
+                        <th><i class="far fa-clock"></i></th>
+                        <th><i class="far fa-heart"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody id="songsBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
     <div id="audiowrap">
         <div id="first" th:vaue="${songs}">
             <audio preload="metadata" id="audio" controls="controls"/>
         </div>
     </div>
+    </div>
+    <section class="playlist__section">
+        <div class="queue-empty">
+            <div class="material-empty">
+                <div class="empty-message">Queue is empty</div>
+                <div class="empty-submessage">Start to listen music. Your playlist will be here.</div>
+            </div>
+        </div>
+    </section>
 </main>
 <footer>
     <div class="ap" id="ap">
@@ -128,40 +122,47 @@
                     <span> / </span>
                     <span class="track__time--duration">0:00</span>
                 </div>
-
             </div>
         </div>
         <div class="ap__inner">
             <div class="ap__item ap__item--title">
                 <img class="track__picture" src="" alt="">
-                <div class="track__info"><p id="track__title"></p>
-                    <p id="album-artist__title"></p></div>
+                <div class="track__info"><p class="track__title"></p>
+                    <p class="album-artist__title"></p></div>
 
             </div>
             <div class="ap__item ap__item--playback">
                 <button class="ap__controls ap__controls--prev" id="btnPrev">
-                    <i class="fi-previous"></i>
+                    <i class="fas fa-step-backward  top "
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="5"
+                       title="previous track"></i>
                 </button>
                 <button class="ap__controls ap__controls--toggle btnPlay">
-                    <i class="fi-play main-play"></i>
-                    <i class="fi-pause main-pause"></i>
+                    <i class="fas fa-play main-play top has-tip"
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="play"></i>
+                    <i class="fas fa-pause main-pause"></i>
                 </button>
                 <button class="ap__controls ap__controls--next" id="btnNext">
-                    <i class="fi-next"></i>
+                    <i class="fas fa-step-forward top has-tip"
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="next track"></i>
                 </button>
             </div>
 
             <div class="ap__item ap__item--settings">
                 <button class="ap__controls ap__controls--playlist">
-                    <i class="fi-heart"></i>
+                    <i class="far fa-heart top has-tip"
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       title="Add to favourites"></i>
                 </button>
                 <button class="ap__controls ap__controls--playlist">
-                    <i class="fi-plus"></i>
+                    <i class="fas fa-plus top has-tip"
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       title="Add to playlist"></i>
                 </button>
                 <div class="ap__controls volume-container">
                     <button class="volume-btn">
-                        <i class="fi-volume icon-volume-on"></i>
-                        <i class="fi-volume-strike icon-volume-off"></i>
+                        <i class="fas fa-volume-up icon-volume-on"></i>
+                        <i class="fas fa-volume-off icon-volume-off"></i>
                     </button>
                     <div class="volume">
                         <div class="volume__track">
@@ -170,28 +171,19 @@
                     </div>
                 </div>
                 <button class="ap__controls ap__controls--playlist" id="showPlaylist">
-                    <i class="fi-music"></i>
+                    <i class="fas fa-music top has-tip"
+                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       title="Current queue"></i>
                 </button>
-                <section class="playlist__section">
-                    <table class="hover">
-                        <thead>
-                        <tr>
-                            <th width="200"></th>
-                            <th>Track</th>
-                            <th width="150"><i class="fi-clock"></i></th>
-                            <th width="150"><i class="fi-heart"></i></th>
-                        </tr>
-                        </thead>
-                        <tbody id="playlistBody">
-                        </tbody>
-                    </table>
-                </section>
+
             </div>
         </div>
     </div>
 </footer>
 <script src="/assets/jquery/jquery.min.js"></script>
 <script src="/assets/jquery/jquery.easy-autocomplete.min.js"></script>
-<script type="module" src="/assets/js/playlist-main.js"></script>
+<script src="/assets/js/vendor/foundation.min.js"></script>
+<script src="/assets/js/vendor/pagination.js"></script>
+<script type="module" src="/assets/js/main.js"></script>
 </body>
 </html>

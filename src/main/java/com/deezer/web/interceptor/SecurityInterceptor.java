@@ -20,7 +20,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle( HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute(LOGGED_USER_ATTRIBUTE);
         if (loggedUser == null) {

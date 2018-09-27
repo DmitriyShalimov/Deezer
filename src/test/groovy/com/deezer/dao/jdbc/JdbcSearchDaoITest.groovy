@@ -43,9 +43,13 @@ class JdbcSearchDaoITest {
 
     @Test
     void getSearchResults() {
-        def expectedResults = [new Song(id: 1, title: 'song'),
-                               new Album(id: 1, title: 'album'),
-                               new Artist(id: 1, name: 'artist')] as List<SearchResult>
+        def expectedResults = [new Song(id: 1, title: 'song',
+                album: new Album(id: 0, title: 'album'),
+                artist: new Artist(id: 0, name: 'artist'),
+                picture: 'song_picture',
+                url: 'track_url'), new Album(id: 1, artist: new Artist(id: 0, name: 'artist'),
+                title: 'album', picture: 'album_picture'),
+                               new Artist(id: 1, name: 'artist', picture: 'picture')] as List<SearchResult>
         def actualResults = searchDao.getSearchResults()
         actualResults.each {
             assertTrue(expectedResults.remove(it))

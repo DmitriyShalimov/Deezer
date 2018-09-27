@@ -49,8 +49,15 @@ public class JdbcSongDao implements SongDao {
             "s.picture_link, al.title as album_title, " +
             "art.name as artist_name " +
             "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id \n" +
+            "join artist art on al.artist = art.id " +
             "WHERE lower(s.title) like lower(:mask);";
+    private static final String GET_RANDOM_SONGS = "select s.id," +
+            "s.title, s.track_url," +
+            "s.picture_link, al.title as album_title," +
+            "art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "order by random() limit 42";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -105,5 +112,11 @@ public class JdbcSongDao implements SongDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("mask", "%" + mask + "%");
         return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_MASK_SQL, params, SONG_ROW_MAPPER);
+    }
+
+    @Override
+    public List<Song> getRandomSongs() {
+        logger.info("start receiving random songs");
+        return namedParameterJdbcTemplate.query(GET_RANDOM_SONGS, SONG_ROW_MAPPER);
     }
 }

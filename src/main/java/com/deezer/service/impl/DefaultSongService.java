@@ -43,6 +43,11 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
+    public List<Song> getRandomSongs() {
+        return songDao.getRandomSongs();
+    }
+
+    @Override
     public List<Song> getSongsByGenre(int genreId) {
         return songDao.getSongsByGenre(genreId);
     }

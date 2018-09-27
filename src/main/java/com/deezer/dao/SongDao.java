@@ -15,4 +15,6 @@ public interface SongDao {
     List<Song> getSongsByPlayList(int playListId);
 
     List<Song> getSongsByMask(String mask);
+
+    List<Song> getRandomSongs();
 }
