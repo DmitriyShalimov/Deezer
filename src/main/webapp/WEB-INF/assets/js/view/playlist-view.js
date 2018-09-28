@@ -19,16 +19,16 @@ export default class PlayListView {
         this.playlist = $('.playlist__section');
         $('.ap__controls--playlist').click(() => this.handlePlaylist());
         $(this.genre).each(i =>
-            $(this.genre[i]).click(
-                () => this.handleGenreChange($(this.genre[i]).val())
-            )
-        );
+        $(this.genre[i]).click(
+            () => this.handleGenreChange($(this.genre[i]).val())
+    )
+    );
 
         $(this.artist).each(i =>
-            $(this.artist[i]).click(
-                () => this.handleArtistChange(($(this.artist[i]).val()))
-            )
-        );
+        $(this.artist[i]).click(
+            () => this.handleArtistChange(($(this.artist[i]).val()))
+    )
+    );
 
         $('#btnPrev').click(() => this.playPrevious());
         $('#btnNext').click(() => this.playNext());
@@ -39,42 +39,42 @@ export default class PlayListView {
         let startingPosVolume = [];
         $(this.volume)
             .mousedown((evt) => {
-                isDraggingVolume = false;
-                startingPosVolume = [evt.pageX, evt.pageY];
-            })
-            .mousemove((evt) => {
-                if (!(evt.pageX === startingPosVolume[0] && evt.pageY === startingPosVolume[1])) {
-                    isDraggingVolume = true;
-                    if (startingPosVolume[1]) {
-                        this.handleVolume(evt);
-                    }
-                }
-            })
-            .mouseup(() => {
-                isDraggingVolume = false;
-                startingPosVolume = [];
-            });
+            isDraggingVolume = false;
+        startingPosVolume = [evt.pageX, evt.pageY];
+    })
+    .mousemove((evt) => {
+            if (!(evt.pageX === startingPosVolume[0] && evt.pageY === startingPosVolume[1])) {
+            isDraggingVolume = true;
+            if (startingPosVolume[1]) {
+                this.handleVolume(evt);
+            }
+        }
+    })
+    .mouseup(() => {
+            isDraggingVolume = false;
+        startingPosVolume = [];
+    });
         this.progress = $('.progress');
         $(this.progress).click((e) => this.handleProgressClick(e))
         let isDraggingProgress = false;
         let startingPosProgress = [];
         $(this.progress)
             .mousedown((evt) => {
-                isDraggingProgress = false;
-                startingPosProgress = [evt.pageX, evt.pageY];
-            })
-            .mousemove((evt) => {
-                if (!(evt.pageX === startingPosProgress[0] && evt.pageY === startingPosProgress[1])) {
-                    isDraggingProgress = true;
-                    if (startingPosProgress[0]) {
-                        this.handleProgressClick(evt);
-                    }
-                }
-            })
-            .mouseup(() => {
-                isDraggingProgress = false;
-                startingPosProgress = [];
-            });
+            isDraggingProgress = false;
+        startingPosProgress = [evt.pageX, evt.pageY];
+    })
+    .mousemove((evt) => {
+            if (!(evt.pageX === startingPosProgress[0] && evt.pageY === startingPosProgress[1])) {
+            isDraggingProgress = true;
+            if (startingPosProgress[0]) {
+                this.handleProgressClick(evt);
+            }
+        }
+    })
+    .mouseup(() => {
+            isDraggingProgress = false;
+        startingPosProgress = [];
+    });
         this.getAudio();
     }
 
@@ -204,11 +204,11 @@ export default class PlayListView {
             let id = -1;
             this.tracks.forEach((song) => {
                 id++;
-                if (song.id.toString() === playId) {
-                    this.index = id;
-                    this.playTrack(this.tracks[id]);
-                }
-            });
+            if (song.id.toString() === playId) {
+                this.index = id;
+                this.playTrack(this.tracks[id]);
+            }
+        });
         } else {
             this.handleAudio();
         }
@@ -224,16 +224,16 @@ export default class PlayListView {
         DeezerUtil.createPlaylistTable(tracks, tbody);
         $('.btnPlay').unbind('click').click((e) => {
             if ($(e.currentTarget).attr("search")) {
-                $(this).trigger('checkPlaylist');
-            }
-            let playId = $(e.currentTarget).attr('trackId');
-            if (playId) {
-                this.pauseAudio();
-                this.handlePlaySong(playId)
-            } else {
-                this.handleAudio();
-            }
-        });
+            $(this).trigger('checkPlaylist');
+        }
+        let playId = $(e.currentTarget).attr('trackId');
+        if (playId) {
+            this.pauseAudio();
+            this.handlePlaySong(playId)
+        } else {
+            this.handleAudio();
+        }
+    });
         if (play) {
             this.playTrack(this.tracks[0]);
         }
@@ -280,29 +280,29 @@ export default class PlayListView {
         let audio = $('#audio');
         $(audio).on('loadedmetadata', () => {
             $(audio).on('timeupdate', () => {
-                this.handleTrackTime();
-                this.handleProgressBar();
-            })
+            this.handleTrackTime();
+        this.handleProgressBar();
+    })
 
 
-        });
+    });
 
         $(audio).bind('play', () => {
             this.currentTrack = this.tracks.find(t => t.url === this.audio.src);
-            console.log(this.currentTrack);
-            $(this.play).attr('track', `${this.currentTrack.id}play`);
-            $(this.pause).attr('track', `${this.currentTrack.id}pause`);
-            this.playAudio();
-        }).bind('pause', () => {
+        console.log(this.currentTrack);
+        $(this.play).attr('track', `${this.currentTrack.id}play`);
+        $(this.pause).attr('track', `${this.currentTrack.id}pause`);
+        this.playAudio();
+    }).bind('pause', () => {
             this.pauseAudio();
-        }).bind('ended', () => {
+    }).bind('ended', () => {
             if ((this.index + 1) < this.tracks.length) {
-                this.index++;
-            } else {
-                this.index = 0;
-            }
-            this.playTrack(this.tracks[this.index]);
-        });
+            this.index++;
+        } else {
+            this.index = 0;
+        }
+        this.playTrack(this.tracks[this.index]);
+    });
         this.audio = $(audio).get(0);
     }
 

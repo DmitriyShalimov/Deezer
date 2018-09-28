@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainPageController {
     private final GenreService genreService;
     private final ArtistService artistService;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public MainPageController(GenreService genreService, ArtistService artistService) {
         this.genreService = genreService;
         this.artistService = artistService;
     }
+
     @GetMapping()
     public String loadMainPage(ModelMap model) {
+        logger.info("Start loading main page");
         model.addAttribute("genres", genreService.getAll());
         model.addAttribute("artists", artistService.getAll());
         return "index";

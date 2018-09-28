@@ -51,6 +51,12 @@ public class JdbcSongDao implements SongDao {
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id \n" +
             "WHERE lower(s.title) like lower(:mask);";
+    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL="select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title,art.name as artist_name,pl.title\n" +
+            "from song s join album al on s.album = al.id \n" +
+            "join artist art on al.artist = art.id \n" +
+            "join playlist_song pls on pls.song = s.id\n" +
+            "join playlist pl on pl.id = pls.playlist\n" +
+            "where pl.id =:playlistId";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -95,8 +101,8 @@ public class JdbcSongDao implements SongDao {
     public List<Song> getSongsByPlayList(int playListId) {
         logger.info("start receiving songs by playList with id {}", playListId);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("playListId", playListId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_GENRE_SQL, params, SONG_ROW_MAPPER);
+        params.addValue("playlistId", playListId);
+        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_PLAYLIST_SQL, params, SONG_ROW_MAPPER);
     }
 
     @Override

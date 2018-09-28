@@ -3,8 +3,8 @@ export default class DeezerUtil {
         $(tbody).empty();
         $(tracks).each((i) => {
             let track = tracks[i];
-            console.log(track);
-            let trHtml = `<tr>
+        console.log(track);
+        let trHtml = `<tr>
                             <td class="btnPlay" trackid="${track.id}"><i class="fi-play" track="${track.id}play" ></i>
                                 <i class="fi-pause" track="${track.id}pause" ></i></td>
                             <td>${track.title}<br>${track.album.title}-${track.artist.name}</td>
@@ -13,10 +13,10 @@ export default class DeezerUtil {
                     <span track="${track.id}track__time--duration">--</span></td>
                             <td>like</td>
                         </tr>`;
-            $(tbody).append(trHtml);
-            if (search) $("td.btnPlay").attr("search", search);
+        $(tbody).append(trHtml);
+        if (search) $("td.btnPlay").attr("search", search);
 
-        });
+    });
     }
 
     static createArtistsCards(artists) {
@@ -24,22 +24,21 @@ export default class DeezerUtil {
         $(artistsPlaylist).empty();
         $(artists).each((i) => {
             let artist = artists[i];
-            let artistHtml =
-                `<div class="cell" value="${artist.id}">
+        let artistHtml =
+            `<div class="cell" value="${artist.id}">
                     <div class="card card-playlist-hover">
                         <img src="${artist.picture}"
                              alt="artist photo">
                         <div class="card-playlist-hover-icons">
                             <button value="${artist.id}"><i class="fi-play-circle"></i></button>
-
                         </div>
                         <div class="card-playlist-hover-details">
                             <h4 class="card-playlist-hover-title">${artist.name}</h4>
                         </div>
                     </div>
                 </div>`;
-            $(artistsPlaylist).append(artistHtml);
-        });
+        $(artistsPlaylist).append(artistHtml);
+    });
     }
 
     static createAlbumsCards(albums) {
@@ -47,14 +46,13 @@ export default class DeezerUtil {
         $(albumPlaylist).empty();
         $(albums).each((i) => {
             let album = albums[i];
-            let albumHtml =
-                `<div class="cell" value="${album.id}">
+        let albumHtml =
+            `<div class="cell" value="${album.id}">
                     <div class="card card-playlist-hover">
                         <img src="${album.picture}"
                              alt="album photo">
                         <div class="card-playlist-hover-icons">
                             <button value="${album.id}"><i class="fi-play-circle"></i></button>
-
                         </div>
                         <div class="card-playlist-hover-details">
                             <h4 class="card-playlist-hover-title">${album.title}</h4>
@@ -62,8 +60,8 @@ export default class DeezerUtil {
                         </div>
                     </div>
                 </div>`;
-            $(albumPlaylist).append(albumHtml);
-        });
+        $(albumPlaylist).append(albumHtml);
+    });
     }
 
     static createGenresCards(genres) {
@@ -71,22 +69,21 @@ export default class DeezerUtil {
         $(genrePlaylist).empty();
         $(genres).each((i) => {
             let genre = genres[i];
-            let genreHtml =
-                `<div class="cell"">
+        let genreHtml =
+            `<div class="cell"">
                     <div class="card card-playlist-hover">
                         <img src="${genre.picture}"
                              alt="genre logo">
                         <div class="card-playlist-hover-icons">
                             <button value="${genre.id}"><i class="fi-play-circle"></i></button>
-
                         </div>
                         <div class="card-playlist-hover-details">
                             <h4 class="card-playlist-hover-title">${genre.title}</h4>
                         </div>
                     </div>
                 </div>`
-            $(genrePlaylist).append(genreHtml);
-        });
+        $(genrePlaylist).append(genreHtml);
+    });
     }
 
     static showGenres(genres, view){
@@ -95,10 +92,10 @@ export default class DeezerUtil {
         $('.genres-playlists').show();
         let genre = $("#genre button");
         $(genre).each(i =>
-            $(genre[i]).unbind('click').click(
-                () => view.handleGenreChange(($(genre[i]).val()))
-            )
-        );
+        $(genre[i]).unbind('click').click(
+            () => view.handleGenreChange(($(genre[i]).val()))
+    )
+    );
     }
 
     static showArtists(artists, view) {
@@ -107,10 +104,10 @@ export default class DeezerUtil {
         $('.artists-playlists').show();
         let artist = $("#artist button");
         $(artist).each(i =>
-            $(artist[i]).unbind('click').click(
-                () => view.handleArtistChange(($(artist[i]).val()))
-            )
-        );
+        $(artist[i]).unbind('click').click(
+            () => view.handleArtistChange(($(artist[i]).val()))
+    )
+    );
     }
 
     static showAlbums(albums, view) {
@@ -119,10 +116,10 @@ export default class DeezerUtil {
         $('.album-playlists').show();
         let album = $("#album button");
         $(album).each(i =>
-            $(album[i]).click(
-                () => view.handleAlbumChange(($(album[i]).val()))
-            )
-        );
+        $(album[i]).click(
+            () => view.handleAlbumChange(($(album[i]).val()))
+    )
+    );
     }
 
 }
