@@ -18,8 +18,8 @@ public class JdbcPlayListDao implements PlayListDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final PlayListRowMapper PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
-    private static final String GET_ALL_PLAYLIST_SQL = "SELECT pl.id, pl.title FROM playlist AS pl WHERE pl.access='public'";
-    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title FROM playlist AS pl " +
+    private static final String GET_ALL_PLAYLIST_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl WHERE pl.access='public'";
+    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl " +
             "JOIN playlist_user AS plu ON  pl.id=plu.playlist " +
             "WHERE plu.user=:userId";
     private static final String ADD_NEW_USER_PLAYLIST_SQL = "WITH new_playlist AS ( " +
