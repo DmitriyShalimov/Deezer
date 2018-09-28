@@ -80,10 +80,9 @@ public class PlayListController {
         return albums;
     }
 
-    @RequestMapping(value = "/playlist/add/song", method = RequestMethod.POST)
+    @PostMapping(value = "/playlist/add/song")
     @ResponseBody
     public String addSongToPlaylist(@RequestParam int playlistId, @RequestParam int songId) {
-        System.out.println();
         boolean isAdded = playListService.addSongToPlaylist(playlistId, songId);
         if (isAdded) {
             return "success";

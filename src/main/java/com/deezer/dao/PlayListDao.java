@@ -1,7 +1,6 @@
 package com.deezer.dao;
 
 import com.deezer.entity.Access;
-import com.deezer.entity.Album;
 import com.deezer.entity.PlayList;
 
 import java.util.List;
