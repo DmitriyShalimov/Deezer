@@ -25,6 +25,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         User loggedUser = (User) session.getAttribute(LOGGED_USER_ATTRIBUTE);
         if (loggedUser == null) {
             logger.info("User in not logged. Redirecting to login");
+            MDC.clear();
             response.sendRedirect(REDIRECT_URI);
             return false;
         } else {
