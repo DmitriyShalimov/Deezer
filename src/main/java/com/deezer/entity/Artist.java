@@ -2,10 +2,9 @@ package com.deezer.entity;
 
 import java.util.Objects;
 
-public class Artist {
+public class Artist implements SearchResult {
     private int id;
     private String name;
-    private Album album;
     private String picture;
 
     public Artist() {
@@ -31,14 +30,6 @@ public class Artist {
         this.name = name;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
-    }
-
     public String getPicture() {
         return picture;
     }
@@ -54,14 +45,13 @@ public class Artist {
         Artist artist = (Artist) o;
         return id == artist.id &&
                 Objects.equals(name, artist.name) &&
-                Objects.equals(album, artist.album) &&
                 Objects.equals(picture, artist.picture);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, album, picture);
+        return Objects.hash(id, name, picture);
     }
 
     @Override
@@ -69,7 +59,6 @@ public class Artist {
         return "Artist{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", album=" + album +
                 ", picture='" + picture + '\'' +
                 '}';
     }

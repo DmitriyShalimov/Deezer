@@ -1,8 +1,6 @@
 package com.deezer.web.controller;
 
-import com.deezer.entity.Access;
-import com.deezer.entity.Song;
-import com.deezer.entity.User;
+import com.deezer.entity.*;
 import com.deezer.service.*;
 
 
@@ -25,7 +23,7 @@ public class PlayListController {
         this.playListService = playListService;
     }
 
-    @RequestMapping(value = "/albumsongs/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/album/{id}")
     @ResponseBody
     List<Song> getSongsByAlbum(@PathVariable Integer id) {
         logger.info("Retrieving songs of album {}", id);
@@ -34,7 +32,7 @@ public class PlayListController {
         return songsByAlbum;
     }
 
-    @RequestMapping(value = "/genre/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/genre/{id}")
     @ResponseBody
     List<Song> getSongsByGenre(@PathVariable Integer id) {
         logger.info("Retrieving songs of genre {}", id);
@@ -43,7 +41,7 @@ public class PlayListController {
         return songsByGenre;
     }
 
-    @RequestMapping(value = "/artist/{id}", method = RequestMethod.GET/*, produces = "application/json;charset=UTF-8"*/)
+    @GetMapping(value = "/artist/{id}")
     @ResponseBody
     List<Song> getSongsByArtist(@PathVariable Integer id) {
         logger.info("Retrieving songs of artist {}", id);
@@ -52,21 +50,40 @@ public class PlayListController {
         return songs;
     }
 
-    @PostMapping(value = "/add/playlist")
+    @GetMapping(value = "/playlist/{id}")
+    @ResponseBody
+    List<Song> getSongsByPlaylist(@PathVariable Integer id) {
+        logger.info("Retrieving songs from playlist {}", id);
+        List<Song> songs = songService.getSongsByPlayList(id);
+        logger.info("Songs from playlist {} are {}", id, songs);
+        return songs;
+    }
+
+    @PostMapping(value = "/playlist/add")
     @ResponseBody
     public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
-        boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(access), user.getId());
+        String accessID= "1".equals(access) ? "private" : "public";
+        boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(accessID), user.getId());
         if (isAdded) {
             return "success";
         }
         return "error";
     }
 
-    @PostMapping(value = "/add/song")
+    @GetMapping(value = "/playlist/user/{id}")
+    @ResponseBody
+    List<PlayList> getUserPlayLists(@PathVariable Integer id) {
+        logger.info("Start retrieving albums of user {}", id);
+        List<PlayList> albums = playListService.getUserPlaylist(id);
+        logger.info("Albums of user {} are {}", id, albums);
+        return albums;
+    }
+
+    @RequestMapping(value = "/playlist/add/song", method = RequestMethod.POST)
     @ResponseBody
     public String addSongToPlaylist(@RequestParam int playlistId, @RequestParam int songId) {
-
+        System.out.println();
         boolean isAdded = playListService.addSongToPlaylist(playlistId, songId);
         if (isAdded) {
             return "success";

@@ -38,6 +38,11 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
+    public List<Song> getSongsByMask(String mask) {
+        return songDao.getSongsByMask(mask);
+    }
+
+    @Override
     public List<Song> getSongsByGenre(int genreId) {
         return songDao.getSongsByGenre(genreId);
     }

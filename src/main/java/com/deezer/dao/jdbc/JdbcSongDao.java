@@ -16,14 +16,19 @@ import java.util.List;
 public class JdbcSongDao implements SongDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final SongRowMapper SONG_ROW_MAPPER = new SongRowMapper();
-    private static final String GET_SONG_BY_ID = "SELECT  id,title ,track_url FROM song  WHERE id=:id";
+    private static final String GET_SONG_BY_ID = "select s.id ,s.title, " +
+            "s.track_url,s.picture_link, " +
+            "al.title as album_title, art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id " +
+            "WHERE s.id = :id";
 
     private static final String GET_ALL_SONGS_BY_GENRE_SQL = "select s.id ,s.title , " +
             "s.track_url,s.picture_link, " +
             "al.title as album_title, art.name as artist_name " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
-            "join song_genre sg on sg.song = s.id "+
+            "join song_genre sg on sg.song = s.id " +
             "WHERE sg.genre=:genreId";
     private static final String GET_ALL_SONGS_BY_ARTIST_SQL = "select s.id " +
             ",s.title, s.track_url" +
@@ -32,13 +37,26 @@ public class JdbcSongDao implements SongDao {
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "WHERE art.id=:artistId";
-    private static final String GET_ALL_SONGS_BY_ALBUM_SQL="select s.id " +
+    private static final String GET_ALL_SONGS_BY_ALBUM_SQL = "select s.id " +
             ",s.title, s.track_url" +
             ",s.picture_link, al.title as album_title" +
             ",art.name as artist_name " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "WHERE al.id=:albumId";
+    private static final String GET_ALL_SONGS_BY_MASK_SQL = "select s.id " +
+            ",s.title, s.track_url," +
+            "s.picture_link, al.title as album_title, " +
+            "art.name as artist_name " +
+            "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id \n" +
+            "WHERE lower(s.title) like lower(:mask);";
+    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL="select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title,art.name as artist_name,pl.title\n" +
+            "from song s join album al on s.album = al.id \n" +
+            "join artist art on al.artist = art.id \n" +
+            "join playlist_song pls on pls.song = s.id\n" +
+            "join playlist pl on pl.id = pls.playlist\n" +
+            "where pl.id =:playlistId";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -83,7 +101,15 @@ public class JdbcSongDao implements SongDao {
     public List<Song> getSongsByPlayList(int playListId) {
         logger.info("start receiving songs by playList with id {}", playListId);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("playListId", playListId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_GENRE_SQL, params, SONG_ROW_MAPPER);
+        params.addValue("playlistId", playListId);
+        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_PLAYLIST_SQL, params, SONG_ROW_MAPPER);
+    }
+
+    @Override
+    public List<Song> getSongsByMask(String mask) {
+        logger.info("start receiving songs by mask {}", mask);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("mask", "%" + mask + "%");
+        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_MASK_SQL, params, SONG_ROW_MAPPER);
     }
 }

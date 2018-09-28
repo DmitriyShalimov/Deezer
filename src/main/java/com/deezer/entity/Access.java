@@ -1,7 +1,7 @@
 package com.deezer.entity;
 
 public enum Access {
-    INDIVIDUAL("I"), PUBLIC("P");
+    PRIVATE("private"), PUBLIC("public");
     private String id;
 
     Access(String id) {

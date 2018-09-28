@@ -11,16 +11,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public class JdbcGenreDao implements GenreDao {
-    private  final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final RowMapper<Genre> GENRE_ROW_MAPPER=new GenreRowMapper();
+    private static final RowMapper<Genre> GENRE_ROW_MAPPER = new GenreRowMapper();
     private static final String GET_ALL_GENRES_SQL = "SELECT id,title, picture_link FROM genre";
+
     @Autowired
     public JdbcGenreDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+
     @Override
     public List<Genre> getGenres() {
         logger.info("start receiving  all genres ");

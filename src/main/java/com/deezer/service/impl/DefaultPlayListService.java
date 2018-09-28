@@ -32,4 +32,9 @@ public class DefaultPlayListService implements PlayListService {
     public boolean addSongToPlaylist(int playlistId, int songId) {
         return playListDao.addSongToPlaylist(playlistId, songId);
     }
+
+    @Override
+    public List<PlayList> getUserPlaylist(Integer id) {
+        return playListDao.getUserPlaylist(id);
+    }
 }

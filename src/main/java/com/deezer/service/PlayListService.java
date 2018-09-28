@@ -11,4 +11,6 @@ public interface PlayListService {
     boolean addPlaylist(String playlistTitle, Access access, int userId);
 
     boolean addSongToPlaylist(int playlistId, int songId);
+
+    List<PlayList> getUserPlaylist(Integer id);
 }
