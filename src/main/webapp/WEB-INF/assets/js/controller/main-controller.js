@@ -1,19 +1,18 @@
 import DeezerUtil from "../deezer-util.js";
+const URI_PREFIX = '/api/v1';
 
 export default class MainController {
     constructor(playListView) {
         this.playlistView = playListView;
-        this.loadGenres();
-       // this.loadArtists();
         $(this.playlistView).on('genre', (event, genre) => this.changeGenre(genre));
         $(this.playlistView).on('artist', (event, artist) => this.changeArtist(artist));
         $(this.playlistView).on('album', (event, album) => this.changeAlbum(album));
         $(this.playlistView).on('logout', () => this.logout());
         $(this.playlistView).on('load', () => {
             this.loadGenres();
-           // this.loadArtists();
+            history.pushState('', 'Deezer', '/')
         });
-        $(this.playlistView).on('random', ()=> this.getRandomSongs())
+        $(this.playlistView).on('random', () => this.getRandomSongs())
     }
 
     logout() {
@@ -23,11 +22,12 @@ export default class MainController {
     loadGenres() {
         $.ajax({
             type: "GET",
-            url: "/genres",
-            headers: {
-                Accept: 'application/json'
-            },
-            success: data => DeezerUtil.showGenres(data, this.playlistView)
+            url: `${URI_PREFIX}/genres`,
+            success: data => {
+                //console.log(data);
+                DeezerUtil.showGenres(data, this.playlistView);
+                //history.pushState(data, 'Genres', '/genres');
+            }
         });
     }
 
@@ -36,7 +36,7 @@ export default class MainController {
         console.log(album);
         $.ajax({
             type: "GET",
-            url: "/album/" + album.id,
+            url: `${URI_PREFIX}/album/${album.id}`,
             headers: {
                 Accept: 'application/json'
             }
@@ -47,13 +47,12 @@ export default class MainController {
     changeGenre(genre) {
         $.ajax({
             type: "GET",
-            url: "/genre/" + genre.id,
+            url: `${URI_PREFIX}/genre/${genre.id}`,
             headers: {
                 Accept: 'application/json'
             },
             success: data => {
-                console.log(data);
-                this.playlistView.createPlayer(data, genre)
+                this.playlistView.createPlayer(data, genre);
             }
         });
     }
@@ -61,17 +60,18 @@ export default class MainController {
     changeArtist(artist) {
         $.ajax({
             type: "GET",
-            url: "/artist/" + artist.id,
+            url: `${URI_PREFIX}/artist/${artist.id}`,
             headers: {
                 Accept: 'application/json'
             },
             success: data => this.playlistView.createPlayer(data, artist)
         });
     }
-    getRandomSongs(){
+
+    getRandomSongs() {
         $.ajax({
             type: "GET",
-            url: "/random",
+            url: `${URI_PREFIX}/random`,
             headers: {
                 Accept: 'application/json'
             },

@@ -4,6 +4,8 @@ import com.deezer.web.interceptor.SecurityInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -17,18 +19,19 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.deezer.web.controller")
+@ComponentScan(basePackages = "com.deezer.web.controller.view")
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SecurityInterceptor())
-                .addPathPatterns("/")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/registration");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/registration", "/assets/**");
+
     }
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         registry.addResourceHandler("/assets/**").addResourceLocations("WEB-INF/assets/");
     }
 

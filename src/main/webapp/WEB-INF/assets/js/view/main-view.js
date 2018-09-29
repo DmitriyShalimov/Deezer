@@ -283,6 +283,7 @@ export default class MainView {
             console.log(this.currentTrack);
             $(this.play).attr('track', `${this.currentTrack.id}play`);
             $(this.pause).attr('track', `${this.currentTrack.id}pause`);
+            $('.main-add-to-playlist').attr('track', `${this.currentTrack.id}`);
             this.playAudio();
         }).bind('pause', () => {
             this.pauseAudio();

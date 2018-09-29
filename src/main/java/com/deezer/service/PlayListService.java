@@ -8,7 +8,7 @@ import java.util.List;
 public interface PlayListService {
     List<PlayList> getAll();
 
-    boolean addPlaylist(String playlistTitle, Access access, int userId);
+    boolean addPlaylist(String playlistTitle, Access access, int userId, int songId);
 
     boolean addSongToPlaylist(int playlistId, int songId);
 

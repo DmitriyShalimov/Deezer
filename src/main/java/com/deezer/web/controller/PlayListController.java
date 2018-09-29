@@ -61,10 +61,10 @@ public class PlayListController {
 
     @PostMapping(value = "/playlist/add")
     @ResponseBody
-    public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access, HttpSession session) {
+        public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access,
+                                  @RequestParam Integer song, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
-        String accessID= "1".equals(access) ? "private" : "public";
-        boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(accessID), user.getId());
+        boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(access), user.getId(), song);
         if (isAdded) {
             return "success";
         }

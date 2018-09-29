@@ -3,6 +3,7 @@ package com.deezer.web.controller
 import com.deezer.UnitTest
 import com.deezer.entity.User
 import com.deezer.security.SecurityService
+import com.deezer.web.controller.view.UserController
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category

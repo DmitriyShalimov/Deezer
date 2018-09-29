@@ -26,7 +26,9 @@ public class JdbcPlayListDao implements PlayListDao {
             "INSERT INTO playlist (title, \"access\") VALUES (:title,:access)  returning id)" +
             "INSERT INTO playlist_user ( \"user\",playlist)" +
             "VALUES ( :userId,   (SELECT id FROM new_playlist));";
+    private static final String GET_PLAYLIST_ID = "select max(id) from playlist where title = :title;";
     private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songID)";
+    private static final String ADD_SONG_TO_PLAYLIST_BY_PLAYLIST_TITLE_SQL = "INSERT INTO playlist_song (playlist,song) VALUES (select max(id) as id, :songID from playlist pl where pl.title = :title)";
 
 
     @Autowired
@@ -41,14 +43,21 @@ public class JdbcPlayListDao implements PlayListDao {
     }
 
     @Override
-    public boolean addPlaylist(String playlistTitle, Access access, int userId) {
+    public boolean addPlaylist(String playlistTitle, Access access, int userId, int songId) {
         logger.info("Start upload playlist {}", playlistTitle);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("userId", userId);
         params.addValue("access", access.getId());
         params.addValue("title", playlistTitle);
         int result = namedParameterJdbcTemplate.update(ADD_NEW_USER_PLAYLIST_SQL, params);
-        logger.info("Playlist {} saved", playlistTitle);
+        if (result == 1) {
+            logger.info("Playlist {} uploaded", playlistTitle);
+            logger.info("Start upload song {} to playlist {}", songId, playlistTitle);
+            MapSqlParameterSource paramsForSong = new MapSqlParameterSource();
+            params.addValue("songId", songId);
+            params.addValue("title", playlistTitle);
+            result = namedParameterJdbcTemplate.update(ADD_SONG_TO_PLAYLIST_BY_PLAYLIST_TITLE_SQL, paramsForSong);
+        }
         return result == 1;
     }
 

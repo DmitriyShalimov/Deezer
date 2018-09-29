@@ -18,7 +18,7 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping(value = "search")
     @ResponseBody
     List<SearchResult> getSearchResults() {
         return searchService.getSearchResults();

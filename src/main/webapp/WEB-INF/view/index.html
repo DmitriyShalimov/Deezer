@@ -20,7 +20,7 @@
         <div class="top-bar">
             <div class="top-bar-left">
                 <div class="logo">
-                    <img class="menu-text" src="assets/img/logo.png" alt="">
+                    <img class="menu-text" src="/assets/img/logo.png" alt="">
                     <p class="menu-text">Deezer</p>
                 </div>
             </div>
@@ -105,6 +105,32 @@
             </div>
         </div>
     </section>
+    <section class="playlist-menu dropdown-pane top" id="addToPlaylistMenu" data-dropdown>
+        <div class="create-playlist" data-open="createPlaylistModal">Create new playlist</div>
+        <div class="menu-separator"></div>
+        <ul class="user-playlist-list">
+            <li>one</li>
+            <li>two</li>
+        </ul>
+    </section>
+    <div class="reveal" id="createPlaylistModal" data-reveal>
+        <h2 class="title">New Playlist</h2>
+        <div class="new-playlist__name">
+            <label for="new-playlist__input">Title</label>
+            <input id="new-playlist__input" autofocus="autofocus"/>
+        </div>
+        <div class="new-playlist__access" data-tooltip aria-haspopup="true" data-position="bottom" data-alignment="left" tabindex="1" title="All users can listen this playlist">
+            <input class="new-playlist__access__input" type="checkbox" id="new-playlist-access__checkbox"/>
+            <label class="new-playlist__access__label" for="new-playlist-access__checkbox">Make public</label>
+        </div>
+        <div class="buttons">
+            <button class="new-playlist__cancel" data-close aria-label="Close Modal" type="button">Cancel</button>
+            <button class="new-playlist__create" type="button">Create Playlist</button>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 </main>
 <footer>
     <div class="ap" id="ap">
@@ -154,7 +180,8 @@
                        data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
                        title="Add to favourites"></i>
                 </button>
-                <button class="ap__controls ap__controls--playlist">
+                <button class="ap__controls ap__controls--playlist main-add-to-playlist"
+                        data-toggle="addToPlaylistMenu">
                     <i class="fas fa-plus top has-tip"
                        data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
                        title="Add to playlist"></i>
