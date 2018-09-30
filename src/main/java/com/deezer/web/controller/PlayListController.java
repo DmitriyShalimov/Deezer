@@ -63,7 +63,7 @@ public class PlayListController {
     @ResponseBody
     public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
-        String accessID= "1".equals(access) ? "private" : "public";
+        String accessID = "1".equals(access) ? "private" : "public";
         boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(accessID), user.getId());
         if (isAdded) {
             return "success";
@@ -88,5 +88,21 @@ public class PlayListController {
             return "success";
         }
         return "error";
+    }
+
+    @PostMapping(value = "/playlist/like")
+    @ResponseBody
+    public String likeSong(@RequestParam String playlistId, HttpSession session) {
+        boolean isLiked =playListService.likePlaylist(Integer.parseInt(playlistId), ((User) session.getAttribute("loggedUser")).getId());
+        if (isLiked) {
+            return "success";
+        }
+        return "error";
+    }
+
+    @GetMapping(value = "/playlist/like/{id}")
+    @ResponseBody
+    String getSongLikeCount(@PathVariable Integer id) {
+        return playListService.getPlaylistLikeCount(id);
     }
 }

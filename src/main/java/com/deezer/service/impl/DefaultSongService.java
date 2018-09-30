@@ -48,6 +48,16 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
+    public boolean likeSong(int songId, int userId) {
+        return songDao.likeSong(songId, userId);
+    }
+
+    @Override
+    public String getSongLikeCount(int id) {
+        return songDao.getSongLikeCount(id);
+    }
+
+    @Override
     public List<Song> getSongsByGenre(int genreId) {
         return songDao.getSongsByGenre(genreId);
     }

@@ -19,4 +19,7 @@ public interface SongService {
 
     List<Song> getRandomSongs();
 
+    boolean likeSong(int songId, int userId);
+
+    String getSongLikeCount(int id);
 }

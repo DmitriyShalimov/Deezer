@@ -51,7 +51,7 @@ export default class DeezerUtil {
                             </div>
                                                
                     </td>
-                            <td>like</td>
+                            <td class="btnLike" trackid="${track.id}">like</td>
                         </tr>`;
             $("#playlistBody").append(trHtml);
         });

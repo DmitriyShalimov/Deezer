@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface SongDao {
     Song getSong(int id);
+
     List<Song> getSongsByGenre(int genreId);
 
     List<Song> getSongsByArtist(int artistId);
@@ -17,4 +18,8 @@ public interface SongDao {
     List<Song> getSongsByMask(String mask);
 
     List<Song> getRandomSongs();
+
+    boolean likeSong(int songId, int userId);
+
+    String getSongLikeCount(int id);
 }

@@ -37,4 +37,14 @@ public class DefaultPlayListService implements PlayListService {
     public List<PlayList> getUserPlaylist(Integer id) {
         return playListDao.getUserPlaylist(id);
     }
+
+    @Override
+    public boolean likePlaylist(int playlistId, int userId) {
+        return playListDao.likePlaylist(playlistId, userId);
+    }
+
+    @Override
+    public String getPlaylistLikeCount(int id) {
+        return playListDao.getPlaylistLikeCount(id);
+    }
 }
