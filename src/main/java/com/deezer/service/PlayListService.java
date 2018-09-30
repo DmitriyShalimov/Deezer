@@ -13,4 +13,8 @@ public interface PlayListService {
     boolean addSongToPlaylist(int playlistId, int songId);
 
     List<PlayList> getUserPlaylist(Integer id);
+
+    boolean likePlaylist(int playlistId, int userId);
+
+    String getPlaylistLikeCount(int id);
 }

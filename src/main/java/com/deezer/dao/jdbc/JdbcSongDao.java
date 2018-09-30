@@ -60,12 +60,17 @@ public class JdbcSongDao implements SongDao {
             "join artist art on al.artist = art.id " +
             "order by random() limit 42";
 
-    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL="select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title,art.name as artist_name,pl.title " +
+    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL = "select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title,art.name as artist_name,pl.title " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "join playlist_song pls on pls.song = s.id " +
             "join playlist pl on pl.id = pls.playlist " +
             "where pl.id =:playlistId";
+
+    private static final String DELETE_SONG_LIKE_COUNT_SQL = "DELETE from song_user where song=:songId and \"user\"=:userId";
+    private static final String ADD_SONG_LIKE_COUNT_SQL = "INSERT INTO song_user (song, \"user\") VALUES (:songId,:userId)";
+    private static final String GET_USER_LIKE_COUNT_FOR_SONG_SQL = "SELECT COUNT(*) FROM song_user WHERE song =:songId AND \"user\"=:userId ;";
+    private static final String GET_SONG_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM song_user WHERE song =:songId;";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -126,5 +131,28 @@ public class JdbcSongDao implements SongDao {
     public List<Song> getRandomSongs() {
         logger.info("start receiving random songs");
         return namedParameterJdbcTemplate.query(GET_RANDOM_SONGS, SONG_ROW_MAPPER);
+    }
+
+    @Override
+    public boolean likeSong(int songId, int userId) {
+        logger.info("Add 'like' to song with id {} by user with id {}", songId, userId);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("songId", songId);
+        params.addValue("userId", userId);
+        int result;
+        if (namedParameterJdbcTemplate.queryForObject(GET_USER_LIKE_COUNT_FOR_SONG_SQL, params, Integer.class) != 0) {
+            result = namedParameterJdbcTemplate.update(DELETE_SONG_LIKE_COUNT_SQL, params);
+        } else {
+            result = namedParameterJdbcTemplate.update(ADD_SONG_LIKE_COUNT_SQL, params);
+        }
+        return result == 1;
+    }
+
+    @Override
+    public String getSongLikeCount(int id) {
+        logger.info("Get like count for song with id {} ", id);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("songId", id);
+        return namedParameterJdbcTemplate.queryForObject(GET_SONG_LIKE_COUNT_SQL, params, String.class);
     }
 }

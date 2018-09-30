@@ -10,4 +10,6 @@ public interface PlayListDao {
    List<PlayList> getUserPlaylist(Integer id);
    boolean addPlaylist(String playlistTitle, Access access, int userId);
    boolean addSongToPlaylist(int playlistId, int songId);
+   String getPlaylistLikeCount(int id);
+   boolean likePlaylist(int playlistId, int userId);
 }

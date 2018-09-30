@@ -20,6 +20,7 @@ export default class MainView {
         this.pause = $('.main-pause');
         this.playlist = $('.playlist__section');
         $('#showPlaylist').click(() => this.handlePlaylist());
+        $('#addLike').click(() => this.addLike());
         $('#btnPrev').click(() => this.playPrevious());
         $('#btnNext').click(() => this.playNext());
         //TODO: wheel handler
@@ -85,6 +86,14 @@ export default class MainView {
             $('.fa-music').css('color', 'black');
         }
 
+    }
+    addLike() {
+       let playId =this.currentTrack.id
+        $.post('/song/like', {songId: playId}, function (data) {
+            if (data === 'success') {
+            } else {
+            }
+        }.bind(this));
     }
 
     handleProgressClick(event) {
@@ -225,6 +234,14 @@ export default class MainView {
                 this.handleAudio();
             }
         });
+        $('.btnLike').unbind('click').click((e) => {
+        let playId = $(e.currentTarget).attr('trackId');
+        $.post('/song/like', {songId: playId}, function (data) {
+            if (data === 'success') {
+            } else {
+            }
+        }.bind(this));
+    });
         if (play) {
             this.playTrack(this.tracks[0]);
         }

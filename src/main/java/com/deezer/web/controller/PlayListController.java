@@ -16,6 +16,8 @@ public class PlayListController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final SongService songService;
     private final PlayListService playListService;
+    private static final String RESPONSE_SUCCESS = "success";
+    private static final String RESPONSE_ERROR = "error";
 
 
     public PlayListController(SongService songService, PlayListService playListService) {
@@ -63,12 +65,12 @@ public class PlayListController {
     @ResponseBody
     public String addPlaylist(@RequestParam String playlistTitle, @RequestParam String access, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
-        String accessID= "1".equals(access) ? "private" : "public";
+        String accessID = "1".equals(access) ? "private" : "public";
         boolean isAdded = playListService.addPlaylist(playlistTitle, Access.getTypeById(accessID), user.getId());
         if (isAdded) {
-            return "success";
+            return RESPONSE_SUCCESS;
         }
-        return "error";
+        return RESPONSE_ERROR;
     }
 
     @GetMapping(value = "/playlist/user/{id}")
@@ -85,8 +87,24 @@ public class PlayListController {
     public String addSongToPlaylist(@RequestParam int playlistId, @RequestParam int songId) {
         boolean isAdded = playListService.addSongToPlaylist(playlistId, songId);
         if (isAdded) {
-            return "success";
+            return RESPONSE_SUCCESS;
         }
-        return "error";
+        return RESPONSE_ERROR;
+    }
+
+    @PostMapping(value = "/playlist/like")
+    @ResponseBody
+    public String likeSong(@RequestParam String playlistId, HttpSession session) {
+        boolean isLiked = playListService.likePlaylist(Integer.parseInt(playlistId), ((User) session.getAttribute("loggedUser")).getId());
+        if (isLiked) {
+            return RESPONSE_SUCCESS;
+        }
+        return RESPONSE_ERROR;
+    }
+
+    @GetMapping(value = "/playlist/like/{id}")
+    @ResponseBody
+    String getSongLikeCount(@PathVariable Integer id) {
+        return playListService.getPlaylistLikeCount(id);
     }
 }

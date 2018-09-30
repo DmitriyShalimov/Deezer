@@ -20,14 +20,15 @@ public class JdbcPlayListDao implements PlayListDao {
     private static final PlayListRowMapper PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
     private static final String GET_ALL_PLAYLIST_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl WHERE pl.access='public'";
     private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl " +
-            "JOIN playlist_user AS plu ON  pl.id=plu.playlist " +
-            "WHERE plu.user=:userId";
-    private static final String ADD_NEW_USER_PLAYLIST_SQL = "WITH new_playlist AS ( " +
-            "INSERT INTO playlist (title, \"access\") VALUES (:title,:access)  returning id)" +
-            "INSERT INTO playlist_user ( \"user\",playlist)" +
-            "VALUES ( :userId,   (SELECT id FROM new_playlist));";
+            "WHERE pluser=:userId";
+    private static final String ADD_NEW_USER_PLAYLIST_SQL = "INSERT INTO playlist (title, \"access\",\"user\") VALUES (:title,:access,:userId)";
     private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songID)";
-
+    private static final String GET_PLAYLIST_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId;";
+    private static final String GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId AND \"user\"=:userId ;";
+    private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
+    private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
+    private static final String USER_ID="userId";
+    private static final String PLAYLIST_ID="playlistId";
 
     @Autowired
     public JdbcPlayListDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -44,7 +45,7 @@ public class JdbcPlayListDao implements PlayListDao {
     public boolean addPlaylist(String playlistTitle, Access access, int userId) {
         logger.info("Start upload playlist {}", playlistTitle);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", userId);
+        params.addValue(USER_ID, userId);
         params.addValue("access", access.getId());
         params.addValue("title", playlistTitle);
         int result = namedParameterJdbcTemplate.update(ADD_NEW_USER_PLAYLIST_SQL, params);
@@ -57,7 +58,7 @@ public class JdbcPlayListDao implements PlayListDao {
         logger.info("Start upload song with id= {} to playlist with id= {}", songId, playlistId);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("songId", songId);
-        params.addValue("playlist", playlistId);
+        params.addValue(PLAYLIST_ID, playlistId);
         int result = namedParameterJdbcTemplate.update(ADD_SONG_TO_PLAYLIST_SQL, params);
         logger.info("Song with id= {} saved in playlist with id= {}", songId, playlistId);
         return result == 1;
@@ -67,7 +68,30 @@ public class JdbcPlayListDao implements PlayListDao {
     public List<PlayList> getUserPlaylist(Integer id) {
         logger.info("start receiving  albums of user with id {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", id);
+        params.addValue(USER_ID, id);
         return namedParameterJdbcTemplate.query(GET_ALL_PLAYLIST_OF_USER_ID_SQL, params, PLAYLIST_ROW_MAPPER);
+    }
+
+    @Override
+    public boolean likePlaylist(int playlistId, int userId) {
+        logger.info("Add 'like' to playlist with id {} by user with id {}", playlistId, userId);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(PLAYLIST_ID, playlistId);
+        params.addValue(USER_ID, userId);
+        int result;
+        if (namedParameterJdbcTemplate.queryForObject(GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL, params, Integer.class) != 0) {
+            result = namedParameterJdbcTemplate.update(DELETE_PLAYLIST_LIKE_COUNT_SQL, params);
+        } else {
+            result = namedParameterJdbcTemplate.update(ADD_PLAYLIST_LIKE_COUNT_SQL, params);
+        }
+        return result == 1;
+    }
+
+    @Override
+    public String getPlaylistLikeCount(int id) {
+        logger.info("Get like count for playlist with id {} ", id);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(PLAYLIST_ID, id);
+        return namedParameterJdbcTemplate.queryForObject(GET_PLAYLIST_LIKE_COUNT_SQL, params, String.class);
     }
 }

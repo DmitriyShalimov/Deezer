@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                 pattern = "com\\.deezer\\.web\\.controller.*"))
 public class RootConfig implements WebMvcConfigurer {
 
-    @Bean
+        @Bean
     NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Value("${DB_URL}") String url
             , @Value("${DB_USERNAME}") String username
             , @Value("${DB_PASSWORD}") String password) {
