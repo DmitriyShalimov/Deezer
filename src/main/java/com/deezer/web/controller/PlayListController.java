@@ -16,8 +16,8 @@ public class PlayListController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final SongService songService;
     private final PlayListService playListService;
-    private final static String  RESPONSE_SUCCESS="success";
-    private final static String   RESPONSE_ERROR="error";
+    private static final String RESPONSE_SUCCESS = "success";
+    private static final String RESPONSE_ERROR = "error";
 
 
     public PlayListController(SongService songService, PlayListService playListService) {
@@ -95,7 +95,7 @@ public class PlayListController {
     @PostMapping(value = "/playlist/like")
     @ResponseBody
     public String likeSong(@RequestParam String playlistId, HttpSession session) {
-        boolean isLiked =playListService.likePlaylist(Integer.parseInt(playlistId), ((User) session.getAttribute("loggedUser")).getId());
+        boolean isLiked = playListService.likePlaylist(Integer.parseInt(playlistId), ((User) session.getAttribute("loggedUser")).getId());
         if (isLiked) {
             return RESPONSE_SUCCESS;
         }
