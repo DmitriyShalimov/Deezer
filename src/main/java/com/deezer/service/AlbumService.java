@@ -8,4 +8,6 @@ public interface AlbumService {
     List<Album> getAlbumsByArtistId(int artistId);
 
     List<Album> getAlbumsByMask(String mask);
+
+    Album getById(Integer id);
 }

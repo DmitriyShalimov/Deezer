@@ -6,6 +6,7 @@ import com.deezer.entity.Album;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import java.util.List;
 @Repository
 public class JdbcAlbumDao implements AlbumDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private static final AlbumRowMapper ALBUM_ROW_MAPPER = new AlbumRowMapper();
+    private static final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();
     private static final String GET_ALL_ALBUMS_BY_ARTIST_ID_SQL = "SELECT  al.id ,al.title, " +
             "al.picture_link, ar.name as artist_name " +
             "FROM album al join artist ar on al.artist = ar.id " +
@@ -23,6 +24,10 @@ public class JdbcAlbumDao implements AlbumDao {
             "al.picture_link, ar.name as artist_name " +
             "FROM album al join artist ar on al.artist = ar.id " +
             "WHERE lower(title) like lower(:mask)";
+    private static final String GET_ALBUM_BY_ID_SQL = "SELECT  al.id ,al.title, " +
+            "al.picture_link, ar.name as artist_name " +
+            "FROM album al join artist ar on al.artist = ar.id " +
+            "WHERE al.id=:id;";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
@@ -43,5 +48,13 @@ public class JdbcAlbumDao implements AlbumDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("mask", "%"+mask+"%");
         return namedParameterJdbcTemplate.query(GET_ALBUMS_BY_MASK_SQL, params, ALBUM_ROW_MAPPER);
+    }
+
+    @Override
+    public Album getById(Integer id) {
+        logger.info("Start receiving album {}", id);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id",id);
+        return namedParameterJdbcTemplate.queryForObject(GET_ALBUM_BY_ID_SQL, params, ALBUM_ROW_MAPPER);
     }
 }

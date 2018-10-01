@@ -1,4 +1,4 @@
-package com.deezer.web.controller;
+package com.deezer.web.controller.view;
 
 import com.deezer.entity.User;
 import com.deezer.security.SecurityService;

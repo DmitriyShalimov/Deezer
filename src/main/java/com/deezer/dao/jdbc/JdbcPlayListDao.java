@@ -10,25 +10,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 public class JdbcPlayListDao implements PlayListDao {
+    private static final int TOP_PLAYLIST_COUNT = 10;
+    private static final String USER_ID="userId";
+    private static final String PLAYLIST_ID="playlistId";
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final PlayListRowMapper PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
-    private static final String GET_ALL_PLAYLIST_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl WHERE pl.access='public'";
-    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title, pl.like_count, pl.access FROM playlist AS pl " +
-            "WHERE pluser=:userId";
-    private static final String ADD_NEW_USER_PLAYLIST_SQL = "INSERT INTO playlist (title, \"access\",\"user\") VALUES (:title,:access,:userId)";
-    private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songID)";
     private static final String GET_PLAYLIST_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId;";
     private static final String GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId AND \"user\"=:userId ;";
     private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
     private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
-    private static final String USER_ID="userId";
-    private static final String PLAYLIST_ID="playlistId";
+    private static final String GET_TOP_PLAYLIST_SQL = "SELECT pl.id, pl.title, pl.picture, pl.access FROM playlist AS pl WHERE pl.access='public' limit :limit;";
+    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title,pl.picture, pl.access FROM playlist AS pl " +
+            "WHERE pl.user=:userId";
+    private static final String ADD_NEW_USER_PLAYLIST_SQL = "insert into playlist(title, \"access\", \"user\") values(:title, :access, :userId)";
+    private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songId)";
+    private static final String ADD_SONG_TO_PLAYLIST_BY_PLAYLIST_TITLE_SQL = "INSERT INTO playlist_song (playlist,song) (select max(id) as id, :songId from playlist pl where pl.title = :title)";
+    private static final String ADD_PLAYLIST_PICTURE_SQL = "with current_pl as(" +
+            "select max(id) as id from playlist p " +
+            "where p.title = :title " +
+            ") update playlist set picture =" +
+            " (select max(picture_link) from song s " +
+            "join playlist_song ps on ps.song = s.id " +
+            "where ps.playlist = (select id from current_pl))" +
+            " where id = (select id from current_pl);";
+    private static final String GET_PLAYLIST_BY_ID = "SELECT pl.id, pl.title, pl.picture, pl.access FROM playlist AS pl WHERE pl.id = :id";
 
     @Autowired
     public JdbcPlayListDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -36,20 +48,21 @@ public class JdbcPlayListDao implements PlayListDao {
     }
 
     @Override
-    public List<PlayList> getAll() {
-        logger.info("start receiving  all playLists ");
-        return namedParameterJdbcTemplate.query(GET_ALL_PLAYLIST_SQL, PLAYLIST_ROW_MAPPER);
-    }
-
-    @Override
-    public boolean addPlaylist(String playlistTitle, Access access, int userId) {
+    @Transactional
+    public boolean addPlaylist(String playlistTitle, Access access, int userId, int songId) {
         logger.info("Start upload playlist {}", playlistTitle);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(USER_ID, userId);
         params.addValue("access", access.getId());
         params.addValue("title", playlistTitle);
+        params.addValue("songId", songId);
         int result = namedParameterJdbcTemplate.update(ADD_NEW_USER_PLAYLIST_SQL, params);
-        logger.info("Playlist {} saved", playlistTitle);
+        if (result == 1) {
+            logger.info("Playlist {} uploaded", playlistTitle);
+            logger.info("Start upload song {} to playlist {}", songId, playlistTitle);
+            namedParameterJdbcTemplate.update(ADD_SONG_TO_PLAYLIST_BY_PLAYLIST_TITLE_SQL, params);
+            result = namedParameterJdbcTemplate.update(ADD_PLAYLIST_PICTURE_SQL, params);
+        }
         return result == 1;
     }
 
@@ -62,6 +75,22 @@ public class JdbcPlayListDao implements PlayListDao {
         int result = namedParameterJdbcTemplate.update(ADD_SONG_TO_PLAYLIST_SQL, params);
         logger.info("Song with id= {} saved in playlist with id= {}", songId, playlistId);
         return result == 1;
+    }
+
+    @Override
+    public List<PlayList> getTopPlaylists() {
+        logger.info("start receiving  top {} playLists ", TOP_PLAYLIST_COUNT);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("limit", TOP_PLAYLIST_COUNT);
+        return namedParameterJdbcTemplate.query(GET_TOP_PLAYLIST_SQL, params, PLAYLIST_ROW_MAPPER);
+    }
+
+    @Override
+    public PlayList getById(Integer id) {
+        logger.info("start receiving  playlist {} ", id);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        return namedParameterJdbcTemplate.queryForObject(GET_PLAYLIST_BY_ID, params, PLAYLIST_ROW_MAPPER);
     }
 
     @Override

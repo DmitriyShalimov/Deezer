@@ -21,4 +21,9 @@ public class DefaultGenreService implements GenreService {
     public List<Genre> getAll() {
         return genreDao.getGenres();
     }
+
+    @Override
+    public Genre getGenreById(Integer id) {
+        return genreDao.getById(id);
+    }
 }

@@ -11,7 +11,7 @@ export default class SearchView {
 
     checkPlaylist() {
         if (this.playlistView.currentPlayList !== this.tracks) {
-            this.playlistView.createPlayer(this.tracks, {picture:this.tracks[0].picture, title : "Search"});
+            this.playlistView.createPlayer(this.tracks, {picture: this.tracks[0].picture, title: "Search"});
         }
     }
 
@@ -109,29 +109,11 @@ export default class SearchView {
         $(this.searchInput).val('');
     }
 
-    hideMainPlaylists() {
-        $('.genres-playlists').hide();
-        $('.artists-playlists').hide();
-    }
-
     showSongs(tracks, search) {
-        if (tracks.length === 0) return;
-        this.tracks = tracks;
         DeezerUtil.createPlaylist(tracks, search);
-        $('.songs-playlist').show();
-        $('.btnPlay').unbind('click').click((e) => {
-            if ($(e.currentTarget).attr("search")
-                && this.playlistView.currentPlayList !== this.tracks) {
-                this.playlistView.createPlayer(this.tracks, {title: 'Search', picture: this.tracks[0].picture});
-            }
-            let playId = $(e.currentTarget).attr('trackId');
-            if (playId) {
-                this.playlistView.pauseAudio();
-                this.playlistView.handlePlaySong(playId)
-            } else {
-                this.playlistView.handleAudio();
-            }
-        });
-
+        if (tracks.length !== 0) {
+            this.tracks = tracks;
+            DeezerUtil.bindPlay(this.playlistView, this.tracks, 'Search');
+        }
     }
 }

@@ -6,10 +6,18 @@ import com.deezer.entity.PlayList;
 import java.util.List;
 
 public interface PlayListDao {
-   List<PlayList> getAll();
-   List<PlayList> getUserPlaylist(Integer id);
-   boolean addPlaylist(String playlistTitle, Access access, int userId);
-   boolean addSongToPlaylist(int playlistId, int songId);
-   String getPlaylistLikeCount(int id);
-   boolean likePlaylist(int playlistId, int userId);
+    List<PlayList> getUserPlaylist(Integer id);
+
+    String getPlaylistLikeCount(int id);
+
+    boolean likePlaylist(int playlistId, int userId);
+
+    boolean addPlaylist(String playlistTitle, Access access, int userId, int songId);
+
+    boolean addSongToPlaylist(int playlistId, int songId);
+
+    List<PlayList> getTopPlaylists();
+
+    PlayList getById(Integer id);
+
 }

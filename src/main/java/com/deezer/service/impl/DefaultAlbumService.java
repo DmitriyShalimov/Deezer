@@ -26,4 +26,9 @@ public class DefaultAlbumService implements AlbumService {
     public List<Album> getAlbumsByMask(String mask) {
         return albumDao.getAlbumsByMask(mask);
     }
+
+    @Override
+    public Album getById(Integer id) {
+        return albumDao.getById(id);
+    }
 }

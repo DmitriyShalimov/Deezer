@@ -8,4 +8,6 @@ public interface ArtistDao {
     List<Artist> getAll();
 
     List<Artist> getArtistsByMask(String mask);
+
+    Artist getById(Integer id);
 }
