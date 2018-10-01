@@ -34,4 +34,11 @@ public class ArtistController {
     List<Artist> getAllArtists() {
         return artistService.getAll();
     }
+
+    @GetMapping(value = "/artist/{id}")
+    @ResponseBody
+    Artist getArtistById(@PathVariable Integer id) {
+        logger.info("Start retrieving artist {}", id);
+        return artistService.getById(id);
+    }
 }

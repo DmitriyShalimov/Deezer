@@ -35,7 +35,7 @@
 
             <div class="top-bar-right">
                 <i class="logout fas fa-sign-out-alt top has-tip"
-                   data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Logout"></i>
+                   data-tooltip aria-haspopup="true" tabindex="1" title="Logout"></i>
             </div>
         </div>
     </div>
@@ -43,8 +43,12 @@
 
 <main>
     <aside class="random__song left has-tip"
-           data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Play something"><i
+           data-tooltip aria-haspopup="true" tabindex="1" title="Play something"><i
             class="fas fa-dice-three"></i></aside>
+    <aside class="music-library right">
+        <i class="fas fa-clone"></i>
+        <p class="music-library-title">Music Library</p>
+    </aside>
     <div class="grid-container">
         <section id="playlist-section">
             <div class="genres-playlists">
@@ -54,6 +58,12 @@
                     <div id="pagination-container-genre"></div>
                 </div>
                 <div class="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="genre">
+                </div>
+            </div>
+            <div class="top-public-playlists">
+                <h3>Deezer Top 10</h3>
+                <div class="underline"></div>
+                <div class="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="topPlaylist">
                 </div>
             </div>
             <div class="artists-playlists">
@@ -109,8 +119,7 @@
         <div class="create-playlist" data-open="createPlaylistModal">Create new playlist</div>
         <div class="menu-separator"></div>
         <ul class="user-playlist-list">
-            <li>one</li>
-            <li>two</li>
+
         </ul>
     </section>
     <div class="reveal" id="createPlaylistModal" data-reveal>
@@ -119,7 +128,8 @@
             <label for="new-playlist__input">Title</label>
             <input id="new-playlist__input" autofocus="autofocus"/>
         </div>
-        <div class="new-playlist__access" data-tooltip aria-haspopup="true" data-position="bottom" data-alignment="left" tabindex="1" title="All users can listen this playlist">
+        <div class="new-playlist__access" data-tooltip aria-haspopup="true" data-position="bottom" data-alignment="left"
+             tabindex="1" title="All users can listen this playlist">
             <input class="new-playlist__access__input" type="checkbox" id="new-playlist-access__checkbox"/>
             <label class="new-playlist__access__label" for="new-playlist-access__checkbox">Make public</label>
         </div>
@@ -160,30 +170,30 @@
             <div class="ap__item ap__item--playback">
                 <button class="ap__controls ap__controls--prev" id="btnPrev">
                     <i class="fas fa-step-backward  top "
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="5"
+                       data-tooltip aria-haspopup="true" tabindex="5"
                        title="previous track"></i>
                 </button>
                 <button class="ap__controls ap__controls--toggle btnPlay">
                     <i class="fas fa-play main-play top has-tip"
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="play"></i>
+                       data-tooltip aria-haspopup="true" tabindex="1" title="play"></i>
                     <i class="fas fa-pause main-pause"></i>
                 </button>
                 <button class="ap__controls ap__controls--next" id="btnNext">
                     <i class="fas fa-step-forward top has-tip"
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="next track"></i>
+                       data-tooltip aria-haspopup="true" tabindex="1" title="next track"></i>
                 </button>
             </div>
 
             <div class="ap__item ap__item--settings">
                 <button class="ap__controls ap__controls--playlist">
                     <i class="far fa-heart top has-tip"
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       data-tooltip aria-haspopup="true" tabindex="1"
                        title="Add to favourites"></i>
                 </button>
                 <button class="ap__controls ap__controls--playlist main-add-to-playlist"
                         data-toggle="addToPlaylistMenu">
                     <i class="fas fa-plus top has-tip"
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       data-tooltip aria-haspopup="true" tabindex="1"
                        title="Add to playlist"></i>
                 </button>
                 <div class="ap__controls volume-container">
@@ -199,7 +209,7 @@
                 </div>
                 <button class="ap__controls ap__controls--playlist" id="showPlaylist">
                     <i class="fas fa-music top has-tip"
-                       data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1"
+                       data-tooltip aria-haspopup="true" tabindex="1"
                        title="Current queue"></i>
                 </button>
 

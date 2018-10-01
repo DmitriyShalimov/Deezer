@@ -45,7 +45,7 @@ export default class MainView {
                 startingPosVolume = [];
             });
         this.progress = $('.progress');
-        $(this.progress).click((e) => this.handleProgressClick(e))
+        $(this.progress).click((e) => this.handleProgressClick(e));
         let isDraggingProgress = false;
         let startingPosProgress = [];
         $(this.progress)
@@ -69,9 +69,7 @@ export default class MainView {
     }
 
     loadMainPage() {
-        $('.songs-playlist').hide();
-        $('.album-playlists').hide();
-        $('.artists-playlists').hide();
+        DeezerUtil.hideMainPlaylists();
         $(this).trigger('load');
 
     }
@@ -180,15 +178,36 @@ export default class MainView {
 
     handleAlbumChange(album) {
         console.log(album);
-        $(this).trigger('album', album);
+        $(this).trigger('album', {item: album, cb: this.createPlayer.bind(this)});
     }
 
     handleGenreChange(genre) {
-        $(this).trigger('genre', genre);
+        $(this).trigger('genre', {item: genre, cb: this.createPlayer.bind(this)});
+    }
+
+    handlePlaylistChange(playlist) {
+        $(this).trigger('playlist', {item: playlist, cb: this.createPlayer.bind(this)});
     }
 
     handleArtistChange(artist) {
-        $(this).trigger('artist', artist);
+        $(this).trigger('artist', {item: artist, cb: this.createPlayer.bind(this)});
+    }
+
+    handleShowItem(selectedItem) {
+        if (selectedItem.type === 'artist') {
+            selectedItem.albumsRequired = true;
+        }
+        $(this).trigger(selectedItem.type, {item: selectedItem, cb: DeezerUtil.showItem});
+    }
+
+    getItemToShowFromResult(result) {
+        if (result.type === 'album') {
+            result.subtitle = result.artist.name;
+        } else if (result.type === 'artist') {
+            result.title = result.name;
+            delete result[name];
+        }
+        this.handleShowItem(result);
     }
 
     handlePlaySong(playId) {

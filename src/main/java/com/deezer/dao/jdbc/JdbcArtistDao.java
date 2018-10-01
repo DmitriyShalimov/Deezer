@@ -22,6 +22,9 @@ public class JdbcArtistDao implements ArtistDao {
     private static final String GET_ARTISTS_BY_MASK_SQL =
             "SELECT id,name, picture FROM artist" +
                     " where lower(name) like lower(:mask)";
+    private static final String GET_ARTIST_BY_ID_SQL =
+            "SELECT id,name, picture FROM artist" +
+                    " where id = :id;";
 
     @Autowired
     public JdbcArtistDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -36,9 +39,17 @@ public class JdbcArtistDao implements ArtistDao {
 
     @Override
     public List<Artist> getArtistsByMask(String mask) {
-        logger.info("start receiving songs by mask {}", mask);
+        logger.info("start receiving artists by mask {}", mask);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("mask", "%" + mask + "%");
         return namedParameterJdbcTemplate.query(GET_ARTISTS_BY_MASK_SQL, params, ARTIST_ROW_MAPPER);
+    }
+
+    @Override
+    public Artist getById(Integer id) {
+        logger.info("start receiving artist {}", id);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        return namedParameterJdbcTemplate.queryForObject(GET_ARTIST_BY_ID_SQL, params, ARTIST_ROW_MAPPER);
     }
 }

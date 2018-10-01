@@ -6,6 +6,7 @@ import com.deezer.entity.Song;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ import java.util.List;
 @Repository
 public class JdbcSongDao implements SongDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private static final SongRowMapper SONG_ROW_MAPPER = new SongRowMapper();
+    private static final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
     private static final String GET_SONG_BY_ID = "select s.id ,s.title, " +
             "s.track_url,s.picture_link, " +
             "al.title as album_title, art.name as artist_name " +
@@ -60,12 +61,14 @@ public class JdbcSongDao implements SongDao {
             "join artist art on al.artist = art.id " +
             "order by random() limit 42";
 
-    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL="select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title,art.name as artist_name,pl.title " +
+    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL = "select s.id ," +
+            "s.title, s.track_url," +
+            "s.picture_link, al.title as album_title," +
+            "art.name as artist_name " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "join playlist_song pls on pls.song = s.id " +
-            "join playlist pl on pl.id = pls.playlist " +
-            "where pl.id =:playlistId";
+            "where pls.playlist =:playlistId";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

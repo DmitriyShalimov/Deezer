@@ -19,11 +19,6 @@ public class DefaultPlayListService implements PlayListService {
     }
 
     @Override
-    public List<PlayList> getAll() {
-        return playListDao.getAll();
-    }
-
-    @Override
     public boolean addPlaylist(String playlistTitle, Access access, int userId, int songId) {
         return playListDao.addPlaylist(playlistTitle, access, userId, songId);
     }
@@ -36,5 +31,15 @@ public class DefaultPlayListService implements PlayListService {
     @Override
     public List<PlayList> getUserPlaylist(Integer id) {
         return playListDao.getUserPlaylist(id);
+    }
+
+    @Override
+    public List<PlayList> getTopPlaylists() {
+        return playListDao.getTopPlaylists();
+    }
+
+    @Override
+    public PlayList getById(Integer id) {
+        return playListDao.getById(id);
     }
 }

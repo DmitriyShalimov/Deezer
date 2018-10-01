@@ -13,7 +13,7 @@ public class PlayListRowMapper implements RowMapper<PlayList> {
         PlayList playList=new PlayList();
         playList.setId(resultSet.getInt("id"));
         playList.setTitle(resultSet.getString("title"));
-        playList.setLikeCount(resultSet.getInt("like_count"));
+        playList.setPicture(resultSet.getString("picture"));
         playList.setAccess(Access.getTypeById(resultSet.getString("access")));
         return playList;
     }

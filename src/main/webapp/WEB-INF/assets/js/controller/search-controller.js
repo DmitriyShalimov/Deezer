@@ -13,7 +13,7 @@ export default class SearchController {
     }
 
     search(mask) {
-        this.view.hideMainPlaylists();
+        DeezerUtil.hideMainPlaylists();
         $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/song/search/${mask}`,

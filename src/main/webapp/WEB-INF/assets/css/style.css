@@ -18,9 +18,16 @@ div:focus {
     outline: none;
 }
 
+li:focus {
+    outline: none;
+}
+
 body {
     font-family: 'Roboto', arial, 'Noto Sans Japanese', sans-serif;
     background-color: #f5f5f5;
+    width: 100% !important;
+    height: 100% !important;
+
 }
 
 /* header */
@@ -295,6 +302,10 @@ li .button {
     max-width: 80%;
 }
 
+.cell {
+    cursor: pointer;
+}
+
 i[class^='fa'] {
     font-size: 1.2rem;
     cursor: pointer;
@@ -462,6 +473,10 @@ i.fa-dice-three {
     background: transparent;
 }
 
+.top-public-playlists {
+    margin-top: 10%;
+}
+
 .underline {
     width: 100px;
     height: 2px;
@@ -483,6 +498,14 @@ i.fa-dice-three {
 }
 
 .album-playlists {
+    display: none;
+}
+
+.genres-playlists {
+    display: none;
+}
+
+.top-public-playlists {
     display: none;
 }
 
@@ -1086,7 +1109,7 @@ h2.title {
 }
 
 .buttons button:focus {
-    background-color: rgba(255, 87, 34, 0.22);;
+    background-color: rgba(255, 87, 34, 0.22);
 }
 
 .new-playlist__access {
@@ -1120,6 +1143,157 @@ h2.title {
     line-height: 0.8;
     color: #ff5722;
     transition: all .2s;
+}
+
+span.user-playlist-subtitle {
+    text-transform: lowercase;
+    color: #757575;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.playlist__header {
+    flex-direction: row;
+}
+
+.playlist__picture {
+    /* height: auto; */
+    width: 15%;
+    border-radius: 2%;
+}
+
+.playlist__picture img {
+    width: 100%;
+}
+
+.artist .playlist__picture img {
+    border-radius: 50%;
+}
+
+.playlist__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.playlist__subtitle {
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #616161;
+    margin-left: 15px;
+}
+
+.artist-page .outline-pagination .underline {
+    display: none;
+}
+
+.artist-page .outline-pagination {
+    float: right;
+}
+
+#playlist-section .artist-page h3 {
+    font-size: 18px;
+    font-weight: bolder;
+    line-height: 24px;
+    color: #212121;
+    cursor: default;
+    margin: 0 0 0 30px;
+}
+
+.artist-page .card-playlist-hover-subtitle {
+    display: none;
+}
+
+.artist-page .card {
+    overflow: visible;
+    white-space: nowrap;
+    background-color: white;
+    margin: 8px;
+    border-radius: 2px;
+    font-weight: 300;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.artist-page .card:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.artist-page .card .card-playlist-hover-details {
+    padding: 5%;
+}
+
+.artist-page .card .card-playlist-hover-title {
+    font-size: 0.9rem;
+    color: #212121;
+}
+
+/*music library*/
+.music-library {
+    position: fixed;
+    margin-top: 1.3em;
+    left: 2%;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.music-library:hover {
+    opacity: 0.8;
+}
+
+.music-library:active {
+    background-color: rgba(255, 87, 34, 0.22);
+}
+
+.music-library i {
+    display: flex;
+    justify-content: center;
+    color: #ff5722;
+    font-size: 1.5em;
+}
+
+.music-library p {
+    overflow: hidden;
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 10px;
+    text-align: center;
+    color: #212121;
+}
+
+.tabs, .tabs-content {
+    background-color: transparent;
+    border: none;
+    color: #212121;
+}
+
+.tabs {
+    border-bottom:1px solid rgba(0, 0, 0, 0.37);
+}
+
+.tabs-title a {
+    color: #212121;
+    text-transform: uppercase;
+    font-weight: bolder;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.tabs-title.is-active a {
+    opacity: 1;
+    border-bottom: 2px solid #ff5722;
+    background-color: inherit;
+    color: #212121;
+    outline: none;
+}
+
+.tabs-title a:hover{
+    background-color: inherit;
+    color: inherit;
+}
+.tabs-panel.is-active{
+    display: flex;
 }
 
 /*media*/
@@ -1185,6 +1359,10 @@ h2.title {
 
     .card-playlist-hover-subtitle {
         font-size: 0.5em;
+    }
+
+    .playlist__picture {
+        height: auto;
     }
 }
 

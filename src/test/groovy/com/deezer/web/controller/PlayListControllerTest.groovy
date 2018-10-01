@@ -45,7 +45,7 @@ class PlayListControllerTest {
 
     @Test
     void getSongsByAlbum() {
-        def result = mockMvc.perform(get("/album/{id}", 1))
+        def result = mockMvc.perform(get("/album/{id}/songs", 1))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))
@@ -53,15 +53,15 @@ class PlayListControllerTest {
 
     @Test
     void getSongsByGenre() {
-        def result = mockMvc.perform(get("/genre/{id}", 1))
+        def result = mockMvc.perform(get("/genre/{id}/songs", 1))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))
     }
 
     @Test
-    void testGetSongsByArtist() {
-        def result = mockMvc.perform(get("/artist/{id}", 1))
+    void getSongsByArtist() {
+        def result = mockMvc.perform(get("/artist/{id}/songs", 1))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))

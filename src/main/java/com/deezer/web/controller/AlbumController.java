@@ -17,7 +17,7 @@ public class AlbumController {
         this.albumService = albumService;
     }
 
-    @GetMapping(value = "/album/artist/{id}")
+    @GetMapping(value = "/artist/{id}/albums")
     @ResponseBody
     List<Album> getAlbumsByArtist(@PathVariable Integer id) {
         logger.info("Start retrieving albums of artist {}", id);
@@ -31,5 +31,12 @@ public class AlbumController {
     List<Album> getAlbumsByMask(@PathVariable String mask) {
         logger.info("Start retrieving albums by mask {}", mask);
         return albumService.getAlbumsByMask(mask);
+    }
+
+    @GetMapping(value = "/album/{id}")
+    @ResponseBody
+    Album getAlbumById(@PathVariable Integer id) {
+        logger.info("Start retrieving album {}", id);
+        return albumService.getById(id);
     }
 }
