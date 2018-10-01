@@ -9,6 +9,7 @@ export default class MainController {
         $(this.playlistView).on('artist', (event, artist) => this.changeArtist(artist.item, artist.cb));
         $(this.playlistView).on('album', (event, album) => this.changeAlbum(album.item, album.cb));
         $(this.playlistView).on('playlist', (event, playlist) => this.changePlaylist(playlist.item, playlist.cb));
+        $(this.playlistView).on('like', (event, id) => this.addLikeToSong(id));
         $(this.playlistView).on('logout', () => this.logout());
         $(this.playlistView).on('load', () => {
             this.loadGenres();
@@ -107,7 +108,6 @@ export default class MainController {
             },
             success: data => {
                 success(data, playlist, this.playlistView);
-                //this.playlistView.createPlayer(data, playlist)
             }
         });
     }
@@ -133,6 +133,16 @@ export default class MainController {
             success: data => {
                 data.type = type;
                 this.playlistView.getItemToShowFromResult(data);
+            }
+        });
+    }
+
+    addLikeToSong(id){
+        $.ajax({
+            type: "POST",
+            url: `${URI_PREFIX}/song/${id}/like`,
+            success: data => {
+                this.playlistView.toggleLike(id);
             }
         });
     }

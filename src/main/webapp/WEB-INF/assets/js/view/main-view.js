@@ -20,7 +20,7 @@ export default class MainView {
         this.pause = $('.main-pause');
         this.playlist = $('.playlist__section');
         $('#showPlaylist').click(() => this.handlePlaylist());
-        $('#addLike').click(() => this.addLike());
+        $('#addLike').click(() => this.addLike(this.currentTrack.id));
         $('#btnPrev').click(() => this.playPrevious());
         $('#btnNext').click(() => this.playNext());
         //TODO: wheel handler
@@ -83,15 +83,10 @@ export default class MainView {
             $(this.playlist).hide('fast');
             $('.fa-music').css('color', 'black');
         }
-
     }
-    addLike() {
-       let playId =this.currentTrack.id
-        $.post('/song/like', {songId: playId}, function (data) {
-            if (data === 'success') {
-            } else {
-            }
-        }.bind(this));
+
+    addLike(playId) {
+        $(this).trigger('like', playId);
     }
 
     handleProgressClick(event) {
@@ -209,6 +204,32 @@ export default class MainView {
         $(this).trigger(selectedItem.type, {item: selectedItem, cb: DeezerUtil.showItem});
     }
 
+    toggleLike(id) {
+
+        if (this.currentTrack && id == this.currentTrack.id) {
+            this.changeLike($('.main-like'), $('.main-dislike'), id);
+        }
+        let plSongLikeBtn = $(`.btnLike[trackid=${id}]`);
+        console.log(plSongLikeBtn);
+        this.changeLike($(plSongLikeBtn).find('.like'), $(plSongLikeBtn).find(".dislike"), id);
+    }
+
+    changeLike(like, dislike, id) {
+        like.each(i => {
+                if (!$(like[i]).hasClass('active-like-state')) {
+                    $(like[i]).addClass('active-like-state');
+                    $(dislike[i]).removeClass('active-like-state');
+                    this.tracks.filter(track => track.id == id)[0].liked = false;
+                } else {
+                    $(like[i]).removeClass('active-like-state');
+                    $(dislike[i]).addClass('active-like-state');
+                    this.tracks.filter(track => track.id == id)[0].liked = true;
+                }
+            }
+        );
+
+    }
+
     getItemToShowFromResult(result) {
         if (result.type === 'album') {
             result.subtitle = result.artist.name;
@@ -239,8 +260,7 @@ export default class MainView {
         this.tracks = tracks;
         this.index = 0;
         $('.ap').addClass('active');
-        console.log(playlistMeta);
-        DeezerUtil.createMiniPlaylist(tracks, playlistMeta);
+        DeezerUtil.createMiniPlaylist(tracks, playlistMeta, this);
         $('.btnPlay').unbind('click').click((e) => {
             if ($(e.currentTarget).attr("search")) {
                 $(this).trigger('checkPlaylist');
@@ -253,14 +273,6 @@ export default class MainView {
                 this.handleAudio();
             }
         });
-        $('.btnLike').unbind('click').click((e) => {
-        let playId = $(e.currentTarget).attr('trackId');
-        $.post('/song/like', {songId: playId}, function (data) {
-            if (data === 'success') {
-            } else {
-            }
-        }.bind(this));
-    });
         if (play) {
             this.playTrack(this.tracks[0]);
         }
@@ -269,6 +281,13 @@ export default class MainView {
 
 
     playTrack(track) {
+        if (track.liked) {
+            $('.main-dislike').addClass('active-like-state');
+            $('.main-like').removeClass('active-like-state');
+        } else {
+            $('.main-like').addClass('active-like-state');
+            $('.main-dislike').removeClass('active-like-state');
+        }
         this.loadTrack(track);
         this.audio.play();
         let volume = $('.volume__bar').css('height');

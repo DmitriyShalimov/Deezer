@@ -5,5 +5,5 @@ import com.deezer.entity.SearchResult;
 import java.util.List;
 
 public interface SearchDao {
-    List<SearchResult> getSearchResults();
+    List<SearchResult> getSearchResults(int userId);
 }

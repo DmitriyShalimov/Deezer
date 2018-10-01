@@ -9,8 +9,7 @@ export default class DeezerUtil {
         $(main).css('margin-bottom', contentPlacementBottom);
     }
 
-    static createMiniPlaylist(tracks, playlist) {
-        console.log(playlist);
+    static createMiniPlaylist(tracks, playlist, view) {
         $('.playlist__section').empty().prepend(`
             <div class="pl-img">   
                 <img src=${playlist.picture}>
@@ -51,13 +50,18 @@ export default class DeezerUtil {
                             </div>
                                                
                     </td>
-                            <td class="btnLike" trackid="${track.id}">like</td>
+                            <td class="btnLike" trackid="${track.id}">
+                                <i class="far fa-heart top like"></i>
+                                <i class="fas fa-heart top dislike"></i>
+                            </td>
                         </tr>`;
             $("#playlistBody").append(trHtml);
+            DeezerUtil.toggleLike(track);
+            DeezerUtil.bindLike(view);
         });
     }
 
-    static createPlaylist(tracks, search) {
+    static createPlaylist(tracks, search, view) {
         const body = $('#songsBody');
         $(body).empty();
         if (tracks.length === 0) return;
@@ -79,12 +83,29 @@ export default class DeezerUtil {
                             </div>
                                                
                     </td>
-                            <td>like</td>
+                             <td class="btnLike" trackid="${track.id}">
+                                <i class="far fa-heart top like"></i>
+                                <i class="fas fa-heart top dislike"></i>
+                            </td>
                         </tr>`;
             $(body).append(trHtml);
             if (search) $("td.btnPlay").attr("search", search);
+            DeezerUtil.toggleLike(track);
+            DeezerUtil.bindLike(view);
         });
         $('.songs-playlist').show();
+    }
+
+    static toggleLike(track) {
+
+        let btnLike = $(`.btnLike[trackid=${track.id}]`);
+        if (track.liked) {
+            $(btnLike).find('.dislike').addClass('active-like-state');
+            $(btnLike).find('.like').removeClass('active-like-state');
+        } else {
+            $(btnLike).find('.like').addClass('active-like-state');
+            $(btnLike).find('.dislike').removeClass('active-like-state');
+        }
     }
 
     static getArtistsHtml(artists) {
@@ -304,7 +325,7 @@ export default class DeezerUtil {
         DeezerUtil.bindCard('album', view);
     }
 
-    static bindCard(item, view){
+    static bindCard(item, view) {
         let albumCards = $(`#${item} .cell`);
         $(albumCards).each(i => {
             let albumCard = albumCards[i];
@@ -359,7 +380,7 @@ export default class DeezerUtil {
         });
     }
 
-    static showPlaylists(itemId, playlists, view){
+    static showPlaylists(itemId, playlists, view) {
         if (playlists.length === 0) return;
         let playlistsPlaylist = $(`#${itemId}`);
         $(playlistsPlaylist).empty();
@@ -398,7 +419,7 @@ export default class DeezerUtil {
     static showItem(data, item, view) {
         history.pushState(data, item.type, `/${item.type}/${item.id}`);
         DeezerUtil.hideMainPlaylists();
-        DeezerUtil.createPlaylist(data, true);
+        DeezerUtil.createPlaylist(data, true, view);
         DeezerUtil.createHeader(item);
         console.log(item);
         if (item.albums) {
@@ -429,7 +450,6 @@ export default class DeezerUtil {
             if (!view.tracks) {
                 view.tracks = tracks;
             }
-
             if ($(e.currentTarget).attr("search")
                 && view.currentPlayList !== tracks) {
                 view.createPlayer(tracks, {title: playlistTitle, picture: tracks[0].picture});
@@ -441,6 +461,14 @@ export default class DeezerUtil {
             } else {
                 view.handleAudio();
             }
+        });
+
+    }
+
+    static bindLike(view) {
+        $('.btnLike').unbind('click').click((e) => {
+            let likeId = $(e.currentTarget).attr('trackId');
+            view.addLike(likeId);
         });
 
     }

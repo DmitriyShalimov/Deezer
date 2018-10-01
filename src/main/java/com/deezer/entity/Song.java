@@ -9,7 +9,8 @@ public class Song implements SearchResult{
     private Album album;
     private String url;
     private String picture;
-    private int likeCount;
+    private boolean isLiked;
+
 
     public int getId() {
         return id;
@@ -59,12 +60,12 @@ public class Song implements SearchResult{
         this.picture = picture;
     }
 
-    public int getLikeCount() {
-        return likeCount;
+    public boolean isLiked() {
+        return isLiked;
     }
 
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class Song implements SearchResult{
         if (o == null || getClass() != o.getClass()) return false;
         Song song = (Song) o;
         return id == song.id &&
-                likeCount == song.likeCount &&
+                isLiked == song.isLiked &&
                 Objects.equals(title, song.title) &&
                 Objects.equals(artist, song.artist) &&
                 Objects.equals(album, song.album) &&
@@ -84,7 +85,7 @@ public class Song implements SearchResult{
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, artist, album, url, picture, likeCount);
+        return Objects.hash(id, title, artist, album, url, picture, isLiked);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class Song implements SearchResult{
                 ", album=" + album +
                 ", url='" + url + '\'' +
                 ", picture='" + picture + '\'' +
-                ", likeCount=" + likeCount +
+                ", isLiked=" + isLiked +
                 '}';
     }
 }

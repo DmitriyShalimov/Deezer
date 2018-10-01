@@ -868,6 +868,26 @@ p.pl-track__title {
     justify-content: center;
 }
 
+
+.main-dislike{
+    display: none;
+}
+
+.dislike{
+    display: none;
+}
+
+.main-like{
+    display: none;
+}
+
+.like{
+    display: none;
+}
+.active-like-state{
+    display: inline;
+}
+
 /*-----------------------
     Playlist Player
 ------------------------*/

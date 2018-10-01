@@ -9,7 +9,7 @@ export default class PlaylistView {
         $(this.newPlaylistModal).on('open.zf.reveal', () =>
             $(this.playlistMenu).foundation('close'));
         $('.new-playlist__create').click(() => this.handleCreateNewPlaylist());
-        $('.music-library').click(() => this.showUserPlaylists());
+        $('.music-library').click(() => this.handlePlaylists());
     }
 
     handleCreateNewPlaylist() {
@@ -31,6 +31,14 @@ export default class PlaylistView {
 
     closePlaylistMenu() {
         $(this.playlistMenu).foundation('close');
+    }
+
+    handlePlaylists(){
+        if(this.playlists.filter(playlist => playlist.title ==='Favourites').length > 0) {
+            this.showUserPlaylists(this.playlists)
+        }else {
+            $(this).trigger('refresh', this.showUserPlaylists.bind(this))
+        }
     }
 
     showPlaylistsNames(data) {
@@ -59,7 +67,7 @@ export default class PlaylistView {
                 <ul class="tabs" data-active-collapse="true" data-tabs id="collapsing-tabs">
                     <li class="tabs-title is-active"><a href="#privatePl" aria-selected="true">Private</a></li>
                     <li class="tabs-title"><a href="#publicPl">Public</a></li>
-                    <li class="tabs-title"><a href="#favouritesPl">Favourites</a></li>
+                    <li class="tabs-title"><a href="#favouritesPl">Playlists you liked</a></li>
                 </ul>
             <div class="tabs-content artist-page" data-tabs-content="collapsing-tabs">
                 <div class=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="privatePl">
@@ -84,6 +92,7 @@ export default class PlaylistView {
         if (publicPlaylists.length > 0) {
             DeezerUtil.showPlaylists('publicPl', publicPlaylists, this.mainView);
         }
+        this.showPlaylistsNames(playlists);
     }
 
 

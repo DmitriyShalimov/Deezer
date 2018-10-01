@@ -63,3 +63,24 @@ create table song_artist (
   ,song   int references song (id)
   ,artist int references artist (id)
 );
+
+CREATE OR REPLACE FUNCTION like_song(userId int, songId int)
+  RETURNS void AS $$
+DECLARE
+  likeCount int;
+  favouritesPl int;
+BEGIN
+  SELECT COUNT(*) into likeCount FROM song_user WHERE song = songId AND "user"= userId ;
+  select id into favouritesPl from playlist where "user" = userId and title = 'Favourites';
+  if likeCount = 0 then
+    INSERT INTO song_user (song, "user") VALUES (songId,userId);
+    if favouritesPl is null then
+      insert into playlist(title, "access", "user", picture) values('Favourites', 'private', userId, '/assets/img/cat.png') returning id into favouritesPl;
+    end if;
+    INSERT INTO playlist_song (playlist,song) VALUES(favouritesPl, songId);
+  else
+    DELETE from song_user where song = songId and "user"= userId;
+    DELETE FROM playlist_song where playlist = favouritesPl and song = songId;
+  end if;
+END;
+$$ LANGUAGE plpgsql;

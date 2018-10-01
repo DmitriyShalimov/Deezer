@@ -6,6 +6,8 @@ export default class PlaylistController {
         this.getUserPlaylists(this.view.showPlaylistsNames.bind(this.view));
         $(this.view).on('new-playlist', (e, data) => this.createNewPlaylist(data));
         $(this.view).on('add-song', (e, data) => this.addSongToPlaylist(data));
+        $(this.view).on('refresh', (e, success) => this.getUserPlaylists(success));
+
     }
 
     createNewPlaylist(data) {

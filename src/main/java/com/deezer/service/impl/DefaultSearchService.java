@@ -15,7 +15,7 @@ public class DefaultSearchService implements SearchService {
     }
 
     @Override
-    public List<SearchResult> getSearchResults() {
-        return searchDao.getSearchResults();
+    public List<SearchResult> getSearchResults(int userId) {
+        return searchDao.getSearchResults(userId);
     }
 }

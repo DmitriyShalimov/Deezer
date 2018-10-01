@@ -18,38 +18,38 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
-    public Song getSong(int id) {
-        return songDao.getSong(id);
+    public Song getSong(int id, int userId) {
+        return songDao.getSong(id, userId);
     }
 
     @Override
-    public List<Song> getSongsByArtist(int artistId) {
-        return songDao.getSongsByArtist(artistId);
+    public List<Song> getSongsByArtist(int artistId, int userId) {
+        return songDao.getSongsByArtist(artistId, userId);
     }
 
     @Override
-    public List<Song> getSongsByAlbum(int albumId) {
-        return songDao.getSongsByAlbum(albumId);
+    public List<Song> getSongsByAlbum(int albumId, int userId) {
+        return songDao.getSongsByAlbum(albumId, userId);
     }
 
     @Override
-    public List<Song> getSongsByPlayList(int playListId) {
-        return songDao.getSongsByPlayList(playListId);
+    public List<Song> getSongsByPlayList(int playListId, int userId) {
+        return songDao.getSongsByPlayList(playListId, userId);
     }
 
     @Override
-    public List<Song> getSongsByMask(String mask) {
-        return songDao.getSongsByMask(mask);
+    public List<Song> getSongsByMask(String mask, int userId) {
+        return songDao.getSongsByMask(mask, userId);
     }
 
     @Override
-    public List<Song> getRandomSongs() {
-        return songDao.getRandomSongs();
+    public List<Song> getRandomSongs(int userId) {
+        return songDao.getRandomSongs(userId);
     }
 
     @Override
-    public boolean likeSong(int songId, int userId) {
-        return songDao.likeSong(songId, userId);
+    public void likeSong(int songId, int userId) {
+        songDao.likeSong(songId, userId);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
-    public List<Song> getSongsByGenre(int genreId) {
-        return songDao.getSongsByGenre(genreId);
+    public List<Song> getSongsByGenre(int genreId, int userId) {
+        return songDao.getSongsByGenre(genreId, userId);
     }
 }

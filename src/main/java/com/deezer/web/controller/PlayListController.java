@@ -30,36 +30,36 @@ public class PlayListController {
 
     @GetMapping(value = "/album/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByAlbum(@PathVariable Integer id) {
+    List<Song> getSongsByAlbum(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of album {}", id);
-        List<Song> songsByAlbum = songService.getSongsByAlbum(id);
+        List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of album {} are {}", id, songsByAlbum);
         return songsByAlbum;
     }
 
     @GetMapping(value = "/genre/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByGenre(@PathVariable Integer id) {
+    List<Song> getSongsByGenre(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of genre {}", id);
-        List<Song> songsByGenre = songService.getSongsByGenre(id);
+        List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of genre {} are {}", id, songsByGenre);
         return songsByGenre;
     }
 
     @GetMapping(value = "/artist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByArtist(@PathVariable Integer id) {
+    List<Song> getSongsByArtist(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of artist {}", id);
-        List<Song> songs = songService.getSongsByArtist(id);
+        List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of artist {} are {}", id, songs);
         return songs;
     }
 
     @GetMapping(value = "/playlist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByPlaylist(@PathVariable Integer id) {
+    List<Song> getSongsByPlaylist(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs from playlist {}", id);
-        List<Song> songs = songService.getSongsByPlayList(id);
+        List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs from playlist {} are {}", id, songs);
         return songs;
     }

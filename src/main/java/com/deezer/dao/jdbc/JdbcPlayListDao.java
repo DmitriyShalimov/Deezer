@@ -7,6 +7,7 @@ import com.deezer.entity.PlayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,12 +17,13 @@ import java.util.List;
 
 @Repository
 public class JdbcPlayListDao implements PlayListDao {
-    private static final int TOP_PLAYLIST_COUNT = 10;
-    private static final String USER_ID="userId";
-    private static final String PLAYLIST_ID="playlistId";
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final int TOP_PLAYLIST_COUNT = 10;
+    private static final String USER_ID = "userId";
+    private static final String PLAYLIST_ID = "playlistId";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final PlayListRowMapper PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
+    private static final RowMapper<PlayList> PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
+
     private static final String GET_PLAYLIST_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId;";
     private static final String GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId AND \"user\"=:userId ;";
     private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
@@ -102,6 +104,7 @@ public class JdbcPlayListDao implements PlayListDao {
     }
 
     @Override
+    @Transactional
     public boolean likePlaylist(int playlistId, int userId) {
         logger.info("Add 'like' to playlist with id {} by user with id {}", playlistId, userId);
         MapSqlParameterSource params = new MapSqlParameterSource();
