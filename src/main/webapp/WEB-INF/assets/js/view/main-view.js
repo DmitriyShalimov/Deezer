@@ -201,6 +201,7 @@ export default class MainView {
         if (selectedItem.type === 'artist') {
             selectedItem.albumsRequired = true;
         }
+        selectedItem.pushState=true;
         $(this).trigger(selectedItem.type, {item: selectedItem, cb: DeezerUtil.showItem});
     }
 
