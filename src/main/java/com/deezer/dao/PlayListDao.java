@@ -16,8 +16,9 @@ public interface PlayListDao {
 
     boolean addSongToPlaylist(int playlistId, int songId);
 
-    List<PlayList> getTopPlaylists();
+    List<PlayList> getTopPlaylists(int userId);
 
-    PlayList getById(Integer id);
+    PlayList getById(Integer id, int userId);
 
+    List<PlayList> getLikedPlayLists(int userId);
 }

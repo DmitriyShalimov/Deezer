@@ -1,4 +1,5 @@
 import DeezerUtil from "../deezer-util.js";
+
 const URI_PREFIX = '/api/v1';
 export default class SearchController {
     constructor(view) {
@@ -51,9 +52,13 @@ export default class SearchController {
     }
 
     searchByType(data) {
+        let url = `${URI_PREFIX}/${data.type}/${data.id}`;
+        if (data.type !== 'song') {
+            url += '/songs'
+        }
         $.ajax({
             type: "GET",
-            url: `${URI_PREFIX}/${data.type}/${data.id}`,
+            url: url,
             headers: {
                 Accept: 'application/json'
             },

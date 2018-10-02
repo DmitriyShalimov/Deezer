@@ -9,8 +9,7 @@ export default class DeezerUtil {
         $(main).css('margin-bottom', contentPlacementBottom);
     }
 
-    static createMiniPlaylist(tracks, playlist) {
-        console.log(playlist);
+    static createMiniPlaylist(tracks, playlist, view) {
         $('.playlist__section').empty().prepend(`
             <div class="pl-img">   
                 <img src=${playlist.picture}>
@@ -51,13 +50,18 @@ export default class DeezerUtil {
                             </div>
                                                
                     </td>
-                            <td class="btnLike" trackid="${track.id}">like</td>
+                            <td class="btnLike" trackid="${track.id}">
+                                <i class="far fa-heart top like"></i>
+                                <i class="fas fa-heart top dislike"></i>
+                            </td>
                         </tr>`;
             $("#playlistBody").append(trHtml);
+            DeezerUtil.toggleLike(track);
+            DeezerUtil.bindLike(view);
         });
     }
 
-    static createPlaylist(tracks, search) {
+    static createPlaylist(tracks, search, view) {
         const body = $('#songsBody');
         $(body).empty();
         if (tracks.length === 0) return;
@@ -79,12 +83,29 @@ export default class DeezerUtil {
                             </div>
                                                
                     </td>
-                            <td>like</td>
+                             <td class="btnLike" trackid="${track.id}">
+                                <i class="far fa-heart top like"></i>
+                                <i class="fas fa-heart top dislike"></i>
+                            </td>
                         </tr>`;
             $(body).append(trHtml);
             if (search) $("td.btnPlay").attr("search", search);
+            DeezerUtil.toggleLike(track);
+            DeezerUtil.bindLike(view);
         });
         $('.songs-playlist').show();
+    }
+
+    static toggleLike(track) {
+
+        let btnLike = $(`.btnLike[trackid=${track.id}]`);
+        if (track.liked) {
+            $(btnLike).find('.dislike').addClass('active-like-state');
+            $(btnLike).find('.like').removeClass('active-like-state');
+        } else {
+            $(btnLike).find('.like').addClass('active-like-state');
+            $(btnLike).find('.dislike').removeClass('active-like-state');
+        }
     }
 
     static getArtistsHtml(artists) {
@@ -140,7 +161,6 @@ export default class DeezerUtil {
                              alt="genre logo">
                         <div class="card-playlist-hover-icons">
                             <button value="${genre.id}"><i class="fas fa-play"></i></button>
-
                         </div>
                         <div class="card-playlist-hover-details">
                             <p class="card-playlist-hover-title">${genre.title}</p>
@@ -152,7 +172,7 @@ export default class DeezerUtil {
         return html;
     }
 
-    static getTopPlaylistsHtml(playlists) {
+    static getTopPlaylistsHtml(playlists, like) {
         let html = '';
         $(playlists).each((i) => {
             let playlist = playlists[i];
@@ -165,6 +185,10 @@ export default class DeezerUtil {
                         </div>
                         <div class="card-playlist-hover-details">
                             <p class="card-playlist-hover-title">${playlist.title}</p>
+                            ${like ? `<div class="card-playlist-like" playlist="${playlist.id}">
+                                <i class="far fa-heart top pl-like ${playlist.liked ? '' : 'active-like-state'}"></i>
+                                <i class="fas fa-heart top pl-dislike ${playlist.liked ? 'active-like-state' : ''}"></i>
+                            </div>` : ''}
                         </div>
                     </div>
                 </div>`;
@@ -304,7 +328,7 @@ export default class DeezerUtil {
         DeezerUtil.bindCard('album', view);
     }
 
-    static bindCard(item, view){
+    static bindCard(item, view) {
         let albumCards = $(`#${item} .cell`);
         $(albumCards).each(i => {
             let albumCard = albumCards[i];
@@ -327,7 +351,7 @@ export default class DeezerUtil {
         let playlistsPlaylist = $('#topPlaylist');
         $('.top-public-playlists').show();
         $(playlistsPlaylist).empty();
-        let html = DeezerUtil.getTopPlaylistsHtml(playlists);
+        let html = DeezerUtil.getTopPlaylistsHtml(playlists, true);
         $(playlistsPlaylist).append(html);
         let playlist = $("#topPlaylist button");
         let playlistPicture = $("#topPlaylist img");
@@ -342,6 +366,15 @@ export default class DeezerUtil {
                     view.handlePlaylistChange({id, title, picture})
                 }
             )
+        });
+        let playlistLike = $('.card-playlist-like');
+        console.log(playlistLike);
+        $(playlistLike).each(i => {
+            $(playlistLike[i]).unbind('click').click((e) => {
+                e.stopPropagation();
+                console.log(view);
+                view.handlePlaylistLike($(playlistLike[i]).attr('playlist'));
+            })
         });
         let playlistCards = $("#topPlaylist .cell");
         $(playlistCards).each(i => {
@@ -359,7 +392,7 @@ export default class DeezerUtil {
         });
     }
 
-    static showPlaylists(itemId, playlists, view){
+    static showPlaylists(itemId, playlists, view) {
         if (playlists.length === 0) return;
         let playlistsPlaylist = $(`#${itemId}`);
         $(playlistsPlaylist).empty();
@@ -379,10 +412,19 @@ export default class DeezerUtil {
                 }
             )
         });
+        let playlistLike = $('.card-playlist-like');
+        console.log(playlistLike);
+        $(playlistLike).each(i => {
+            $(playlistLike[i]).click((e) => {
+                e.stopPropagation();
+                view.handleLike($(playlistLike[i]).attr('value'));
+            })
+        });
         let playlistCards = $(`#${itemId} .cell`);
         $(playlistCards).each(i => {
             let playlistCard = playlistCards[i];
             $(playlistCard).click((e) => {
+                e.stopPropagation();
                 let selectedItem = {
                     id: $(playlistCard).attr('value'),
                     type: 'playlist',
@@ -393,12 +435,13 @@ export default class DeezerUtil {
                 view.handleShowItem(selectedItem);
             });
         });
+
     }
 
     static showItem(data, item, view) {
         history.pushState(data, item.type, `/${item.type}/${item.id}`);
         DeezerUtil.hideMainPlaylists();
-        DeezerUtil.createPlaylist(data, true);
+        DeezerUtil.createPlaylist(data, true, view);
         DeezerUtil.createHeader(item);
         console.log(item);
         if (item.albums) {
@@ -429,7 +472,6 @@ export default class DeezerUtil {
             if (!view.tracks) {
                 view.tracks = tracks;
             }
-
             if ($(e.currentTarget).attr("search")
                 && view.currentPlayList !== tracks) {
                 view.createPlayer(tracks, {title: playlistTitle, picture: tracks[0].picture});
@@ -441,6 +483,14 @@ export default class DeezerUtil {
             } else {
                 view.handleAudio();
             }
+        });
+
+    }
+
+    static bindLike(view) {
+        $('.btnLike').unbind('click').click((e) => {
+            let likeId = $(e.currentTarget).attr('trackId');
+            view.addLike(likeId);
         });
 
     }

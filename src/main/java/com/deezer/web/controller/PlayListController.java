@@ -1,13 +1,13 @@
 package com.deezer.web.controller;
 
-import com.deezer.entity.*;
-import com.deezer.service.*;
-
-
-import org.omg.PortableInterceptor.INACTIVE;
+import com.deezer.entity.Access;
+import com.deezer.entity.PlayList;
+import com.deezer.entity.Song;
+import com.deezer.entity.User;
+import com.deezer.service.PlayListService;
+import com.deezer.service.SongService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -30,36 +30,36 @@ public class PlayListController {
 
     @GetMapping(value = "/album/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByAlbum(@PathVariable Integer id) {
+    List<Song> getSongsByAlbum(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of album {}", id);
-        List<Song> songsByAlbum = songService.getSongsByAlbum(id);
+        List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of album {} are {}", id, songsByAlbum);
         return songsByAlbum;
     }
 
     @GetMapping(value = "/genre/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByGenre(@PathVariable Integer id) {
+    List<Song> getSongsByGenre(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of genre {}", id);
-        List<Song> songsByGenre = songService.getSongsByGenre(id);
+        List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of genre {} are {}", id, songsByGenre);
         return songsByGenre;
     }
 
     @GetMapping(value = "/artist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByArtist(@PathVariable Integer id) {
+    List<Song> getSongsByArtist(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs of artist {}", id);
-        List<Song> songs = songService.getSongsByArtist(id);
+        List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of artist {} are {}", id, songs);
         return songs;
     }
 
     @GetMapping(value = "/playlist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByPlaylist(@PathVariable Integer id) {
+    List<Song> getSongsByPlaylist(@PathVariable Integer id, HttpSession session) {
         logger.info("Retrieving songs from playlist {}", id);
-        List<Song> songs = songService.getSongsByPlayList(id);
+        List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs from playlist {} are {}", id, songs);
         return songs;
     }
@@ -79,9 +79,9 @@ public class PlayListController {
 
     @GetMapping(value = "/playlist/{id}")
     @ResponseBody
-    public PlayList getPlaylistById(@PathVariable Integer id) {
+    public PlayList getPlaylistById(@PathVariable Integer id, HttpSession session) {
         logger.info("Getting playlist {} metadata", id);
-        return playListService.getById(id);
+        return playListService.getById(id, Util.getUserIdFromHttpSession(session));
     }
 
     @GetMapping(value = "/playlist/user")
@@ -105,10 +105,10 @@ public class PlayListController {
         return RESPONSE_ERROR;
     }
 
-    @PostMapping(value = "/playlist/like")
+    @PostMapping(value = "/playlist/{id}/like")
     @ResponseBody
-    public String likeSong(@RequestParam String playlistId, HttpSession session) {
-        boolean isLiked = playListService.likePlaylist(Integer.parseInt(playlistId), ((User) session.getAttribute("loggedUser")).getId());
+    public String likePlaylist(@PathVariable int id, HttpSession session) {
+        boolean isLiked = playListService.likePlaylist(id, Util.getUserIdFromHttpSession(session));
         if (isLiked) {
             return RESPONSE_SUCCESS;
         }
@@ -123,10 +123,20 @@ public class PlayListController {
 
     @GetMapping(value = "/top-playlists")
     @ResponseBody
-    public List<PlayList> getTopPlaylists() {
+    public List<PlayList> getTopPlaylists(HttpSession session) {
         logger.info("Start retrieving top playlists");
-        List<PlayList> playLists = playListService.getTopPlaylists();
+        List<PlayList> playLists = playListService.getTopPlaylists(Util.getUserIdFromHttpSession(session));
         logger.info("Top playlists are {}", playLists);
+        return playLists;
+    }
+
+    @GetMapping(value = "/playlists/liked")
+    @ResponseBody
+    public List<PlayList> getLikedPlaylists(HttpSession session) {
+        int userId = Util.getUserIdFromHttpSession(session);
+        logger.info("Start retrieving playlists liked by user {}", userId);
+        List<PlayList> playLists = playListService.getLikedPlaylists(userId);
+        logger.info("User {} likes {} playlists",userId, playLists);
         return playLists;
     }
 }

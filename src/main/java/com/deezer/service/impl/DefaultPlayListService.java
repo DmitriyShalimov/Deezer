@@ -45,13 +45,18 @@ public class DefaultPlayListService implements PlayListService {
     }
 
     @Override
-    public List<PlayList> getTopPlaylists() {
-        return playListDao.getTopPlaylists();
+    public List<PlayList> getTopPlaylists(int userId) {
+        return playListDao.getTopPlaylists(userId);
     }
 
     @Override
-    public PlayList getById(Integer id) {
-        return playListDao.getById(id);
+    public PlayList getById(Integer id, int userId) {
+        return playListDao.getById(id, userId);
 
+    }
+
+    @Override
+    public List<PlayList> getLikedPlaylists(int userId) {
+        return playListDao.getLikedPlayLists(userId);
     }
 }

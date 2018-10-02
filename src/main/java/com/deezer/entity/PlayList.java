@@ -6,18 +6,10 @@ import java.util.Objects;
 public class PlayList {
     private int id;
     private String title;
-    private int likeCount;
     private Access access;
     private List<Song> songs;
     private String picture;
-
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
+    private boolean liked;
 
     public Access getAccess() {
         return access;
@@ -59,13 +51,21 @@ public class PlayList {
         this.picture = picture;
     }
 
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlayList playList = (PlayList) o;
         return id == playList.id &&
-                likeCount == playList.likeCount &&
+                liked == playList.liked &&
                 Objects.equals(title, playList.title) &&
                 access == playList.access &&
                 Objects.equals(songs, playList.songs) &&
@@ -75,7 +75,7 @@ public class PlayList {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, likeCount, access, songs, picture);
+        return Objects.hash(id, title, access, songs, picture, liked);
     }
 
     @Override
@@ -83,10 +83,10 @@ public class PlayList {
         return "PlayList{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", likeCount=" + likeCount +
                 ", access=" + access +
                 ", songs=" + songs +
                 ", picture='" + picture + '\'' +
+                ", liked=" + liked +
                 '}';
     }
 }

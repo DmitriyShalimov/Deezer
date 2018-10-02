@@ -10,7 +10,7 @@ export default class SearchView {
     }
 
     checkPlaylist() {
-        if (this.playlistView.currentPlayList !== this.tracks) {
+        if (this.tracks && this.playlistView.currentPlayList !== this.tracks) {
             this.playlistView.createPlayer(this.tracks, {picture: this.tracks[0].picture, title: "Search"});
         }
     }
@@ -99,6 +99,7 @@ export default class SearchView {
         if (!Array.isArray(result)) {
             result = [result];
         }
+        console.log(result);
         this.playlistView.createPlayer(result, playlist);
     }
 
@@ -110,9 +111,10 @@ export default class SearchView {
     }
 
     showSongs(tracks, search) {
-        DeezerUtil.createPlaylist(tracks, search);
+        DeezerUtil.createPlaylist(tracks, search, this.playlistView);
         if (tracks.length !== 0) {
             this.tracks = tracks;
+            this.playlistView.searchTrackList = tracks;
             DeezerUtil.bindPlay(this.playlistView, this.tracks, 'Search');
         }
     }

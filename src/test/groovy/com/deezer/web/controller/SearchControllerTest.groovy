@@ -1,6 +1,7 @@
 package com.deezer.web.controller
 
 import com.deezer.UnitTest
+import com.deezer.entity.User
 import com.deezer.service.SearchService
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +36,8 @@ class SearchControllerTest {
 
     @Test
     void getSearchResults() {
-        mockMvc.perform(get("/search"))
+        def user = new User(id:1)
+        mockMvc.perform(get("/search").sessionAttr('loggedUser', user))
                 .andExpect(status().isOk())
     }
 }

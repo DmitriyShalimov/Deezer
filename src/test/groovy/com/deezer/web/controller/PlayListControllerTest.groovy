@@ -2,6 +2,7 @@ package com.deezer.web.controller
 
 import com.deezer.UnitTest
 import com.deezer.entity.Song
+import com.deezer.entity.User
 import com.deezer.service.SongService
 import org.junit.Before
 import org.junit.Test
@@ -36,16 +37,18 @@ class PlayListControllerTest {
         song = new Song(title: 'album')
         List<Song> songs = new ArrayList<>()
         songs.add(song)
-        Mockito.when(songService.getSongsByAlbum(Mockito.anyInt())).thenReturn(songs)
-        Mockito.when(songService.getSongsByGenre(Mockito.anyInt())).thenReturn(songs)
-        Mockito.when(songService.getSongsByArtist(Mockito.anyInt())).thenReturn(songs)
+        Mockito.when(songService.getSongsByAlbum(Mockito.anyInt(), Mockito.anyInt())).thenReturn(songs)
+        Mockito.when(songService.getSongsByGenre(Mockito.anyInt(), Mockito.anyInt())).thenReturn(songs)
+        Mockito.when(songService.getSongsByArtist(Mockito.anyInt(), Mockito.anyInt())).thenReturn(songs)
         MockitoAnnotations.initMocks(this)
         this.mockMvc = MockMvcBuilders.standaloneSetup(playListController).build()
     }
 
     @Test
     void getSongsByAlbum() {
-        def result = mockMvc.perform(get("/album/{id}/songs", 1))
+        def user = new User(id:1)
+        def result = mockMvc.perform(get("/album/{id}/songs", 1)
+                .sessionAttr('loggedUser', user))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))
@@ -53,7 +56,9 @@ class PlayListControllerTest {
 
     @Test
     void getSongsByGenre() {
-        def result = mockMvc.perform(get("/genre/{id}/songs", 1))
+        def user = new User(id:1)
+        def result = mockMvc.perform(get("/genre/{id}/songs", 1)
+                .sessionAttr('loggedUser', user))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))
@@ -61,7 +66,9 @@ class PlayListControllerTest {
 
     @Test
     void getSongsByArtist() {
-        def result = mockMvc.perform(get("/artist/{id}/songs", 1))
+        def user = new User(id:1)
+        def result = mockMvc.perform(get("/artist/{id}/songs", 1)
+                .sessionAttr('loggedUser', user))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(song.title))

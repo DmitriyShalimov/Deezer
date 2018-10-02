@@ -1,12 +1,14 @@
 package com.deezer.web.controller;
 
 import com.deezer.entity.Song;
-import com.deezer.entity.User;
 import com.deezer.service.SongService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,30 +24,28 @@ public class SongController {
 
     @GetMapping(value = "/song/{id}")
     @ResponseBody
-    public Song getSong(@PathVariable Integer id) {
-        return songService.getSong(id);
+    public Song getSong(@PathVariable Integer id, HttpSession session){
+        int userId = Util.getUserIdFromHttpSession(session);
+        return songService.getSong(id, userId);
     }
 
     @GetMapping(value = "/song/search/{mask}")
     @ResponseBody
-    List<Song> getSongsByMask(@PathVariable String mask) {
-        return songService.getSongsByMask(mask);
+    List<Song> getSongsByMask(@PathVariable String mask, HttpSession session) {
+        int userId = Util.getUserIdFromHttpSession(session);
+        return songService.getSongsByMask(mask, userId);
     }
 
     @GetMapping(value = "/random")
     @ResponseBody
-    List<Song> getRandomSongs() {
-        return songService.getRandomSongs();
+    List<Song> getRandomSongs(HttpSession session) {
+        return songService.getRandomSongs(Util.getUserIdFromHttpSession(session));
     }
 
-    @PostMapping(value = "/song/like")
+    @PostMapping(value = "/song/{id}/like")
     @ResponseBody
-    public String likeSong(@RequestParam String songId, HttpSession session) {
-        boolean isLiked =songService.likeSong(Integer.parseInt(songId), ((User) session.getAttribute("loggedUser")).getId());
-        if (isLiked) {
-            return "success";
-        }
-        return "error";
+    public void likeSong(@PathVariable Integer id, HttpSession session) {
+        songService.likeSong(id, Util.getUserIdFromHttpSession(session));
     }
 
     @GetMapping(value = "/song/like/{id}")
