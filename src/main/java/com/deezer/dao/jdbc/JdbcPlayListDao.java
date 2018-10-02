@@ -24,18 +24,17 @@ public class JdbcPlayListDao implements PlayListDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final RowMapper<PlayList> PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
 
+    private static final String SELECT_FROM_PLAYLIST_CLAUSE = "SELECT pl.id, pl.title," +
+            " pl.picture, pl.access, pu.id as liked " +
+            "FROM playlist AS pl ";
     private static final String GET_PLAYLIST_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId;";
     private static final String GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId AND \"user\"=:userId ;";
     private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
     private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
-    private static final String GET_TOP_PLAYLIST_SQL = "SELECT pl.id, pl.title," +
-            " pl.picture, pl.access, pu.id as liked " +
-            "FROM playlist AS pl " +
+    private static final String GET_TOP_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
             "left join playlist_user pu on pu.user=:userId and pu.playlist=pl.id " +
             "WHERE pl.access='public' limit :limit;";
-    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = "SELECT pl.id, pl.title,pl.picture," +
-            " pl.access, pu.id as liked  " +
-            "FROM playlist AS pl " +
+    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
             "left join playlist_user pu on pu.user=:userId and pu.playlist=pl.id " +
             "WHERE pl.user=:userId";
     private static final String ADD_NEW_USER_PLAYLIST_SQL = "insert into playlist(title, \"access\", \"user\") values(:title, :access, :userId)";
@@ -49,14 +48,10 @@ public class JdbcPlayListDao implements PlayListDao {
             "join playlist_song ps on ps.song = s.id " +
             "where ps.playlist = (select id from current_pl))" +
             " where id = (select id from current_pl);";
-    private static final String GET_PLAYLIST_BY_ID = "SELECT pl.id, pl.title, pl.picture, " +
-            "pl.access,pu.id as liked " +
-            "FROM playlist AS pl " +
+    private static final String GET_PLAYLIST_BY_ID = SELECT_FROM_PLAYLIST_CLAUSE +
             "left join playlist_user pu on pu.user=:userId and pu.playlist=pl.id " +
             "WHERE pl.id = :id";
-    private static final String GET_LIKED_PLAYLIST_SQL = "SELECT pl.id, pl.title," +
-            " pl.picture, pl.access, pu.id as liked " +
-            "FROM playlist AS pl " +
+    private static final String GET_LIKED_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
             "join playlist_user pu on pu.playlist=pl.id " +
             "WHERE pu.user=:userId";
 
@@ -100,7 +95,7 @@ public class JdbcPlayListDao implements PlayListDao {
         logger.info("start receiving  top {} playLists ", TOP_PLAYLIST_COUNT);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("limit", TOP_PLAYLIST_COUNT);
-        params.addValue("userId", userId);
+        params.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(GET_TOP_PLAYLIST_SQL, params, PLAYLIST_ROW_MAPPER);
     }
 
@@ -109,7 +104,7 @@ public class JdbcPlayListDao implements PlayListDao {
         logger.info("start receiving  playlist {} ", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("userId", userId);
+        params.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.queryForObject(GET_PLAYLIST_BY_ID, params, PLAYLIST_ROW_MAPPER);
     }
 
@@ -117,7 +112,7 @@ public class JdbcPlayListDao implements PlayListDao {
     public List<PlayList> getLikedPlayLists(int userId) {
         logger.info("start receiving  playLists liked by user", userId);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("userId", userId);
+        params.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(GET_LIKED_PLAYLIST_SQL, params, PLAYLIST_ROW_MAPPER);
     }
 

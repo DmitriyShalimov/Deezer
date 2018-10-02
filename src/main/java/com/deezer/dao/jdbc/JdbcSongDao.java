@@ -21,71 +21,45 @@ public class JdbcSongDao implements SongDao {
     private static final String USER_ID_KEY = "userId";
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
-    private static final String GET_SONG_BY_ID = "select s.id ,s.title, " +
+    private static final String SELECT_CLAUSE = "select s.id ,s.title, " +
             "s.track_url,s.picture_link, " +
             "al.title as album_title, art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+            ", su.id as liked ";
+    private static final String LEFT_JOIN_USER_SONG_CLAUSE = "left join song_user su on su.user = :userId  and su.song = s.id ";
+    private static final String FROM_SONG_ALBUM_ARTIST_CLAUSE = "from song s join album al on s.album = al.id " +
+            "join artist art on al.artist = art.id ";
+    private static final String GET_SONG_BY_ID = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "WHERE s.id = :id";
 
-    private static final String GET_ALL_SONGS_BY_GENRE_SQL = "select s.id ,s.title , " +
-            "s.track_url,s.picture_link, " +
-            "al.title as album_title, art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
+    private static final String GET_ALL_SONGS_BY_GENRE_SQL = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
             "join song_genre sg on sg.song = s.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "WHERE sg.genre=:genreId";
-    private static final String GET_ALL_SONGS_BY_ARTIST_SQL = "select s.id " +
-            ",s.title, s.track_url" +
-            ",s.picture_link, al.title as album_title" +
-            ",art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
-            "left join song_user su on su.user = :userId and su.song = s.id " +
+    private static final String GET_ALL_SONGS_BY_ARTIST_SQL = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "WHERE art.id=:artistId";
-    private static final String GET_ALL_SONGS_BY_ALBUM_SQL = "select s.id " +
-            ",s.title, s.track_url" +
-            ",s.picture_link, al.title as album_title" +
-            ",art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+    private static final String GET_ALL_SONGS_BY_ALBUM_SQL = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "WHERE al.id=:albumId";
-    private static final String GET_ALL_SONGS_BY_MASK_SQL = "select s.id " +
-            ",s.title, s.track_url," +
-            "s.picture_link, al.title as album_title, " +
-            "art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+    private static final String GET_ALL_SONGS_BY_MASK_SQL = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "WHERE lower(s.title) like lower(:mask);";
 
-    private static final String GET_RANDOM_SONGS = "select s.id," +
-            "s.title, s.track_url," +
-            "s.picture_link, al.title as album_title," +
-            "art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+    private static final String GET_RANDOM_SONGS = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "order by random() limit 42";
 
-    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL = "select s.id ," +
-            "s.title, s.track_url," +
-            "s.picture_link, al.title as album_title," +
-            "art.name as artist_name " +
-            ", su.id as liked " +
-            "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id " +
+    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL = SELECT_CLAUSE +
+            FROM_SONG_ALBUM_ARTIST_CLAUSE +
             "join playlist_song pls on pls.song = s.id " +
-            "left join song_user su on su.user = :userId  and su.song = s.id " +
+            LEFT_JOIN_USER_SONG_CLAUSE +
             "where pls.playlist =:playlistId";
     private static final String GET_SONG_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM song_user WHERE song =:songId;";
 
@@ -157,7 +131,7 @@ public class JdbcSongDao implements SongDao {
         logger.info("start receiving random songs");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_RANDOM_SONGS, params,SONG_ROW_MAPPER);
+        return namedParameterJdbcTemplate.query(GET_RANDOM_SONGS, params, SONG_ROW_MAPPER);
     }
 
     @Override
