@@ -368,7 +368,6 @@ export default class DeezerUtil {
             )
         });
         let playlistLike = $('.card-playlist-like');
-        console.log(playlistLike);
         $(playlistLike).each(i => {
             $(playlistLike[i]).unbind('click').click((e) => {
                 e.stopPropagation();
@@ -413,7 +412,6 @@ export default class DeezerUtil {
             )
         });
         let playlistLike = $('.card-playlist-like');
-        console.log(playlistLike);
         $(playlistLike).each(i => {
             $(playlistLike[i]).click((e) => {
                 e.stopPropagation();
@@ -439,7 +437,6 @@ export default class DeezerUtil {
     }
 
     static showItem(data, item, view) {
-        history.pushState(data, item.type, `/${item.type}/${item.id}`);
         DeezerUtil.hideMainPlaylists();
         DeezerUtil.createPlaylist(data, true, view);
         DeezerUtil.createHeader(item);

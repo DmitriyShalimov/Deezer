@@ -12,9 +12,8 @@ export default class MainController {
         $(this.playlistView).on('like', (event, id) => this.addLikeToSong(id));
         $(this.playlistView).on('logout', () => this.logout());
         $(this.playlistView).on('load', () => {
-            this.loadGenres();
-            this.loadTopPlaylists();
-            history.pushState('', 'Deezer', '/')
+            this.load();
+
         });
         $(this.playlistView).on('random', () => this.getRandomSongs());
         $(this.playlistView).on('like-pl', (e, id) => this.likePlaylist(id));
@@ -24,25 +23,26 @@ export default class MainController {
         $.get('/logout', null, $(location).attr('pathname', '/login'));
     }
 
-    loadGenres() {
-        $.ajax({
+    load() {
+        let state = [];
+        let genres = $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/genres`,
             success: data => {
+                state.push({key: 'genres', value: data});
                 DeezerUtil.showGenres(data, this.playlistView);
             }
         });
-    }
-
-    loadTopPlaylists() {
-        console.log('load');
-        $.ajax({
+        let playlists = $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/top-playlists`,
             success: data => {
+                state.push({key: 'top-playlists', value: data});
                 DeezerUtil.showTopPlaylists(data, this.playlistView);
             }
         });
+
+        $.when(genres, playlists).done(() => history.pushState(state, 'Deezer', '/'));
     }
 
 
@@ -53,8 +53,13 @@ export default class MainController {
             url: `${URI_PREFIX}/album/${album.id}/songs`,
             headers: {
                 Accept: 'application/json'
+            },
+            success: data => {
+                success(data, album, this.playlistView);
+                if (album.pushState) {
+                    history.pushState({meta: album, data}, 'album', `/album/${album.id}`);
+                }
             }
-            , success: data => success(data, album, this.playlistView)
         });
     }
 
@@ -67,6 +72,9 @@ export default class MainController {
             },
             success: data => {
                 success(data, genre, this.playlistView);
+                if (genre.pushState) {
+                    history.pushState({meta: genre, data}, 'genre', `/genre/${genre.id}`);
+                }
             }
         });
     }
@@ -82,6 +90,7 @@ export default class MainController {
                 success: data => {
                     artist.albums = data;
                     this.getArtistSongs(artist, success);
+
                 }
             });
         } else {
@@ -96,7 +105,12 @@ export default class MainController {
             headers: {
                 Accept: 'application/json'
             },
-            success: data => success(data, artist, this.playlistView)
+            success: data => {
+                success(data, artist, this.playlistView);
+                if (artist.pushState) {
+                    history.pushState({meta: artist, data}, 'artist', `/artist/${artist.id}`);
+                }
+            }
         });
     }
 
@@ -109,6 +123,9 @@ export default class MainController {
             },
             success: data => {
                 success(data, playlist, this.playlistView);
+                if (playlist.pushState) {
+                    history.pushState({meta: playlist, data}, 'playlist', `/playlist/${playlist.id}`);
+                }
             }
         });
     }
@@ -138,7 +155,7 @@ export default class MainController {
         });
     }
 
-    addLikeToSong(id){
+    addLikeToSong(id) {
         $.ajax({
             type: "POST",
             url: `${URI_PREFIX}/song/${id}/like`,
@@ -147,6 +164,7 @@ export default class MainController {
             }
         });
     }
+
     likePlaylist(id) {
         $.ajax({
             type: "POST",

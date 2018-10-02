@@ -15,7 +15,8 @@ export default class SearchController {
 
     search(mask) {
         DeezerUtil.hideMainPlaylists();
-        $.ajax({
+        let state = [];
+        let songs = $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/song/search/${mask}`,
             headers: {
@@ -23,11 +24,11 @@ export default class SearchController {
             },
             success: result => {
                 this.view.showSongs(result, true);
-                history.pushState(result, 'Search', `/search/${mask}`);
+                state.push({key: 'songs', value:result})
             }
 
         });
-        $.ajax({
+        let artists = $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/artist/search/${mask}`,
             headers: {
@@ -35,10 +36,10 @@ export default class SearchController {
             },
             success: result => {
                 DeezerUtil.showArtists(result, this.view.playlistView, true);
-                history.pushState(result, 'Search', `/search/${mask}`);
+                state.push({key: 'artists', value:result})
             }
         });
-        $.ajax({
+        let albums = $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/album/search/${mask}`,
             headers: {
@@ -46,9 +47,13 @@ export default class SearchController {
             },
             success: result => {
                 DeezerUtil.showAlbums(result, this.view.playlistView);
-                history.pushState(result, 'Search', `/search/${mask}`);
+                state.push({key: 'albums', value:result})
             }
         });
+        $.when(songs, artists, albums).done(() => {
+            history.pushState(state, 'Search', `/search/${mask}`);
+        });
+
     }
 
     searchByType(data) {

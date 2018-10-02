@@ -4,6 +4,7 @@ import SearchView from "./view/search-view.js";
 import SearchController from "./controller/search-controller.js";
 import PlaylistView from "./view/playlist-view.js";
 import PlaylistController from "./controller/playlist-controller.js";
+import DeezerUtil from "./deezer-util.js";
 
 $(document).foundation();
 const view = new MainView();
@@ -14,20 +15,11 @@ const mainController = new MainController(view);
 const searchController = new SearchController(searchView);
 
 
-jQuery(document).ready(() => locationChange());
-
-/* //TODO:popstate
-$(window).on('popstate', () => {
-    locationChange();
-});
-*/
-
-function locationChange() {
+jQuery(document).ready(() => {
     const pathname = window.location.pathname;
     console.info(`Requested path: ${pathname}`);
     if (pathname === '/') {
-        mainController.loadGenres();
-        mainController.loadTopPlaylists();
+        mainController.load();
     } else if (pathname.startsWith('/search/')) {
         const mask = pathname.split('/search/').pop();
         if (mask) {
@@ -56,4 +48,25 @@ function locationChange() {
     } else if (pathname === '/music-library') {
         playlistView.showLibrary();
     }
-}
+});
+
+
+$(window).on('popstate', () => {
+    const pathname = window.location.pathname;
+    console.info(`Popstate requested path: ${pathname}`);
+    if (pathname === '/') {
+        DeezerUtil.hideMainPlaylists();
+        DeezerUtil.showTopPlaylists(history.state.filter(st => st.key === 'top-playlists')[0].value, view);
+        DeezerUtil.showGenres(history.state.filter(st => st.key === 'genres')[0].value, view)
+    } else if (pathname.startsWith('/search/')) {
+        DeezerUtil.hideMainPlaylists();
+        searchView.showSongs(history.state.filter(st => st.key === 'songs')[0].value, true);
+        DeezerUtil.showArtists(history.state.filter(st => st.key === 'artists')[0].value, playlistView, true);
+        DeezerUtil.showAlbums(history.state.filter(st => st.key === 'albums')[0].value, playlistView);
+    } else if (pathname.startsWith('/genre/') || pathname.startsWith('/playlist/')
+        || pathname.startsWith('/album/') || pathname.startsWith('/artist')) {
+        DeezerUtil.showItem(history.state.data, history.state.meta, view);
+    } else if (pathname === '/music-library') {
+        playlistView.showLibrary();
+    }
+});
