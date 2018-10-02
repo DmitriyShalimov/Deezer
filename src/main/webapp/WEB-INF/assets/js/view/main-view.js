@@ -211,23 +211,33 @@ export default class MainView {
         }
         let plSongLikeBtn = $(`.btnLike[trackid=${id}]`);
         console.log(plSongLikeBtn);
-        this.changeLike($(plSongLikeBtn).find('.like'), $(plSongLikeBtn).find(".dislike"), id);
+        this.tracks.filter(track => track.id == id)[0].liked = this.changeLike($(plSongLikeBtn).find('.like'), $(plSongLikeBtn).find(".dislike"), id);
     }
 
-    changeLike(like, dislike, id) {
+    changeLike(like, dislike) {
         like.each(i => {
                 if (!$(like[i]).hasClass('active-like-state')) {
                     $(like[i]).addClass('active-like-state');
                     $(dislike[i]).removeClass('active-like-state');
-                    this.tracks.filter(track => track.id == id)[0].liked = false;
+                    return false;
                 } else {
                     $(like[i]).removeClass('active-like-state');
                     $(dislike[i]).addClass('active-like-state');
-                    this.tracks.filter(track => track.id == id)[0].liked = true;
+                    return true;
                 }
             }
         );
 
+    }
+
+    handlePlaylistLike(id){
+        $(this).trigger('like-pl', id);
+    }
+
+    toggleLikePlaylist(id){
+        let plLike = $(`.card-playlist-like[playlist=${id}]`);
+        console.log($(plLike).find('.pl-like'));
+        this.changeLike($(plLike).find('.pl-like'), $(plLike).find('.pl-dislike'));
     }
 
     getItemToShowFromResult(result) {
@@ -352,4 +362,7 @@ export default class MainView {
         });
         this.audio = $(audio).get(0);
     }
+
+
+
 }

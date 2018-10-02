@@ -54,6 +54,6 @@ function locationChange() {
             mainController.loadCardMeta(id, 'artist');
         }
     } else if (pathname === '/music-library') {
-        playlistController.getUserPlaylists(playlistView.showUserPlaylists.bind(playlistView))
+        playlistView.showLibrary();
     }
 }

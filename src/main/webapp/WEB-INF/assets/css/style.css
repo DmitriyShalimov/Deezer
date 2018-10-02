@@ -411,6 +411,7 @@ i.fa-dice-three {
     -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
+    height: 2.7rem;
 }
 
 .card-playlist-hover-icons button i {
@@ -868,24 +869,31 @@ p.pl-track__title {
     justify-content: center;
 }
 
-
-.main-dislike{
+.main-dislike,
+.dislike,
+.main-like,
+.like,
+.pl-like,
+.pl-dislike {
     display: none;
 }
 
-.dislike{
-    display: none;
+.pl-like,
+.pl-dislike {
+    color: #ff5722;
 }
 
-.main-like{
-    display: none;
-}
 
-.like{
-    display: none;
-}
-.active-like-state{
+.active-like-state {
     display: inline;
+}
+
+
+
+.card-playlist-hover-details {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10%;
 }
 
 /*-----------------------
@@ -1289,7 +1297,7 @@ span.user-playlist-subtitle {
 }
 
 .tabs {
-    border-bottom:1px solid rgba(0, 0, 0, 0.37);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.37);
 }
 
 .tabs-title a {
@@ -1308,11 +1316,12 @@ span.user-playlist-subtitle {
     outline: none;
 }
 
-.tabs-title a:hover{
+.tabs-title a:hover {
     background-color: inherit;
     color: inherit;
 }
-.tabs-panel.is-active{
+
+.tabs-panel.is-active {
     display: flex;
 }
 

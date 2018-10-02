@@ -17,8 +17,9 @@ public interface PlayListService {
 
     String getPlaylistLikeCount(int id);
 
-    List<PlayList> getTopPlaylists();
+    List<PlayList> getTopPlaylists(int userId);
 
-    PlayList getById(Integer id);
+    PlayList getById(Integer id, int userId);
 
+    List<PlayList> getLikedPlaylists(int userId);
 }

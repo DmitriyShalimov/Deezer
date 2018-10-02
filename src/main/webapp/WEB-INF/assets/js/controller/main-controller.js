@@ -16,7 +16,8 @@ export default class MainController {
             this.loadTopPlaylists();
             history.pushState('', 'Deezer', '/')
         });
-        $(this.playlistView).on('random', () => this.getRandomSongs())
+        $(this.playlistView).on('random', () => this.getRandomSongs());
+        $(this.playlistView).on('like-pl', (e, id) => this.likePlaylist(id));
     }
 
     logout() {
@@ -146,5 +147,13 @@ export default class MainController {
             }
         });
     }
-
+    likePlaylist(id) {
+        $.ajax({
+            type: "POST",
+            url: `${URI_PREFIX}/playlist/${id}/like`,
+            success: data => {
+                this.playlistView.toggleLikePlaylist(id);
+            }
+        });
+    }
 }
