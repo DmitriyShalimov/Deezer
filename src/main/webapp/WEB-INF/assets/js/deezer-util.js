@@ -2,7 +2,7 @@ export default class DeezerUtil {
     static adjustUI() {
         let header = $('header');
         let footer = $('.ap');
-        let contentPlacementTop = $(header).position().top + $(header).height() + 20;
+        let contentPlacementTop = $(header).position().top + $(header).height();
         let main = $('main');
         $(main).css('margin-top', contentPlacementTop);
         let contentPlacementBottom = $(footer).height();
@@ -455,7 +455,7 @@ export default class DeezerUtil {
                             <img  src=${item.picture}>
                         </div>
                         <div class="playlist__details">
-                            <h3 class="playlist__title">${item.title}</h3>
+                            <h4 class="playlist__title">${item.title}</h4>
                             <p class="playlist__subtitle">${item.subtitle || ''}</p>
                         </div>
                     </div>`;

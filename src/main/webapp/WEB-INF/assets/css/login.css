@@ -1,9 +1,10 @@
-header{
-    height: 64px!important;
+header {
+    height: 64px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .logo img {
     width: 50px;
     height: 50px;
@@ -42,10 +43,11 @@ header{
 }
 
 main.card.grid-container.login-box {
-    max-width: 45rem;
+    max-width: 50%;
     margin-top: 70px;
 }
-main.grid-container.login-box.card{
+
+main.grid-container.login-box.card {
     border: 1px solid #e6e6e6;
     background: #fefefe;
 }
@@ -80,7 +82,8 @@ main.grid-container.login-box.card{
     border: 0;
     border-bottom: 2px solid #cc4f27;
 }
-.button{
+
+.button {
     background-color: #cc4f27;
 }
 
@@ -88,6 +91,7 @@ main.grid-container.login-box.card{
     border: 1px solid #cc4f27;
     color: #cc4f27;
 }
+
 .login-box-submit-button {
     vertical-align: middle;
     padding: 0.85em 1em;
@@ -115,10 +119,12 @@ main.grid-container.login-box.card{
     background-color: #b33e1c;
     color: #fefefe;
 }
-.button:hover{
+
+.button:hover {
     background-color: #b33e1c;
 }
-.button.hollow:hover{
+
+.button.hollow:hover {
     border: 1px solid #b33e1c;
     color: #b33e1c;
 }

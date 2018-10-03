@@ -61,8 +61,8 @@ $(window).on('popstate', () => {
     } else if (pathname.startsWith('/search/')) {
         DeezerUtil.hideMainPlaylists();
         searchView.showSongs(history.state.filter(st => st.key === 'songs')[0].value, true);
-        DeezerUtil.showArtists(history.state.filter(st => st.key === 'artists')[0].value, playlistView, true);
-        DeezerUtil.showAlbums(history.state.filter(st => st.key === 'albums')[0].value, playlistView);
+        DeezerUtil.showArtists(history.state.filter(st => st.key === 'artists')[0].value, view, true);
+        DeezerUtil.showAlbums(history.state.filter(st => st.key === 'albums')[0].value, view);
     } else if (pathname.startsWith('/genre/') || pathname.startsWith('/playlist/')
         || pathname.startsWith('/album/') || pathname.startsWith('/artist')) {
         DeezerUtil.showItem(history.state.data, history.state.meta, view);

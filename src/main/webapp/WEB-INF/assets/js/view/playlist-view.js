@@ -75,13 +75,13 @@ export default class PlaylistView {
                     <li class="tabs-title"><a href="#favouritesPl">Playlists you liked</a></li>
                 </ul>
             <div class="tabs-content artist-page" data-tabs-content="collapsing-tabs">
-                <div class=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="privatePl">
+                <div class=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="privatePl">
                     <p class="empty-message">Nothing to show. Create you first private playlist and it will be here.</p>
                 </div>
-                <div class="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="publicPl">
+                <div class="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="publicPl">
                 <p class="empty-message">Nothing to show. Create you first public playlist and it will be here.</p>
                 </div>
-                <div class=" tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="favouritesPl">
+                <div class=" tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="favouritesPl">
                     <p class="empty-message">Nothing to show. Click 'like' on any playlist and it will be here.</p>
                 </div>
             </div>
