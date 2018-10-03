@@ -6,7 +6,7 @@ import com.deezer.entity.PlayList;
 import java.util.List;
 
 public interface PlayListDao {
-    List<PlayList> getUserPlaylist(Integer id);
+    List<PlayList> getUserPlaylist(int id);
 
     String getPlaylistLikeCount(int id);
 
@@ -18,7 +18,7 @@ public interface PlayListDao {
 
     List<PlayList> getTopPlaylists(int userId);
 
-    PlayList getById(Integer id, int userId);
+    PlayList getById(int id, int userId);
 
     List<PlayList> getLikedPlayLists(int userId);
 

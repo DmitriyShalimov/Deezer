@@ -24,26 +24,35 @@ public class JdbcPlayListDao implements PlayListDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final RowMapper<PlayList> PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
 
-    private static final String SELECT_FROM_PLAYLIST_CLAUSE = "SELECT pl.id, pl.title," +
-            " pl.picture, pl.access, pu.id as liked " +
-            "FROM playlist AS pl ";
+    private static final String SELECT_CLAUSE = "SELECT pl.id, pl.title," +
+            " pl.picture, pl.access, pu.id as liked ";
+    private static final String FROM_CLAUSE = "FROM playlist AS pl ";
     private static final String LEFT_JOIN_PLAYLIST_USER_CLAUSE = "left join playlist_user pu on pu.user=:userId and pu.playlist=pl.id ";
+    private static final String LEFT_JOIN_LIKE_COUNT = " left join (select count(playlist) ct, playlist from playlist_user " +
+            " group by playlist) pl_l on pl_l.playlist = pl.id  ";
 
     private static final String GET_PLAYLIST_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId;";
     private static final String GET_USER_LIKE_COUNT_FOR_PLAYLIST_SQL = "SELECT COUNT(*) FROM playlist_user WHERE playlist =:playlistId AND \"user\"=:userId ;";
     private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
     private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
-    private static final String GET_TOP_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
+    private static final String GET_TOP_PLAYLIST_SQL = SELECT_CLAUSE +
+            " , pl_l.ct as likeCount " +
+            FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
-            " left join (select count(playlist) ct, playlist from playlist_user " +
-            " group by playlist) pl_l on pl_l.playlist = pl.id  " +
+            LEFT_JOIN_LIKE_COUNT +
             "WHERE pl.access='public' " +
             "order by pl_l.ct desc nulls last limit :limit";
-    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
+    private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = SELECT_CLAUSE +
+            " , pl_l.ct as likeCount " +
+            FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
+            LEFT_JOIN_LIKE_COUNT +
             "WHERE pl.user=:userId";
-    private static final String GET_ALL_PUBLIC_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
+    private static final String GET_ALL_PUBLIC_PLAYLIST_SQL = SELECT_CLAUSE +
+            " , pl_l.ct as likeCount " +
+            FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
+            LEFT_JOIN_LIKE_COUNT +
             " WHERE pl.access='public';";
     private static final String ADD_NEW_USER_PLAYLIST_SQL = "insert into playlist(title, \"access\", \"user\") values(:title, :access, :userId)";
     private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songId)";
@@ -56,12 +65,17 @@ public class JdbcPlayListDao implements PlayListDao {
             "join playlist_song ps on ps.song = s.id " +
             "where ps.playlist = (select id from current_pl))" +
             " where id = (select id from current_pl);";
-    private static final String GET_PLAYLIST_BY_ID = SELECT_FROM_PLAYLIST_CLAUSE +
+    private static final String GET_PLAYLIST_BY_ID = SELECT_CLAUSE +
+            " , -1 as likeCount " +
+            FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             "WHERE pl.id = :id";
-    private static final String GET_LIKED_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
-            "join playlist_user pu on pu.playlist=pl.id " +
-            "WHERE pu.user=:userId";
+    private static final String GET_LIKED_PLAYLIST_SQL = SELECT_CLAUSE +
+            " , pl_l.ct as likeCount " +
+            FROM_CLAUSE +
+            " join playlist_user pu on pu.playlist=pl.id " +
+            LEFT_JOIN_LIKE_COUNT +
+            " WHERE pu.user=:userId";
 
     @Autowired
     public JdbcPlayListDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -108,7 +122,7 @@ public class JdbcPlayListDao implements PlayListDao {
     }
 
     @Override
-    public PlayList getById(Integer id, int userId) {
+    public PlayList getById(int id, int userId) {
         logger.info("start receiving  playlist {} ", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
@@ -133,7 +147,7 @@ public class JdbcPlayListDao implements PlayListDao {
     }
 
     @Override
-    public List<PlayList> getUserPlaylist(Integer id) {
+    public List<PlayList> getUserPlaylist(int id) {
         logger.info("start receiving  albums of user with id {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(USER_ID, id);

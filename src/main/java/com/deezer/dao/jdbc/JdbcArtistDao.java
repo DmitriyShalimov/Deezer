@@ -46,7 +46,7 @@ public class JdbcArtistDao implements ArtistDao {
     }
 
     @Override
-    public Artist getById(Integer id) {
+    public Artist getById(int id) {
         logger.info("start receiving artist {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);

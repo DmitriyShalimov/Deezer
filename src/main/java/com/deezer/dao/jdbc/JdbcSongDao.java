@@ -1,7 +1,7 @@
 package com.deezer.dao.jdbc;
 
 import com.deezer.dao.SongDao;
-import com.deezer.dao.jdbc.mapper.SongRowMapper;
+import com.deezer.dao.jdbc.mapper.SongDetailsRowMapper;
 import com.deezer.entity.Song;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +20,11 @@ import java.util.List;
 public class JdbcSongDao implements SongDao {
     private static final String USER_ID_KEY = "userId";
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private static final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
+    private static final RowMapper<Song> SONG_ROW_MAPPER = new SongDetailsRowMapper();
     private static final String SELECT_CLAUSE = "select s.id ,s.title, " +
             "s.track_url,s.picture_link, " +
             "al.title as album_title, art.name as artist_name " +
-            ", su.id as liked ";
+            ", su.id as liked, s.lyrics ";
     private static final String LEFT_JOIN_USER_SONG_CLAUSE = "left join song_user su on su.user = :userId  and su.song = s.id ";
     private static final String FROM_SONG_ALBUM_ARTIST_CLAUSE = "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id ";

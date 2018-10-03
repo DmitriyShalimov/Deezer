@@ -16,6 +16,7 @@ public class PlayListRowMapper implements RowMapper<PlayList> {
         playList.setPicture(resultSet.getString("picture"));
         playList.setAccess(Access.getTypeById(resultSet.getString("access")));
         playList.setLiked(resultSet.getInt("liked") != 0);
+        playList.setLikeCount(resultSet.getInt("likeCount"));
         return playList;
     }
 }

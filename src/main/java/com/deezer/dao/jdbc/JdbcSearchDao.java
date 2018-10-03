@@ -26,9 +26,8 @@ public class JdbcSearchDao implements SearchDao {
     private final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();
     private final RowMapper<Artist> ARTIST_ROW_MAPPER = new ArtistRowMapper();
     private static final String GET_SONGS = "select s.id ,s.title, " +
-            "s.track_url,s.picture_link, " +
+            "s.picture_link, " +
             "al.title as album_title, art.name as artist_name " +
-            ", su.id as liked " +
             "from song s join album al on s.album = al.id " +
             "join artist art on al.artist = art.id " +
             "left join song_user su on su.user = :userId and su.song = s.id ";

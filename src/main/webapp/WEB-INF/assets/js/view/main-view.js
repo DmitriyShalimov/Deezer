@@ -239,8 +239,20 @@ export default class MainView {
 
     toggleLikePlaylist(id) {
         let plLike = $(`.card-playlist-like[playlist=${id}]`);
-        console.log($(plLike).find('.pl-like'));
-        this.changeLike($(plLike).find('.pl-like'), $(plLike).find('.pl-dislike'));
+        let liked = this.changeLike($(plLike).find('.pl-like'), $(plLike).find('.pl-dislike'));
+        const countSpan = $(plLike).parent().parent().find('.followers-count');
+        let count = parseInt($(countSpan).text());
+        console.log(count);
+        if (liked) {
+            ++count;
+        } else {
+            --count;
+        }
+        if (count === 1) {
+            $(countSpan).text(`${count} follower`);
+        } else {
+            $(countSpan).text(`${count} followers`);
+        }
     }
 
     getItemToShowFromResult(result) {
@@ -308,11 +320,25 @@ export default class MainView {
             $('.main-dislike').removeClass('active-like-state');
         }
         this.loadTrack(track);
+        MainView.addLyrics(track);
         this.audio.play();
         let volume = $('.volume__bar').css('height');
         this.audio.volume = parseInt(volume) / 100;
     };
 
+    static addLyrics(track) {
+        console.log(track);
+        let lyricsP = $('.lyrics-text');
+        if (track.lyrics) {
+            $(lyricsP).empty();
+            $(lyricsP).text(track.lyrics);
+            $(lyricsP).removeClass('empty-message');
+        } else {
+            $(lyricsP).addClass('empty-message');
+            $(lyricsP).empty();
+            $(lyricsP).append(`We are doing our best to find the lyrics for <b>${track.title}</b>.`)
+        }
+    }
 
     loadTrack(track) {
         this.title.text(track.title);

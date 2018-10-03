@@ -104,10 +104,10 @@ export default class PlaylistView {
         }
         let publicPlaylists = this.playlists.filter(playlist => playlist.access === 'PUBLIC');
         if (publicPlaylists.length > 0) {
-            DeezerUtil.showPlaylists('publicPl', publicPlaylists, this.mainView);
+            DeezerUtil.showPlaylists('publicPl', publicPlaylists, this.mainView, true);
         }
         if (this.likedPlaylists.length > 0) {
-            DeezerUtil.showPlaylists('favouritesPl', this.likedPlaylists, this.mainView);
+            DeezerUtil.showPlaylists('favouritesPl', this.likedPlaylists, this.mainView, true);
         }
         this.showPlaylistsNames(playlists);
     }

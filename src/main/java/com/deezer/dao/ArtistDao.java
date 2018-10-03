@@ -9,5 +9,5 @@ public interface ArtistDao {
 
     List<Artist> getArtistsByMask(String mask);
 
-    Artist getById(Integer id);
+    Artist getById(int id);
 }

@@ -313,8 +313,11 @@ li .button {
 
 .cell {
     cursor: pointer;
+    padding-bottom: 0.9375rem ;
 }
-
+.artist-page .followers-count.suggestion-subtitle {
+    margin: 0 0 5% 15%;
+}
 i[class^='fa'] {
     font-size: 1.2rem;
     cursor: pointer;
@@ -720,12 +723,14 @@ p.pl-track__title {
 }
 
 .ap .fa-heart,
-.ap .fa-plus {
+.ap .fa-plus,
+.ap .fa-microphone {
     opacity: 0;
 }
 
 .ap.active .fa-heart,
-.ap.active .fa-plus {
+.ap.active .fa-plus,
+.ap.active .fa-microphone {
     opacity: 1;
 }
 
@@ -744,7 +749,8 @@ p.pl-track__title {
     transition: background .3s ease;
 }
 
-.ap.active button:active i {
+.ap.active button:active i,
+.ap.active .track__lyrics:active i {
     color: #ff5722;
 }
 
@@ -1188,7 +1194,6 @@ span.user-playlist-subtitle {
 }
 
 .playlist__picture {
-    /* height: auto; */
     width: 15%;
     border-radius: 2%;
 }
@@ -1355,6 +1360,27 @@ aside.right {
     margin-left: 22px;
 }
 
+/*lyrics*/
+.track__lyrics {
+    margin-left: auto;
+}
+
+.track-lyrics-dropdown {
+    max-height: calc(100% - 90px - 64px - 20px);
+    width: 50%;
+    overflow-y: auto;
+    z-index: 20000;
+    white-space: pre-line;
+    text-align: center;
+    font-size: 24px;
+    line-height: 32px;
+
+}
+
+.track-lyrics-dropdown {
+    transition: all 0.3ms ease-in;
+}
+
 /*media*/
 @media (max-width: 1024px) {
     .ap__item > .ap__controls {
@@ -1368,6 +1394,14 @@ aside.right {
 
     #playlist-section h3 {
         font-size: 1.1875rem;
+    }
+
+    i.fa-dice-three {
+        font-size: 1.1em;
+    }
+
+    .music-library i {
+        font-size: 1.3em;
     }
 }
 
@@ -1446,13 +1480,6 @@ aside.right {
         max-width: 75%;
     }
 
-    i.fa-dice-three {
-        font-size: 1.1em;
-    }
-
-    .music-library i {
-        font-size: 1.3em;
-    }
 }
 
 @media (max-height: 900px) {

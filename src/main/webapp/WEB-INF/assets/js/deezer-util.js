@@ -154,10 +154,21 @@ export default class DeezerUtil {
                                 <i class="fas fa-heart top pl-dislike ${playlist.liked ? 'active-like-state' : ''}"></i>
                             </div>` : ''}
                         </div>
+                        ${like ? DeezerUtil.addFollowers(playlist) : ''}
                     </div>
                 </div>`;
         });
         return html;
+    }
+
+    static addFollowers(playlist){
+        let follower = 'followers';
+        if (playlist.likeCount === 1){
+            follower = 'follower';
+        }
+        return `<div class="followers-count suggestion-subtitle">
+            <span class="like-count">${playlist.likeCount}</span> ${follower}
+        </div>`;
     }
 
     static setPagination(paginationContainer, data, htmlFunction, paginationData, bindFunction, view) {
