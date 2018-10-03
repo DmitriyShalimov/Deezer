@@ -67,6 +67,6 @@ $(window).on('popstate', () => {
         || pathname.startsWith('/album/') || pathname.startsWith('/artist')) {
         DeezerUtil.showItem(history.state.data, history.state.meta, view);
     } else if (pathname === '/music-library') {
-        playlistView.showLibrary();
+        playlistView.handlePlaylists(history.state);
     }
 });

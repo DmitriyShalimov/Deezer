@@ -47,7 +47,6 @@ export default class MainController {
 
 
     changeAlbum(album, success) {
-        console.log(album);
         $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/album/${album.id}/songs`,
@@ -159,7 +158,7 @@ export default class MainController {
         $.ajax({
             type: "POST",
             url: `${URI_PREFIX}/song/${id}/like`,
-            success: data => {
+            success: () => {
                 this.playlistView.toggleLike(id);
             }
         });
@@ -169,7 +168,7 @@ export default class MainController {
         $.ajax({
             type: "POST",
             url: `${URI_PREFIX}/playlist/${id}/like`,
-            success: data => {
+            success: () => {
                 this.playlistView.toggleLikePlaylist(id);
             }
         });

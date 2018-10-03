@@ -6,14 +6,10 @@ export default class SearchView {
         this.searchInput = $('.search-form');
         this.searchButton = $('.fa-search');
         $(this.searchButton).click(() => this.handleSearch($(this.searchInput).val()));
-        $(this.playlistView).on('checkPlaylist', () => this.checkPlaylist());
+       // $(this.playlistView).on('checkPlaylist', () => this.checkPlaylist());
     }
 
-    checkPlaylist() {
-        if (this.tracks && this.playlistView.currentPlayList !== this.tracks) {
-            this.playlistView.createPlayer(this.tracks, {picture: this.tracks[0].picture, title: "Search"});
-        }
-    }
+
 
     setOptions(data) {
         let ar = SearchView.getDataForOptions(data);
@@ -114,7 +110,7 @@ export default class SearchView {
         DeezerUtil.createPlaylist(tracks, search, this.playlistView);
         if (tracks.length !== 0) {
             this.tracks = tracks;
-            this.playlistView.searchTrackList = tracks;
+            this.playlistView.pageTrackList = tracks;
             DeezerUtil.bindPlay(this.playlistView, this.tracks, 'Search');
         }
     }

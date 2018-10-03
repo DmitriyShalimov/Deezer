@@ -180,62 +180,64 @@ export default class MainView {
 
     }
 
-    handleAlbumChange(album) {
-        console.log(album);
-        $(this).trigger('album', {item: album, cb: this.createPlayer.bind(this)});
+    handleItemChange(item, type) {
+        $(this).trigger(type, {item, cb: this.createPlayer.bind(this)});
     }
 
-    handleGenreChange(genre) {
-        $(this).trigger('genre', {item: genre, cb: this.createPlayer.bind(this)});
-    }
-
-    handlePlaylistChange(playlist) {
-        $(this).trigger('playlist', {item: playlist, cb: this.createPlayer.bind(this)});
-    }
-
-    handleArtistChange(artist) {
-        $(this).trigger('artist', {item: artist, cb: this.createPlayer.bind(this)});
-    }
 
     handleShowItem(selectedItem) {
         if (selectedItem.type === 'artist') {
             selectedItem.albumsRequired = true;
         }
-        selectedItem.pushState=true;
+        selectedItem.pushState = true;
         $(this).trigger(selectedItem.type, {item: selectedItem, cb: DeezerUtil.showItem});
     }
 
     toggleLike(id) {
-
-        if (this.currentTrack && id == this.currentTrack.id) {
-            this.changeLike($('.main-like'), $('.main-dislike'), id);
-        }
         let plSongLikeBtn = $(`.btnLike[trackid=${id}]`);
         console.log(plSongLikeBtn);
-        this.tracks.filter(track => track.id == id)[0].liked = this.changeLike($(plSongLikeBtn).find('.like'), $(plSongLikeBtn).find(".dislike"), id);
+        if (this.currentTrack && id == this.currentTrack.id) {
+            this.currentTrack.iked = this.changeLike($('#addLike').find('.main-like'), $('#addLike').find('.main-dislike'))
+        }
+        let liked = this.changeLike($(plSongLikeBtn).find('.like'), $(plSongLikeBtn).find(".dislike"));
+        if (this.tracks) {
+            this.tracks.map(track => {
+                if (track.id == id) {
+                    track.liked = liked;
+                }
+            });
+        }
+        if (this.pageTrackList) {
+            this.pageTrackList.map(track => {
+                if (track.id == id) {
+                    track.liked = liked
+                }
+            });
+        }
     }
 
     changeLike(like, dislike) {
+        let liked = false;
         like.each(i => {
                 if (!$(like[i]).hasClass('active-like-state')) {
                     $(like[i]).addClass('active-like-state');
                     $(dislike[i]).removeClass('active-like-state');
-                    return false;
+                    liked = false;
                 } else {
                     $(like[i]).removeClass('active-like-state');
                     $(dislike[i]).addClass('active-like-state');
-                    return true;
+                    liked = true;
                 }
             }
         );
-
+        return liked;
     }
 
-    handlePlaylistLike(id){
+    handlePlaylistLike(id) {
         $(this).trigger('like-pl', id);
     }
 
-    toggleLikePlaylist(id){
+    toggleLikePlaylist(id) {
         let plLike = $(`.card-playlist-like[playlist=${id}]`);
         console.log($(plLike).find('.pl-like'));
         this.changeLike($(plLike).find('.pl-like'), $(plLike).find('.pl-dislike'));
@@ -274,7 +276,7 @@ export default class MainView {
         DeezerUtil.createMiniPlaylist(tracks, playlistMeta, this);
         $('.btnPlay').unbind('click').click((e) => {
             if ($(e.currentTarget).attr("search")) {
-                $(this).trigger('checkPlaylist');
+                this.checkPlaylist();
             }
             let playId = $(e.currentTarget).attr('trackId');
             if (playId) {
@@ -290,6 +292,12 @@ export default class MainView {
         this.currentPlayList = tracks;
     }
 
+    checkPlaylist() {
+        console.log(this.pageTrackList);
+        if (this.pageTrackList && this.currentPlayList !== this.pageTrackList) {
+            this.createPlayer(this.pageTrackList, {picture: this.pageTrackList[0].picture, title: "Search"});
+        }
+    }
 
     playTrack(track) {
         if (track.liked) {
@@ -363,7 +371,6 @@ export default class MainView {
         });
         this.audio = $(audio).get(0);
     }
-
 
 
 }

@@ -40,7 +40,7 @@ export default class PlaylistView {
     handlePlaylists(likedPl) {
         this.likedPlaylists = likedPl;
         if (this.playlists && this.playlists.filter(playlist => playlist.title === 'Favourites').length > 0) {
-            this.showUserPlaylists(this.playlists)
+            this.showUserPlaylists(this.playlists);
         } else {
             $(this).trigger('refresh', this.showUserPlaylists.bind(this))
         }
@@ -65,7 +65,6 @@ export default class PlaylistView {
 
     showUserPlaylists(playlists) {
         if (playlists) this.playlists = playlists;
-        history.pushState(this.playlists, 'Library', '/music-library');
         DeezerUtil.hideMainPlaylists();
         $('#playlist-section').append(`
         <div class="user-library">

@@ -7,7 +7,7 @@ export default class PlaylistController {
         $(this.view).on('new-playlist', (e, data) => this.createNewPlaylist(data));
         $(this.view).on('add-song', (e, data) => this.addSongToPlaylist(data));
         $(this.view).on('refresh', (e, success) => this.getUserPlaylists(success));
-        $(this.view).on('favourite-playlists', (e,success) => this.getFavouritePlaylists(success))
+        $(this.view).on('favourite-playlists', (e, success) => this.getFavouritePlaylists(success))
 
     }
 
@@ -44,12 +44,13 @@ export default class PlaylistController {
         });
     }
 
-    getFavouritePlaylists(success){
+    getFavouritePlaylists(success) {
         $.ajax({
             type: "GET",
             url: `${URI_PREFIX}/playlists/liked`,
             success: data => {
                 success(data);
+                history.pushState(data, 'Library', '/music-library');
             }
         });
     }
