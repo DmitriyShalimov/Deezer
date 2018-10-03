@@ -26,6 +26,7 @@ public class JdbcPlayListDao implements PlayListDao {
 
     private static final String SELECT_CLAUSE = "SELECT pl.id, pl.title," +
             " pl.picture, pl.access, pu.id as liked ";
+    private static final String PL_L_CT_AS_LIKE_COUNT = " , pl_l.ct as likeCount ";
     private static final String FROM_CLAUSE = "FROM playlist AS pl ";
     private static final String LEFT_JOIN_PLAYLIST_USER_CLAUSE = "left join playlist_user pu on pu.user=:userId and pu.playlist=pl.id ";
     private static final String LEFT_JOIN_LIKE_COUNT = " left join (select count(playlist) ct, playlist from playlist_user " +
@@ -36,20 +37,20 @@ public class JdbcPlayListDao implements PlayListDao {
     private static final String DELETE_PLAYLIST_LIKE_COUNT_SQL = "DELETE from playlist_user where playlist=:playlistId and \"user\"=:userId";
     private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
     private static final String GET_TOP_PLAYLIST_SQL = SELECT_CLAUSE +
-            " , pl_l.ct as likeCount " +
+            PL_L_CT_AS_LIKE_COUNT +
             FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             LEFT_JOIN_LIKE_COUNT +
             "WHERE pl.access='public' " +
             "order by pl_l.ct desc nulls last limit :limit";
     private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = SELECT_CLAUSE +
-            " , pl_l.ct as likeCount " +
+            PL_L_CT_AS_LIKE_COUNT +
             FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             LEFT_JOIN_LIKE_COUNT +
             "WHERE pl.user=:userId";
     private static final String GET_ALL_PUBLIC_PLAYLIST_SQL = SELECT_CLAUSE +
-            " , pl_l.ct as likeCount " +
+            PL_L_CT_AS_LIKE_COUNT +
             FROM_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             LEFT_JOIN_LIKE_COUNT +
@@ -71,7 +72,7 @@ public class JdbcPlayListDao implements PlayListDao {
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             "WHERE pl.id = :id";
     private static final String GET_LIKED_PLAYLIST_SQL = SELECT_CLAUSE +
-            " , pl_l.ct as likeCount " +
+            PL_L_CT_AS_LIKE_COUNT +
             FROM_CLAUSE +
             " join playlist_user pu on pu.playlist=pl.id " +
             LEFT_JOIN_LIKE_COUNT +
