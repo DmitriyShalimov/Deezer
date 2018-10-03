@@ -499,25 +499,17 @@ i.fa-dice-three {
     font-size: 1.7vw;
 }
 
-.songs-playlist {
-    display: none;
-}
-
-.artists-playlists {
-    display: none;
-}
-
-.album-playlists {
+.songs-playlist,
+.artists-playlists,
+.album-playlists,
+.all-public-playlists,
+.genres-playlists,
+.top-public-playlists {
     display: none;
 }
 
 .genres-playlists {
-    display: none;
     margin: 5vh 0 10vh 0;
-}
-
-.top-public-playlists {
-    display: none;
 }
 
 div#topPlaylist {
@@ -1280,32 +1272,41 @@ span.user-playlist-subtitle {
 /*music library*/
 .user-library {
     margin-top: 2%;
-
 }
 
-.music-library {
+aside.right {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     left: 2%;
     z-index: 5;
     cursor: pointer;
 }
 
-.music-library:hover {
+.all-playlists {
+    margin-top: 20px;
+}
+
+.music-library:hover,
+.all-playlists:hover {
     opacity: 0.8;
 }
 
-.music-library:active {
+.music-library:active,
+.all-playlists:active {
     background-color: rgba(255, 87, 34, 0.22);
 }
 
-.music-library i {
+.music-library i,
+.all-playlists i {
     display: flex;
     justify-content: center;
     color: #ff5722;
     font-size: 1.5em;
 }
 
-.music-library p {
+.music-library p,
+.all-playlists p {
     overflow: hidden;
     margin-top: 4px;
     font-size: 10px;
@@ -1347,6 +1348,11 @@ span.user-playlist-subtitle {
 
 .tabs-panel.is-active {
     display: flex;
+}
+
+#playlist-section .all-public-playlists h3,
+#playlist-section .all-public-playlists .underline {
+    margin-left: 22px;
 }
 
 /*media*/

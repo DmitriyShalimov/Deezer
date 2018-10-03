@@ -35,10 +35,16 @@ public class JdbcPlayListDao implements PlayListDao {
     private static final String ADD_PLAYLIST_LIKE_COUNT_SQL = "INSERT INTO playlist_user (playlist, \"user\") VALUES (:playlistId,:userId)";
     private static final String GET_TOP_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
-            "WHERE pl.access='public' limit :limit;";
+            " left join (select count(playlist) ct, playlist from playlist_user " +
+            " group by playlist) pl_l on pl_l.playlist = pl.id  " +
+            "WHERE pl.access='public' " +
+            "order by pl_l.ct desc nulls last limit :limit";
     private static final String GET_ALL_PLAYLIST_OF_USER_ID_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
             LEFT_JOIN_PLAYLIST_USER_CLAUSE +
             "WHERE pl.user=:userId";
+    private static final String GET_ALL_PUBLIC_PLAYLIST_SQL = SELECT_FROM_PLAYLIST_CLAUSE +
+            LEFT_JOIN_PLAYLIST_USER_CLAUSE +
+            " WHERE pl.access='public';";
     private static final String ADD_NEW_USER_PLAYLIST_SQL = "insert into playlist(title, \"access\", \"user\") values(:title, :access, :userId)";
     private static final String ADD_SONG_TO_PLAYLIST_SQL = "INSERT INTO playlist_song (playlist,song) VALUES(:playlistId, :songId)";
     private static final String ADD_SONG_TO_PLAYLIST_BY_PLAYLIST_TITLE_SQL = "INSERT INTO playlist_song (playlist,song) (select max(id) as id, :songId from playlist pl where pl.title = :title)";
@@ -116,6 +122,14 @@ public class JdbcPlayListDao implements PlayListDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue(USER_ID, userId);
         return namedParameterJdbcTemplate.query(GET_LIKED_PLAYLIST_SQL, params, PLAYLIST_ROW_MAPPER);
+    }
+
+    @Override
+    public List<PlayList> getAllPublicPlaylists(int userId) {
+        logger.info("Start receiving all public playLists");
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(USER_ID, userId);
+        return namedParameterJdbcTemplate.query(GET_ALL_PUBLIC_PLAYLIST_SQL, params, PLAYLIST_ROW_MAPPER);
     }
 
     @Override

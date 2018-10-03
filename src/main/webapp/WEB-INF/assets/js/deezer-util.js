@@ -255,14 +255,7 @@ export default class DeezerUtil {
         });
     }
 
-    static showTopPlaylists(playlists, view) {
-        if (playlists.length === 0) return;
-        let playlistsPlaylist = $('#topPlaylist');
-        $('.top-public-playlists').show();
-        $(playlistsPlaylist).empty();
-        let html = DeezerUtil.getTopPlaylistsHtml(playlists, true);
-        $(playlistsPlaylist).append(html);
-        DeezerUtil.bindBtnPlay('playlist', $("#topPlaylist button"), $("#topPlaylist img"), $("#topPlaylist p.card-playlist-hover-title"), view);
+    static bindPlLike(view) {
         let playlistLike = $('.card-playlist-like');
         $(playlistLike).each(i => {
             $(playlistLike[i]).unbind('click').click((e) => {
@@ -271,6 +264,17 @@ export default class DeezerUtil {
                 view.handlePlaylistLike($(playlistLike[i]).attr('playlist'));
             })
         });
+    }
+
+    static showTopPlaylists(playlists, view) {
+        if (playlists.length === 0) return;
+        let playlistsPlaylist = $('#topPlaylist');
+        $('.top-public-playlists').show();
+        $(playlistsPlaylist).empty();
+        let html = DeezerUtil.getTopPlaylistsHtml(playlists, true);
+        $(playlistsPlaylist).append(html);
+        DeezerUtil.bindBtnPlay('playlist', $("#topPlaylist button"), $("#topPlaylist img"), $("#topPlaylist p.card-playlist-hover-title"), view);
+        DeezerUtil.bindPlLike(view);
         let playlistCards = $("#topPlaylist .cell");
         $(playlistCards).each(i => {
             let playlistCard = playlistCards[i];
@@ -287,20 +291,14 @@ export default class DeezerUtil {
         });
     }
 
-    static showPlaylists(itemId, playlists, view) {
+    static showPlaylists(itemId, playlists, view, isLiked) {
         if (playlists.length === 0) return;
         let playlistsPlaylist = $(`#${itemId}`);
         $(playlistsPlaylist).empty();
-        let html = DeezerUtil.getTopPlaylistsHtml(playlists);
+        let html = DeezerUtil.getTopPlaylistsHtml(playlists, isLiked);
         $(playlistsPlaylist).append(html);
         DeezerUtil.bindBtnPlay('playlist', $(`#${itemId} button`), $(`#${itemId} img`), $(`#${itemId} p.card-playlist-hover-title`), view);
-        let playlistLike = $('.card-playlist-like');
-        $(playlistLike).each(i => {
-            $(playlistLike[i]).click((e) => {
-                e.stopPropagation();
-                view.handlePlaylistLike($(playlistLike[i]).attr('value'));
-            })
-        });
+        DeezerUtil.bindPlLike(view);
         let playlistCards = $(`#${itemId} .cell`);
         $(playlistCards).each(i => {
             let playlistCard = playlistCards[i];
@@ -381,6 +379,7 @@ export default class DeezerUtil {
         $('.artists-playlists').hide();
         $('.top-public-playlists').hide();
         $('.user-library').remove();
+        $('.all-public-playlists').hide();
         let album = $('.album-playlists');
         $(album).removeClass('artist-page');
         $(album).hide();

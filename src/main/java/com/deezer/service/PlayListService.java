@@ -22,4 +22,6 @@ public interface PlayListService {
     PlayList getById(Integer id, int userId);
 
     List<PlayList> getLikedPlaylists(int userId);
+
+    List<PlayList> getAllPublicPlaylists(int userId);
 }

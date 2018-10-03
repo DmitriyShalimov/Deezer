@@ -47,6 +47,8 @@ jQuery(document).ready(() => {
         }
     } else if (pathname === '/music-library') {
         playlistView.showLibrary();
+    } else if (pathname === '/playlists') {
+        playlistController.getAllPlaylists(playlistView.showPublicPlaylists.bind(playlistView));
     }
 });
 
@@ -68,5 +70,7 @@ $(window).on('popstate', () => {
         DeezerUtil.showItem(history.state.data, history.state.meta, view);
     } else if (pathname === '/music-library') {
         playlistView.handlePlaylists(history.state);
+    } else if (pathname === '/playlists') {
+        playlistView.showPublicPlaylists(history.state);
     }
 });

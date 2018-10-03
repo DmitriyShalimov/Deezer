@@ -7,7 +7,8 @@ export default class PlaylistController {
         $(this.view).on('new-playlist', (e, data) => this.createNewPlaylist(data));
         $(this.view).on('add-song', (e, data) => this.addSongToPlaylist(data));
         $(this.view).on('refresh', (e, success) => this.getUserPlaylists(success));
-        $(this.view).on('favourite-playlists', (e, success) => this.getFavouritePlaylists(success))
+        $(this.view).on('favourite-playlists', (e, success) => this.getFavouritePlaylists(success));
+        $(this.view).on('all-playlists', (e, success) => this.getAllPlaylists(success));
 
     }
 
@@ -51,6 +52,17 @@ export default class PlaylistController {
             success: data => {
                 success(data);
                 history.pushState(data, 'Library', '/music-library');
+            }
+        });
+    }
+
+    getAllPlaylists(success){
+        $.ajax({
+            type: "GET",
+            url: `${URI_PREFIX}/playlists`,
+            success: data => {
+                success(data);
+                history.pushState(data, 'Playlists', '/playlists');
             }
         });
     }

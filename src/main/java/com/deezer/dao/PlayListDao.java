@@ -21,4 +21,6 @@ public interface PlayListDao {
     PlayList getById(Integer id, int userId);
 
     List<PlayList> getLikedPlayLists(int userId);
+
+    List<PlayList> getAllPublicPlaylists(int userId);
 }

@@ -139,4 +139,11 @@ public class PlayListController {
         logger.info("User {} likes {} playlists",userId, playLists);
         return playLists;
     }
+
+    @GetMapping(value = "/playlists")
+    @ResponseBody
+    public List<PlayList> getAllPublicPlaylists(HttpSession session) {
+        logger.info("Start retrieving all public playlists");
+        return playListService.getAllPublicPlaylists(Util.getUserIdFromHttpSession(session));
+    }
 }

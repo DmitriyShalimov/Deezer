@@ -10,10 +10,20 @@ export default class PlaylistView {
             $(this.playlistMenu).foundation('close'));
         $('.new-playlist__create').click(() => this.handleCreateNewPlaylist());
         $('.music-library').click(() => this.showLibrary());
+        $('.all-playlists').click(()=> this.showAllPlaylists())
     }
 
     showLibrary() {
         $(this).trigger('favourite-playlists', this.handlePlaylists.bind(this));
+    }
+    showAllPlaylists(){
+        $(this).trigger('all-playlists', this.showPublicPlaylists.bind(this));
+    }
+
+    showPublicPlaylists(data){
+        DeezerUtil.hideMainPlaylists();
+        DeezerUtil.showPlaylists('allPublicPl', data, this.mainView, true);
+        $('.all-public-playlists').show();
     }
 
     handleCreateNewPlaylist() {
