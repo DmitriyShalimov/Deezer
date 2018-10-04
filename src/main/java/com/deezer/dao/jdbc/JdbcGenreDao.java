@@ -33,7 +33,7 @@ public class JdbcGenreDao implements GenreDao {
     }
 
     @Override
-    public Genre getById(Integer id) {
+    public Genre getById(int id) {
         logger.info("start receiving  genre {} ", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);

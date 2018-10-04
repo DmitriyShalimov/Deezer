@@ -14,8 +14,6 @@ public class MainPageController {
     @GetMapping(path = "/**")
     public String loadMainPage() {
         logger.info("Requesting main page");
-//        User loggedUser = (User) httpSession.getAttribute("loggedUser");
-//        modelMap.addAttribute("user", loggedUser.getId());
         return "index.html";
     }
 }

@@ -9,5 +9,5 @@ public interface AlbumService {
 
     List<Album> getAlbumsByMask(String mask);
 
-    Album getById(Integer id);
+    Album getById(int id);
 }

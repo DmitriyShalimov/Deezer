@@ -37,7 +37,7 @@ public class ArtistController {
 
     @GetMapping(value = "/artist/{id}")
     @ResponseBody
-    Artist getArtistById(@PathVariable Integer id) {
+    Artist getArtistById(@PathVariable int id) {
         logger.info("Start retrieving artist {}", id);
         return artistService.getById(id);
     }

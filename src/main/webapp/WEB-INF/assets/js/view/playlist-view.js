@@ -10,10 +10,20 @@ export default class PlaylistView {
             $(this.playlistMenu).foundation('close'));
         $('.new-playlist__create').click(() => this.handleCreateNewPlaylist());
         $('.music-library').click(() => this.showLibrary());
+        $('.all-playlists').click(()=> this.showAllPlaylists())
     }
 
     showLibrary() {
         $(this).trigger('favourite-playlists', this.handlePlaylists.bind(this));
+    }
+    showAllPlaylists(){
+        $(this).trigger('all-playlists', this.showPublicPlaylists.bind(this));
+    }
+
+    showPublicPlaylists(data){
+        DeezerUtil.hideMainPlaylists();
+        DeezerUtil.showPlaylists('allPublicPl', data, this.mainView, true);
+        $('.all-public-playlists').show();
     }
 
     handleCreateNewPlaylist() {
@@ -40,7 +50,7 @@ export default class PlaylistView {
     handlePlaylists(likedPl) {
         this.likedPlaylists = likedPl;
         if (this.playlists && this.playlists.filter(playlist => playlist.title === 'Favourites').length > 0) {
-            this.showUserPlaylists(this.playlists)
+            this.showUserPlaylists(this.playlists);
         } else {
             $(this).trigger('refresh', this.showUserPlaylists.bind(this))
         }
@@ -65,7 +75,6 @@ export default class PlaylistView {
 
     showUserPlaylists(playlists) {
         if (playlists) this.playlists = playlists;
-        history.pushState(this.playlists, 'Library', '/music-library');
         DeezerUtil.hideMainPlaylists();
         $('#playlist-section').append(`
         <div class="user-library">
@@ -75,13 +84,13 @@ export default class PlaylistView {
                     <li class="tabs-title"><a href="#favouritesPl">Playlists you liked</a></li>
                 </ul>
             <div class="tabs-content artist-page" data-tabs-content="collapsing-tabs">
-                <div class=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="privatePl">
+                <div class=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="privatePl">
                     <p class="empty-message">Nothing to show. Create you first private playlist and it will be here.</p>
                 </div>
-                <div class="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="publicPl">
+                <div class="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="publicPl">
                 <p class="empty-message">Nothing to show. Create you first public playlist and it will be here.</p>
                 </div>
-                <div class=" tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-7" id="favouritesPl">
+                <div class=" tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="favouritesPl">
                     <p class="empty-message">Nothing to show. Click 'like' on any playlist and it will be here.</p>
                 </div>
             </div>
@@ -95,10 +104,10 @@ export default class PlaylistView {
         }
         let publicPlaylists = this.playlists.filter(playlist => playlist.access === 'PUBLIC');
         if (publicPlaylists.length > 0) {
-            DeezerUtil.showPlaylists('publicPl', publicPlaylists, this.mainView);
+            DeezerUtil.showPlaylists('publicPl', publicPlaylists, this.mainView, true);
         }
         if (this.likedPlaylists.length > 0) {
-            DeezerUtil.showPlaylists('favouritesPl', this.likedPlaylists, this.mainView);
+            DeezerUtil.showPlaylists('favouritesPl', this.likedPlaylists, this.mainView, true);
         }
         this.showPlaylistsNames(playlists);
     }

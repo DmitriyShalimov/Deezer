@@ -51,7 +51,7 @@ public class JdbcAlbumDao implements AlbumDao {
     }
 
     @Override
-    public Album getById(Integer id) {
+    public Album getById(int id) {
         logger.info("Start receiving album {}", id);
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id",id);

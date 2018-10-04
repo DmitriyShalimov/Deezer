@@ -28,7 +28,7 @@ public class DefaultArtistService implements ArtistService {
     }
 
     @Override
-    public Artist getById(Integer id) {
+    public Artist getById(int id) {
         return artistDao.getById(id);
     }
 }

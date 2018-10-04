@@ -30,7 +30,7 @@ public class PlayListController {
 
     @GetMapping(value = "/album/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByAlbum(@PathVariable Integer id, HttpSession session) {
+    List<Song> getSongsByAlbum(@PathVariable int id, HttpSession session) {
         logger.info("Retrieving songs of album {}", id);
         List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of album {} are {}", id, songsByAlbum);
@@ -39,7 +39,7 @@ public class PlayListController {
 
     @GetMapping(value = "/genre/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByGenre(@PathVariable Integer id, HttpSession session) {
+    List<Song> getSongsByGenre(@PathVariable int id, HttpSession session) {
         logger.info("Retrieving songs of genre {}", id);
         List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of genre {} are {}", id, songsByGenre);
@@ -48,7 +48,7 @@ public class PlayListController {
 
     @GetMapping(value = "/artist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByArtist(@PathVariable Integer id, HttpSession session) {
+    List<Song> getSongsByArtist(@PathVariable int id, HttpSession session) {
         logger.info("Retrieving songs of artist {}", id);
         List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs of artist {} are {}", id, songs);
@@ -57,7 +57,7 @@ public class PlayListController {
 
     @GetMapping(value = "/playlist/{id}/songs")
     @ResponseBody
-    List<Song> getSongsByPlaylist(@PathVariable Integer id, HttpSession session) {
+    List<Song> getSongsByPlaylist(@PathVariable int id, HttpSession session) {
         logger.info("Retrieving songs from playlist {}", id);
         List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
         logger.info("Songs from playlist {} are {}", id, songs);
@@ -67,7 +67,7 @@ public class PlayListController {
     @PostMapping(value = "/playlist")
     @ResponseBody
     public String addPlaylist(@RequestParam String access, @RequestParam String title,
-                              @RequestParam Integer song, HttpSession session) {
+                              @RequestParam int song, HttpSession session) {
         logger.info("Saving playlist {} and adding song {} to it", title, song);
         User user = (User) session.getAttribute(LOGGED_USER_KEY);
         boolean isAdded = playListService.addPlaylist(title, Access.getTypeById(access), user.getId(), song);
@@ -79,7 +79,7 @@ public class PlayListController {
 
     @GetMapping(value = "/playlist/{id}")
     @ResponseBody
-    public PlayList getPlaylistById(@PathVariable Integer id, HttpSession session) {
+    public PlayList getPlaylistById(@PathVariable int id, HttpSession session) {
         logger.info("Getting playlist {} metadata", id);
         return playListService.getById(id, Util.getUserIdFromHttpSession(session));
     }
@@ -97,7 +97,7 @@ public class PlayListController {
 
     @PostMapping(value = "/playlist/{playlistId}/song/{songId}")
     @ResponseBody
-    public String addSongToPlaylist(@PathVariable Integer playlistId, @PathVariable Integer songId) {
+    public String addSongToPlaylist(@PathVariable int playlistId, @PathVariable int songId) {
         boolean isAdded = playListService.addSongToPlaylist(playlistId, songId);
         if (isAdded) {
             return RESPONSE_SUCCESS;
@@ -117,7 +117,7 @@ public class PlayListController {
 
     @GetMapping(value = "/playlist/like/{id}")
     @ResponseBody
-    String getSongLikeCount(@PathVariable Integer id) {
+    String getSongLikeCount(@PathVariable int id) {
         return playListService.getPlaylistLikeCount(id);
     }
 
@@ -138,5 +138,12 @@ public class PlayListController {
         List<PlayList> playLists = playListService.getLikedPlaylists(userId);
         logger.info("User {} likes {} playlists",userId, playLists);
         return playLists;
+    }
+
+    @GetMapping(value = "/playlists")
+    @ResponseBody
+    public List<PlayList> getAllPublicPlaylists(HttpSession session) {
+        logger.info("Start retrieving all public playlists");
+        return playListService.getAllPublicPlaylists(Util.getUserIdFromHttpSession(session));
     }
 }

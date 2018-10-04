@@ -10,6 +10,7 @@ public class Song implements SearchResult{
     private String url;
     private String picture;
     private boolean isLiked;
+    private String lyrics;
 
 
     public int getId() {
@@ -68,6 +69,14 @@ public class Song implements SearchResult{
         isLiked = liked;
     }
 
+    public String getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,13 +88,14 @@ public class Song implements SearchResult{
                 Objects.equals(artist, song.artist) &&
                 Objects.equals(album, song.album) &&
                 Objects.equals(url, song.url) &&
-                Objects.equals(picture, song.picture);
+                Objects.equals(picture, song.picture) &&
+                Objects.equals(lyrics, song.lyrics);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, artist, album, url, picture, isLiked);
+        return Objects.hash(id, title, artist, album, url, picture, isLiked, lyrics);
     }
 
     @Override

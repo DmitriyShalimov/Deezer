@@ -58,7 +58,7 @@ public class UserController {
     public String register(@RequestParam String login, @RequestParam String password, HttpSession session) {
         User user = new User(login, password);
         boolean registered = securityService.register(user);
-        if(registered) {
+        if (registered) {
             session.setAttribute("loggedUser", user);
             return "success";
         }

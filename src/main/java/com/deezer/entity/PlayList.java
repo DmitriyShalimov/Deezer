@@ -10,6 +10,7 @@ public class PlayList {
     private List<Song> songs;
     private String picture;
     private boolean liked;
+    private Integer likeCount;
 
     public Access getAccess() {
         return access;
@@ -59,6 +60,14 @@ public class PlayList {
         this.liked = liked;
     }
 
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,13 +78,14 @@ public class PlayList {
                 Objects.equals(title, playList.title) &&
                 access == playList.access &&
                 Objects.equals(songs, playList.songs) &&
-                Objects.equals(picture, playList.picture);
+                Objects.equals(picture, playList.picture) &&
+                Objects.equals(likeCount, playList.likeCount);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, access, songs, picture, liked);
+        return Objects.hash(id, title, access, songs, picture, liked, likeCount);
     }
 
     @Override
@@ -87,6 +97,7 @@ public class PlayList {
                 ", songs=" + songs +
                 ", picture='" + picture + '\'' +
                 ", liked=" + liked +
+                ", likeCount=" + likeCount +
                 '}';
     }
 }

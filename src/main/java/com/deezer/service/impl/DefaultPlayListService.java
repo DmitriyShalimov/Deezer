@@ -29,7 +29,7 @@ public class DefaultPlayListService implements PlayListService {
     }
 
     @Override
-    public List<PlayList> getUserPlaylist(Integer id) {
+    public List<PlayList> getUserPlaylist(int id) {
         return playListDao.getUserPlaylist(id);
     }
 
@@ -50,7 +50,7 @@ public class DefaultPlayListService implements PlayListService {
     }
 
     @Override
-    public PlayList getById(Integer id, int userId) {
+    public PlayList getById(int id, int userId) {
         return playListDao.getById(id, userId);
 
     }
@@ -58,5 +58,10 @@ public class DefaultPlayListService implements PlayListService {
     @Override
     public List<PlayList> getLikedPlaylists(int userId) {
         return playListDao.getLikedPlayLists(userId);
+    }
+
+    @Override
+    public List<PlayList> getAllPublicPlaylists(int userId) {
+        return playListDao.getAllPublicPlaylists(userId);
     }
 }

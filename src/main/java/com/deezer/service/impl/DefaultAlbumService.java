@@ -28,7 +28,7 @@ public class DefaultAlbumService implements AlbumService {
     }
 
     @Override
-    public Album getById(Integer id) {
+    public Album getById(int id) {
         return albumDao.getById(id);
     }
 }

@@ -45,9 +45,15 @@
     <aside class="random__song left has-tip"
            data-tooltip aria-haspopup="true" tabindex="1" title="Play something"><i
             class="fas fa-dice-three"></i></aside>
-    <aside class="music-library right">
-        <i class="fas fa-clone"></i>
-        <p class="music-library-title">Music Library</p>
+    <aside class="right">
+        <div class="music-library">
+            <i class="fas fa-clone"></i>
+            <p class="music-library-title">Music Library</p>
+        </div>
+        <div class="all-playlists">
+            <i class="fas fa-headphones"></i>
+            <p class="music-library-title">Playlists</p>
+        </div>
     </aside>
     <div class="grid-container">
         <section id="playlist-section">
@@ -82,6 +88,12 @@
                     <div id="pagination-container-album"></div>
                 </div>
                 <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="album">
+                </div>
+            </div>
+            <div class="all-public-playlists">
+                <h3>All Playlists</h3>
+                <div class="underline"></div>
+                <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6 artist-page" id="allPublicPl">
                 </div>
             </div>
             <div class="songs-playlist">
@@ -119,7 +131,6 @@
         <div class="create-playlist" data-open="createPlaylistModal">Create new playlist</div>
         <div class="menu-separator"></div>
         <ul class="user-playlist-list">
-
         </ul>
     </section>
     <div class="reveal" id="createPlaylistModal" data-reveal>
@@ -141,6 +152,9 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+    <section class="track-lyrics-dropdown dropdown-pane top" id="lyricsPane" data-dropdown data-v-offset="60" data-close-on-click="true">
+        <p class="lyrics-text empty-message">We are doing our best to find the lyrics for this song.</p>
+    </section>
 </main>
 <footer>
     <div class="ap" id="ap">
@@ -163,9 +177,14 @@
         <div class="ap__inner">
             <div class="ap__item ap__item--title">
                 <img class="track__picture" src="" alt="">
-                <div class="track__info"><p class="track__title"></p>
-                    <p class="album-artist__title"></p></div>
-
+                <div class="track__info">
+                    <p class="track__title"></p>
+                    <p class="album-artist__title"></p>
+                </div>
+                <div class="track__lyrics" data-toggle="lyricsPane">
+                    <i class="fas fa-microphone"
+                       data-tooltip aria-haspopup="true" tabindex="1" title="Lyrics"></i>
+                </div>
             </div>
             <div class="ap__item ap__item--playback">
                 <button class="ap__controls ap__controls--prev" id="btnPrev">

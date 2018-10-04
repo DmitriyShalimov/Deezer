@@ -11,7 +11,7 @@ public interface PlayListService {
 
     boolean addSongToPlaylist(int playlistId, int songId);
 
-    List<PlayList> getUserPlaylist(Integer id);
+    List<PlayList> getUserPlaylist(int id);
 
     boolean likePlaylist(int playlistId, int userId);
 
@@ -19,7 +19,9 @@ public interface PlayListService {
 
     List<PlayList> getTopPlaylists(int userId);
 
-    PlayList getById(Integer id, int userId);
+    PlayList getById(int id, int userId);
 
     List<PlayList> getLikedPlaylists(int userId);
+
+    List<PlayList> getAllPublicPlaylists(int userId);
 }

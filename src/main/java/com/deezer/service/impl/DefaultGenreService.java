@@ -23,7 +23,7 @@ public class DefaultGenreService implements GenreService {
     }
 
     @Override
-    public Genre getGenreById(Integer id) {
+    public Genre getGenreById(int id) {
         return genreDao.getById(id);
     }
 }

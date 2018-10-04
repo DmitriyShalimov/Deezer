@@ -24,7 +24,7 @@ public class SongController {
 
     @GetMapping(value = "/song/{id}")
     @ResponseBody
-    public Song getSong(@PathVariable Integer id, HttpSession session){
+    public Song getSong(@PathVariable int id, HttpSession session){
         int userId = Util.getUserIdFromHttpSession(session);
         return songService.getSong(id, userId);
     }
@@ -44,13 +44,13 @@ public class SongController {
 
     @PostMapping(value = "/song/{id}/like")
     @ResponseBody
-    public void likeSong(@PathVariable Integer id, HttpSession session) {
+    public void likeSong(@PathVariable int id, HttpSession session) {
         songService.likeSong(id, Util.getUserIdFromHttpSession(session));
     }
 
     @GetMapping(value = "/song/like/{id}")
     @ResponseBody
-    String getSongLikeCount(@PathVariable Integer id) {
+    String getSongLikeCount(@PathVariable int id) {
         return songService.getSongLikeCount(id);
     }
 
