@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.AlbumDao;
 import com.deezer.dao.jdbc.mapper.AlbumRowMapper;
 import com.deezer.entity.Album;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
+@LogExecutionTime
 public class JdbcAlbumDao implements AlbumDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();

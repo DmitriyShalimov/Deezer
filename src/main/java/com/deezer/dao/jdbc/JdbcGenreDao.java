@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.GenreDao;
 import com.deezer.dao.jdbc.mapper.GenreRowMapper;
 import com.deezer.entity.Genre;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@LogExecutionTime
 public class JdbcGenreDao implements GenreDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

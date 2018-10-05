@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.SongDao;
 import com.deezer.dao.jdbc.mapper.SongDetailsRowMapper;
 import com.deezer.entity.Song;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@LogExecutionTime
 public class JdbcSongDao implements SongDao {
     private static final String USER_ID_KEY = "userId";
     private final Logger logger = LoggerFactory.getLogger(getClass());

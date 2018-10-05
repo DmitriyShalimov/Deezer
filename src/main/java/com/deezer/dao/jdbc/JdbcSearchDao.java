@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.SearchDao;
 import com.deezer.dao.jdbc.mapper.AlbumRowMapper;
 import com.deezer.dao.jdbc.mapper.ArtistRowMapper;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@LogExecutionTime
 public class JdbcSearchDao implements SearchDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();

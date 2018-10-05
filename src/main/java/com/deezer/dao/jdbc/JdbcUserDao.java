@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.UserDao;
 import com.deezer.dao.jdbc.mapper.UserRowMapper;
 import com.deezer.entity.User;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 @Repository
+@LogExecutionTime
 public class JdbcUserDao implements UserDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();

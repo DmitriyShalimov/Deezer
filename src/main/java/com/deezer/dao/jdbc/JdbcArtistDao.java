@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.ArtistDao;
 import com.deezer.dao.jdbc.mapper.ArtistRowMapper;
 import com.deezer.entity.Artist;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@LogExecutionTime
 public class JdbcArtistDao implements ArtistDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

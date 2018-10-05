@@ -10,12 +10,14 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
     private static final String LOGGED_USER_ATTRIBUTE = "loggedUser";
     private static final String USER_KEY = "username";
     private static final String REDIRECT_URI = "/login";
     private static final long MAX_INACTIVE_SESSION_TIME = 24 * 60 * 60 * 1000;// 24 hours
+    private static final String REQUEST_ID_KEY = "requestId";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -38,9 +40,16 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                 return false;
             } else {
                 MDC.put(USER_KEY, loggedUser.getLogin());
+                MDC.put(REQUEST_ID_KEY, UUID.randomUUID().toString() );
                 logger.info("Session for user {} is valid", loggedUser.getLogin());
                 return true;
             }
         }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        MDC.clear();
+        super.afterCompletion(request, response, handler, ex);
     }
 }

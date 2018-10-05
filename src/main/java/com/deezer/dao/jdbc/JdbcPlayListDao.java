@@ -1,5 +1,6 @@
 package com.deezer.dao.jdbc;
 
+import com.deezer.config.logging.LogExecutionTime;
 import com.deezer.dao.PlayListDao;
 import com.deezer.dao.jdbc.mapper.PlayListRowMapper;
 import com.deezer.entity.Access;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@LogExecutionTime
 public class JdbcPlayListDao implements PlayListDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final int TOP_PLAYLIST_COUNT = 10;
