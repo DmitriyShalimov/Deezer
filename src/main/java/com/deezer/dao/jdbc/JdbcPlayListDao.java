@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +17,6 @@ import java.util.List;
 @Repository
 public class JdbcPlayListDao implements PlayListDao {
     private static final int TOP_PLAYLIST_COUNT = 10;
-    private static final String USER_ID = "userId";
-    private static final String PLAYLIST_ID = "playlistId";
     private static final RowMapper<PlayList> PLAYLIST_ROW_MAPPER = new PlayListRowMapper();
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final JdbcTemplate jdbcTemplate;

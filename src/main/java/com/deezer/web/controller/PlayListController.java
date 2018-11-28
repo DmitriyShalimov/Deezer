@@ -2,10 +2,7 @@ package com.deezer.web.controller;
 
 import com.deezer.entity.Access;
 import com.deezer.entity.PlayList;
-import com.deezer.entity.Song;
-import com.deezer.entity.User;
 import com.deezer.service.PlayListService;
-import com.deezer.service.SongService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
