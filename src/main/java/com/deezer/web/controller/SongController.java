@@ -81,7 +81,7 @@ public class SongController {
         logger.info("Start request to get random songs ");
         long start = System.currentTimeMillis();
         List<Song> songs = songService.getRandomSongs(Util.getUserIdFromHttpSession(session));
-        logger.info("Random songs are {}. It took {} ms", System.currentTimeMillis() - start);
+        logger.info("Random songs are {}. It took {} ms", songs, System.currentTimeMillis() - start);
         return songs;
     }
 

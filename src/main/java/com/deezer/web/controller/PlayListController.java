@@ -32,7 +32,7 @@ public class PlayListController {
         logger.info("Playlist {} created. It took {} ms", title, System.currentTimeMillis() - start);
     }
 
-    @GetMapping(value = "{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PlayList getPlaylistById(@PathVariable int id, HttpSession session) {
         logger.info("Sending request to get playlist {} metadata", id);
         long start = System.currentTimeMillis();
@@ -41,13 +41,13 @@ public class PlayListController {
         return playList;
     }
 
-    @GetMapping(value = "user", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getUserPlayLists(HttpSession httpSession) {
         int id = Util.getUserIdFromHttpSession(httpSession);
         logger.info("Sending request to get playlists of user {}", id);
         long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getUserPlaylist(id);
-        logger.info("Playlists of user {} are {}.It took {} ms", id, System.currentTimeMillis() - start);
+        logger.info("Playlists of user {} are {}.It took {} ms", id, playLists, System.currentTimeMillis() - start);
         return playLists;
     }
 
@@ -67,7 +67,7 @@ public class PlayListController {
         logger.info("Like added to playlist {}.It took {} ms", id, System.currentTimeMillis() - start);
     }
 
-    @GetMapping(value = "/like/{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/like/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer getSongLikeCount(@PathVariable int id) {
         logger.info("Sending request to get like count of playlist {}", id);
         long start = System.currentTimeMillis();
@@ -76,7 +76,7 @@ public class PlayListController {
         return likeCount;
     }
 
-    @GetMapping(value = "top", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "top", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getTopPlaylists(HttpSession session) {
         logger.info("Sending request to get top playlists");
         long start = System.currentTimeMillis();
@@ -85,7 +85,7 @@ public class PlayListController {
         return playLists;
     }
 
-    @GetMapping(value = "/liked", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/liked", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getLikedPlaylists(HttpSession session) {
         int userId = Util.getUserIdFromHttpSession(session);
         logger.info("Sending request to get playlists liked by user {}", userId);
@@ -95,7 +95,7 @@ public class PlayListController {
         return playLists;
     }
 
-    @GetMapping(value = "/public", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getAllPublicPlaylists(HttpSession session) {
         logger.info("Sending request to get all public playlists");
         long start = System.currentTimeMillis();

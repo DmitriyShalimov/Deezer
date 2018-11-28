@@ -43,7 +43,7 @@ public class JdbcSongDao implements SongDao {
         logger.info("Start query to get song with id {} from DB", id);
         long startTime = System.currentTimeMillis();
         Song song = jdbcTemplate.queryForObject(getSongByIdSql, SONG_ROW_MAPPER, userId, id);
-        logger.info("Finish query to get song with id {} from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        logger.info("Finish query to get song with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return song;
     }
 
