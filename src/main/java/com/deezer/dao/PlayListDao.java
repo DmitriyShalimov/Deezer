@@ -8,13 +8,13 @@ import java.util.List;
 public interface PlayListDao {
     List<PlayList> getUserPlaylist(int id);
 
-    String getPlaylistLikeCount(int id);
+    Integer getPlaylistLikeCount(int id);
 
-    boolean likePlaylist(int playlistId, int userId);
+    void likePlaylist(int playlistId, int userId);
 
-    boolean addPlaylist(String playlistTitle, Access access, int userId, int songId);
+    void addPlaylist(String playlistTitle, Access access, int userId, int songId);
 
-    boolean addSongToPlaylist(int playlistId, int songId);
+    void addSongToPlaylist(int playlistId, int songId);
 
     List<PlayList> getTopPlaylists(int userId);
 

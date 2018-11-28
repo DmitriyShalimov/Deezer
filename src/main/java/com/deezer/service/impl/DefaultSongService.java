@@ -53,7 +53,7 @@ public class DefaultSongService implements SongService {
     }
 
     @Override
-    public String getSongLikeCount(int id) {
+    public Integer getSongLikeCount(int id) {
         return songDao.getSongLikeCount(id);
     }
 

@@ -1,8 +1,8 @@
-package com.deezer.security.impl
+package com.deezer.service.security.impl
 
 import com.deezer.UnitTest
 import com.deezer.entity.User
-import com.deezer.security.SecurityService
+import com.deezer.service.security.SecurityService
 import com.deezer.service.UserService
 import org.junit.Test
 import org.junit.experimental.categories.Category

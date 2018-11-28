@@ -51,7 +51,7 @@ class JdbcSongDaoITest {
             url: 'tract_url'
             picture: 'song_picture'
         } as Song
-        assertEquals(expectedSong, songDao.getSong(1))
+        assertEquals(expectedSong, songDao.getSong(1, 1))
     }
 
     @Test
@@ -66,7 +66,8 @@ class JdbcSongDaoITest {
             url: 'tract_url'
             picture: 'song_picture'
         } as Song
-        assertEquals(expectedSong, songDao.getSongsByGenre(1))
+        def genreSongs = songDao.getSongsByGenre(1, 1)
+        assertEquals(expectedSong, genreSongs.get(0))
     }
 
     @Test
@@ -81,7 +82,7 @@ class JdbcSongDaoITest {
             url: 'tract_url'
             picture: 'song_picture'
         } as Song
-        assertEquals(expectedSong, songDao.getSongsByArtist(1))
+        assertEquals(expectedSong, songDao.getSongsByArtist(1, 1).get(0))
     }
 
     @Test
@@ -96,7 +97,7 @@ class JdbcSongDaoITest {
             url: 'tract_url'
             picture: 'song_picture'
         } as Song
-        assertEquals(expectedSong, songDao.getSongsByAlbum(1))
+        assertEquals(expectedSong, songDao.getSongsByAlbum(1, 1).get(0))
     }
 
     @Test
@@ -111,6 +112,6 @@ class JdbcSongDaoITest {
             url: 'tract_url'
             picture: 'song_picture'
         } as Song
-        assertEquals(expectedSong, songDao.getSongsByMask("on"))
+        assertEquals(expectedSong, songDao.getSongsByMask("on", 1).get(0))
     }
 }

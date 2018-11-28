@@ -21,5 +21,5 @@ public interface SongDao {
 
     void likeSong(int songId, int userId);
 
-    String getSongLikeCount(int id);
+    Integer getSongLikeCount(int id);
 }

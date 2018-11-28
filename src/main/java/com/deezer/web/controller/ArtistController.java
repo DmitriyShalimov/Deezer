@@ -5,14 +5,15 @@ import com.deezer.service.ArtistService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/artist")
 public class ArtistController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private ArtistService artistService;
@@ -22,22 +23,22 @@ public class ArtistController {
         this.artistService = artistService;
     }
 
-    @GetMapping(value = "/artist/search/{mask}")
-    @ResponseBody
-    List<Artist> getArtistsByMask(@PathVariable String mask) {
-        logger.info("Start retrieving artist by mask {}", mask);
-        return artistService.getArtistsByMask(mask);
+    @GetMapping(value = "search/{mask}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Artist> getArtistsByMask(@PathVariable String mask) {
+        logger.info("Start request to get artist by mask {}", mask);
+        long start = System.currentTimeMillis();
+        List<Artist> artistsByMask = artistService.getArtistsByMask(mask);
+        logger.info("Artist by mask {} are {}. It took {} ms", mask, artistsByMask, System.currentTimeMillis() - start);
+        return artistsByMask;
     }
 
-    @GetMapping(value = "/artists")
-    @ResponseBody
-    List<Artist> getAllArtists() {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Artist> getAllArtists() {
         return artistService.getAll();
     }
 
-    @GetMapping(value = "/artist/{id}")
-    @ResponseBody
-    Artist getArtistById(@PathVariable int id) {
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Artist getArtistById(@PathVariable int id) {
         logger.info("Start retrieving artist {}", id);
         return artistService.getById(id);
     }

@@ -43,7 +43,7 @@ class GenreControllerTest {
 
     @Test
     void getAllGenres() {
-        def result = mockMvc.perform(get("/genres"))
+        def result = mockMvc.perform(get("/genre"))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(genre.title))

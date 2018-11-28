@@ -14,7 +14,7 @@ public enum Access {
                 return access;
             }
         }
-        throw new IllegalArgumentException("No access found for id = " + id);
+        return null;
     }
 
     public String getId() {

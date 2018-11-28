@@ -18,134 +18,146 @@ import java.util.List;
 
 @Repository
 public class JdbcSongDao implements SongDao {
-    private static final String USER_ID_KEY = "userId";
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String LIKE_SONG_FUNCTION_NAME = "like_song";
     private static final RowMapper<Song> SONG_ROW_MAPPER = new SongDetailsRowMapper();
-    private static final String SELECT_CLAUSE = "select s.id ,s.title, " +
-            "s.track_url,s.picture_link, " +
-            "al.title as album_title, art.name as artist_name " +
-            ", su.id as liked, s.lyrics ";
-    private static final String LEFT_JOIN_USER_SONG_CLAUSE = "left join song_user su on su.user = :userId  and su.song = s.id ";
-    private static final String FROM_SONG_ALBUM_ARTIST_CLAUSE = "from song s join album al on s.album = al.id " +
-            "join artist art on al.artist = art.id ";
-    private static final String GET_SONG_BY_ID = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "WHERE s.id = :id";
-
-    private static final String GET_ALL_SONGS_BY_GENRE_SQL = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            "join song_genre sg on sg.song = s.id " +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "WHERE sg.genre=:genreId";
-    private static final String GET_ALL_SONGS_BY_ARTIST_SQL = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "WHERE art.id=:artistId";
-    private static final String GET_ALL_SONGS_BY_ALBUM_SQL = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "WHERE al.id=:albumId";
-    private static final String GET_ALL_SONGS_BY_MASK_SQL = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "WHERE lower(s.title) like lower(:mask);";
-
-    private static final String GET_RANDOM_SONGS = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "order by random() limit 42";
-
-    private static final String GET_ALL_SONGS_BY_PLAYLIST_SQL = SELECT_CLAUSE +
-            FROM_SONG_ALBUM_ARTIST_CLAUSE +
-            "join playlist_song pls on pls.song = s.id " +
-            LEFT_JOIN_USER_SONG_CLAUSE +
-            "where pls.playlist =:playlistId";
-    private static final String GET_SONG_LIKE_COUNT_SQL = "SELECT COUNT(*) FROM song_user WHERE song =:songId;";
-
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcCall likeSong;
 
+    private String getSongByIdSql;
+    private String getAllSongsByGenreSql;
+    private String getAllSongsByArtistSql;
+    private String getAllSongsByAlbumSql;
+    private String getAllSongsByMaskSql;
+    private String getRandomSongs;
+    private String getAllSongsByPlaylistSql;
+    private String getSongLikeCountSql;
+
+
     @Autowired
-    public JdbcSongDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, JdbcTemplate jdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.likeSong = new SimpleJdbcCall(jdbcTemplate).withFunctionName("like_song");
+    public JdbcSongDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.likeSong = new SimpleJdbcCall(jdbcTemplate).withFunctionName(LIKE_SONG_FUNCTION_NAME);
     }
 
     @Override
     public Song getSong(int id, int userId) {
-        logger.info("Start receiving song with id {}", id);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", id);
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.queryForObject(GET_SONG_BY_ID, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get song with id {} from DB", id);
+        long startTime = System.currentTimeMillis();
+        Song song = jdbcTemplate.queryForObject(getSongByIdSql, SONG_ROW_MAPPER, userId, id);
+        logger.info("Finish query to get song with id {} from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        return song;
     }
 
     @Override
     public List<Song> getSongsByGenre(int genreId, int userId) {
-        logger.info("start receiving songs by genre with id {}", genreId);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("genreId", genreId);
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_GENRE_SQL, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get all songs of genre {} from DB", genreId);
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getAllSongsByGenreSql, SONG_ROW_MAPPER, userId, genreId);
+        logger.info("Finish query to get all songs of genre {} from DB. It took {} ms", genreId, System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     public List<Song> getSongsByArtist(int artistId, int userId) {
-        logger.info("start receiving songs by artist with id {}", artistId);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("artistId", artistId);
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_ARTIST_SQL, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get all songs of artist {} from DB", artistId);
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getAllSongsByArtistSql, SONG_ROW_MAPPER, userId, artistId);
+        logger.info("Finish query to get all songs of artist {} from DB. It took {} ms", artistId, System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     public List<Song> getSongsByAlbum(int albumId, int userId) {
-        logger.info("start receiving songs by genre with id {}", albumId);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("albumId", albumId);
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_ALBUM_SQL, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get all songs of album {} from DB", albumId);
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getAllSongsByAlbumSql, SONG_ROW_MAPPER, userId, albumId);
+        logger.info("Finish query to get all songs of album {} from DB. It took {} ms", albumId, System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     public List<Song> getSongsByPlayList(int playListId, int userId) {
-        logger.info("start receiving songs by playList with id {}", playListId);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("playlistId", playListId);
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_PLAYLIST_SQL, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get all songs of playlist {} from DB", playListId);
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getAllSongsByPlaylistSql, SONG_ROW_MAPPER, userId, playListId);
+        logger.info("Finish query to get all songs of playlist {} from DB. It took {} ms", playListId, System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     public List<Song> getSongsByMask(String mask, int userId) {
-        logger.info("start receiving songs by mask {}", mask);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("mask", "%" + mask + "%");
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_ALL_SONGS_BY_MASK_SQL, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get all songs by mask {} from DB", mask);
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getAllSongsByMaskSql, SONG_ROW_MAPPER, userId, "%" + mask + "%");
+        logger.info("Finish query to get all songs by mask {} from DB. It took {} ms", mask, System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     public List<Song> getRandomSongs(int userId) {
-        logger.info("start receiving random songs");
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(USER_ID_KEY, userId);
-        return namedParameterJdbcTemplate.query(GET_RANDOM_SONGS, params, SONG_ROW_MAPPER);
+        logger.info("Start query to get random songs from DB");
+        long startTime = System.currentTimeMillis();
+        List<Song> songs = jdbcTemplate.query(getRandomSongs, SONG_ROW_MAPPER, userId);
+        logger.info("Finish query to get random songs from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        return songs;
     }
 
     @Override
     @Transactional
     public void likeSong(int songId, int userId) {
-        logger.info("User {} triggered like for song {}", userId, songId);
+        logger.info("Start query to add/remove like to song {} by user {} to DB", songId, userId);
+        long startTime = System.currentTimeMillis();
         likeSong.executeFunction(Void.class, userId, songId);
+        logger.info("Finish query to add/remove like to song {} by user {} to DB. It took {} ms", songId, userId, System.currentTimeMillis() - startTime);
     }
 
     @Override
-    public String getSongLikeCount(int id) {
-        logger.info("Get like count for song with id {} ", id);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("songId", id);
-        return namedParameterJdbcTemplate.queryForObject(GET_SONG_LIKE_COUNT_SQL, params, String.class);
+    public Integer getSongLikeCount(int id) {
+        logger.info("Start query to get song {} like count from DB", id);
+        long startTime = System.currentTimeMillis();
+        Integer songLikeCount = jdbcTemplate.queryForObject(getSongLikeCountSql, Integer.class, id);
+        logger.info("Finish query to get song {} like count from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
+        return songLikeCount;
+    }
+
+    @Autowired
+    public void setGetSongByIdSql(String getSongByIdSql) {
+        this.getSongByIdSql = getSongByIdSql;
+    }
+
+    @Autowired
+    public void setGetAllSongsByGenreSql(String getAllSongsByGenreSql) {
+        this.getAllSongsByGenreSql = getAllSongsByGenreSql;
+    }
+
+    @Autowired
+    public void setGetAllSongsByArtistSql(String getAllSongsByArtistSql) {
+        this.getAllSongsByArtistSql = getAllSongsByArtistSql;
+    }
+
+    @Autowired
+    public void setGetAllSongsByAlbumSql(String getAllSongsByAlbumSql) {
+        this.getAllSongsByAlbumSql = getAllSongsByAlbumSql;
+    }
+
+    @Autowired
+    public void setGetAllSongsByMaskSql(String getAllSongsByMaskSql) {
+        this.getAllSongsByMaskSql = getAllSongsByMaskSql;
+    }
+
+    @Autowired
+    public void setGetRandomSongs(String getRandomSongs) {
+        this.getRandomSongs = getRandomSongs;
+    }
+
+    @Autowired
+    public void setGetAllSongsByPlaylistSql(String getAllSongsByPlaylistSql) {
+        this.getAllSongsByPlaylistSql = getAllSongsByPlaylistSql;
+    }
+
+    @Autowired
+    public void setGetSongLikeCountSql(String getSongLikeCountSql) {
+        this.getSongLikeCountSql = getSongLikeCountSql;
     }
 }

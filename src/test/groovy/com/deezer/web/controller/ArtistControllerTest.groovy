@@ -40,7 +40,7 @@ class ArtistControllerTest {
 
     @Test
     void getAllArtists() {
-        mockMvc.perform(get("/artists"))
+        mockMvc.perform(get("/artist"))
                 .andExpect(status().isOk())
     }
 }

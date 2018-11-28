@@ -1,4 +1,4 @@
-package com.deezer.security;
+package com.deezer.service.security;
 
 import com.deezer.entity.User;
 

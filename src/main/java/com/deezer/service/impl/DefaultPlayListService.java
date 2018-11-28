@@ -19,13 +19,13 @@ public class DefaultPlayListService implements PlayListService {
     }
 
     @Override
-    public boolean addPlaylist(String playlistTitle, Access access, int userId, int songId) {
-        return playListDao.addPlaylist(playlistTitle, access, userId, songId);
+    public void addPlaylist(String playlistTitle, Access access, int userId, int songId) {
+        playListDao.addPlaylist(playlistTitle, access, userId, songId);
     }
 
     @Override
-    public boolean addSongToPlaylist(int playlistId, int songId) {
-        return playListDao.addSongToPlaylist(playlistId, songId);
+    public void addSongToPlaylist(int playlistId, int songId) {
+        playListDao.addSongToPlaylist(playlistId, songId);
     }
 
     @Override
@@ -35,12 +35,12 @@ public class DefaultPlayListService implements PlayListService {
 
     @Override
 
-    public boolean likePlaylist(int playlistId, int userId) {
-        return playListDao.likePlaylist(playlistId, userId);
+    public void likePlaylist(int playlistId, int userId) {
+        playListDao.likePlaylist(playlistId, userId);
     }
 
     @Override
-    public String getPlaylistLikeCount(int id) {
+    public Integer getPlaylistLikeCount(int id) {
         return playListDao.getPlaylistLikeCount(id);
     }
 

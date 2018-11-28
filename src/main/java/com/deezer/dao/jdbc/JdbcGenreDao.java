@@ -6,6 +6,7 @@ import com.deezer.entity.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,28 +16,42 @@ import java.util.List;
 
 @Repository
 public class JdbcGenreDao implements GenreDao {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final RowMapper<Genre> GENRE_ROW_MAPPER = new GenreRowMapper();
-    private static final String GET_ALL_GENRES_SQL = "SELECT id,title, picture_link FROM genre";
-    private static final String GET_GENRE_BY_ID_SQL = "SELECT id,title, picture_link FROM genre where id = :id";
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final JdbcTemplate jdbcTemplate;
+    private String getAllGenresSql;
+    private String getGenreByIdSql;
 
     @Autowired
-    public JdbcGenreDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public JdbcGenreDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<Genre> getGenres() {
-        logger.info("start receiving  all genres ");
-        return namedParameterJdbcTemplate.query(GET_ALL_GENRES_SQL, GENRE_ROW_MAPPER);
+        logger.info("Start query to get all genres from DB");
+        long startTime = System.currentTimeMillis();
+        List<Genre> genres = jdbcTemplate.query(getAllGenresSql, GENRE_ROW_MAPPER);
+        logger.info("Finish query to get all genres from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        return genres;
     }
 
     @Override
     public Genre getById(int id) {
-        logger.info("start receiving  genre {} ", id);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", id);
-        return namedParameterJdbcTemplate.queryForObject(GET_GENRE_BY_ID_SQL, params, GENRE_ROW_MAPPER);
+        logger.info("Start query to get genre by id {} from DB", id);
+        long startTime = System.currentTimeMillis();
+        Genre genre = jdbcTemplate.queryForObject(getGenreByIdSql, GENRE_ROW_MAPPER, id);
+        logger.info("Finish query to get genre by id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
+        return genre;
+    }
+
+    @Autowired
+    public void setGetAllGenresSql(String getAllGenresSql) {
+        this.getAllGenresSql = getAllGenresSql;
+    }
+
+    @Autowired
+    public void setGetGenreByIdSql(String getGenreByIdSql) {
+        this.getGenreByIdSql = getGenreByIdSql;
     }
 }

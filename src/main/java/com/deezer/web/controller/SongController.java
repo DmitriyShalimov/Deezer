@@ -4,16 +4,15 @@ import com.deezer.entity.Song;
 import com.deezer.service.SongService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/song")
 public class SongController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private SongService songService;
@@ -22,36 +21,86 @@ public class SongController {
         this.songService = songService;
     }
 
-    @GetMapping(value = "/song/{id}")
-    @ResponseBody
-    public Song getSong(@PathVariable int id, HttpSession session){
+    @GetMapping(value = "/album/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getSongsByAlbum(@PathVariable int id, HttpSession session) {
+        logger.info("Start request to get songs of album {}", id);
+        long start = System.currentTimeMillis();
+        List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Songs of album {} are {}. It took {} ms", id, songsByAlbum, System.currentTimeMillis() - start);
+        return songsByAlbum;
+    }
+
+    @GetMapping(value = "/genre/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getSongsByGenre(@PathVariable int id, HttpSession session) {
+        logger.info("Start request to get songs of genre {}", id);
+        long start = System.currentTimeMillis();
+        List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Songs of genre {} are {}. It took {} ms", id, songsByGenre, System.currentTimeMillis() - start);
+        return songsByGenre;
+    }
+
+    @GetMapping(value = "/artist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getSongsByArtist(@PathVariable int id, HttpSession session) {
+        logger.info("Start request to get songs of artist {}", id);
+        long start = System.currentTimeMillis();
+        List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Songs of artist {} are {}. It took {} ms", id, songs, System.currentTimeMillis() - start);
+        return songs;
+    }
+
+    @GetMapping(value = "/playlist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getSongsByPlaylist(@PathVariable int id, HttpSession session) {
+        logger.info("Start request to get songs from playlist {}", id);
+        long start = System.currentTimeMillis();
+        List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Songs from playlist {} are {}. It took {} ms", id, songs, System.currentTimeMillis() - start);
+        return songs;
+    }
+
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Song getSong(@PathVariable int id, HttpSession session) {
         int userId = Util.getUserIdFromHttpSession(session);
-        return songService.getSong(id, userId);
+        logger.info("Start request to get song {}", id);
+        long start = System.currentTimeMillis();
+        Song song = songService.getSong(id, userId);
+        logger.info("Song is {}. It took {} ms", song, System.currentTimeMillis() - start);
+        return song;
     }
 
-    @GetMapping(value = "/song/search/{mask}")
-    @ResponseBody
-    List<Song> getSongsByMask(@PathVariable String mask, HttpSession session) {
+    @GetMapping(value = "search/{mask}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getSongsByMask(@PathVariable String mask, HttpSession session) {
         int userId = Util.getUserIdFromHttpSession(session);
-        return songService.getSongsByMask(mask, userId);
+        logger.info("Start request to get songs by mask {}", mask);
+        long start = System.currentTimeMillis();
+        List<Song> songs = songService.getSongsByMask(mask, userId);
+        logger.info("Songs by mask {} are {}. It took {} ms", mask, songs, System.currentTimeMillis() - start);
+        return songs;
     }
 
-    @GetMapping(value = "/random")
-    @ResponseBody
-    List<Song> getRandomSongs(HttpSession session) {
-        return songService.getRandomSongs(Util.getUserIdFromHttpSession(session));
+    @GetMapping(value = "/random", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Song> getRandomSongs(HttpSession session) {
+        logger.info("Start request to get random songs ");
+        long start = System.currentTimeMillis();
+        List<Song> songs = songService.getRandomSongs(Util.getUserIdFromHttpSession(session));
+        logger.info("Random songs are {}. It took {} ms", System.currentTimeMillis() - start);
+        return songs;
     }
 
-    @PostMapping(value = "/song/{id}/like")
-    @ResponseBody
+    @PostMapping(value = "{id}/like")
     public void likeSong(@PathVariable int id, HttpSession session) {
+        logger.info("Start request to add like to song {}", id);
+        long start = System.currentTimeMillis();
         songService.likeSong(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Like added to song {}. It took {} ms", id, System.currentTimeMillis() - start);
     }
 
-    @GetMapping(value = "/song/like/{id}")
-    @ResponseBody
-    String getSongLikeCount(@PathVariable int id) {
-        return songService.getSongLikeCount(id);
+    @GetMapping(value = "{id}/like", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getSongLikeCount(@PathVariable int id) {
+        logger.info("Start request to get song {} like count", id);
+        long start = System.currentTimeMillis();
+        Integer songLikeCount = songService.getSongLikeCount(id);
+        logger.info("Song {} like count is {}. It took {} ms", id, songLikeCount, System.currentTimeMillis() - start);
+        return songLikeCount;
     }
 
 }

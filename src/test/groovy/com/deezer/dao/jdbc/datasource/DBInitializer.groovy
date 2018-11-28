@@ -7,6 +7,8 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder
 import org.dbunit.operation.DatabaseOperation
 import org.h2.Driver
 import org.h2.tools.RunScript
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.PropertySource
 
 import java.nio.charset.Charset
 

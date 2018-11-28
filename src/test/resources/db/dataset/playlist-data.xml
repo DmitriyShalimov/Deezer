@@ -4,6 +4,6 @@
     <genre id="1" title="genre" picture_link="genre_picture"/>
     <artist id="1" name="artist" picture="picture"/>
     <album id="1" title="album" artist="1" picture_link="album_picture"/>
-    <song id="1" title="song" track_url="track_url" album="1" picture_link="song_picture" like_count="0"/>
+    <song id="1" title="song" track_url="track_url" album="1" picture_link="song_picture" like_count="0" lyrics="lyrics"/>
     <song_genre id="1" song="1" genre="1"/>
 </dataset>

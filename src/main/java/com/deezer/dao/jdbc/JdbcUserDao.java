@@ -5,6 +5,7 @@ import com.deezer.dao.jdbc.mapper.UserRowMapper;
 import com.deezer.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,41 +16,46 @@ import java.util.Optional;
 
 @Repository
 public class JdbcUserDao implements UserDao {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
-    private static final String ADD_NEW_USER_SQL = "INSERT INTO \"user\" (login,password,salt) VALUES(:login, :password, :salt);";
-    private static final String GET_USER_BY_LOGIN = "SELECT id,login, password,salt FROM \"user\"  WHERE login=:login";
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final JdbcTemplate jdbcTemplate;
+    private String addNewUserSql;
+    private String getUserByLogin;
 
     @Autowired
-    public JdbcUserDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public JdbcUserDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void add(User user) {
-        logger.info("Start upload user {}", user.getLogin());
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("login", user.getLogin());
-        params.addValue("password", user.getPassword());
-        params.addValue("salt", user.getSalt());
-        namedParameterJdbcTemplate.update(ADD_NEW_USER_SQL, params);
-        logger.info("User {} saved", user.getLogin());
+        logger.info("Start query to add user {} to DB", user);
+        long startTime = System.currentTimeMillis();
+        jdbcTemplate.update(addNewUserSql, user.getLogin(), user.getPassword(), user.getSalt());
+        logger.info("Finish query to add user {} to DB. It took {} ms", user, System.currentTimeMillis() - startTime);
     }
 
     @Override
     public Optional<User> getByLogin(String login) {
-        logger.info("Start getting user {}", login);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("login", login);
+        logger.info("Start query to get user by login {} from DB", login);
+        long startTime = System.currentTimeMillis();
         try {
-            User user = namedParameterJdbcTemplate.queryForObject(GET_USER_BY_LOGIN, params, USER_ROW_MAPPER);
-            logger.info("User {} was found", login);
+            User user = jdbcTemplate.queryForObject(getUserByLogin, USER_ROW_MAPPER, login);
+            logger.info("Finish query to get user by login {} from DB. User was found. It took {} ms", login, System.currentTimeMillis() - startTime);
             return Optional.of(user);
         } catch (EmptyResultDataAccessException e) {
-            logger.info("User {} was not found", login);
+            logger.info("Finish query to get user by login {} from DB. User was not found. It took {} ms", login, System.currentTimeMillis() - startTime);
         }
         return Optional.empty();
     }
 
+    @Autowired
+    public void setAddNewUserSql(String addNewUserSql) {
+        this.addNewUserSql = addNewUserSql;
+    }
+
+    @Autowired
+    public void setGetUserByLogin(String getUserByLogin) {
+        this.getUserByLogin = getUserByLogin;
+    }
 }
