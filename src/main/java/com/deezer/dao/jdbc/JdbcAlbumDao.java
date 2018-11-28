@@ -6,55 +6,66 @@ import com.deezer.entity.Album;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public class JdbcAlbumDao implements AlbumDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();
-    private static final String GET_ALL_ALBUMS_BY_ARTIST_ID_SQL = "SELECT  al.id ,al.title, " +
-            "al.picture_link, ar.name as artist_name " +
-            "FROM album al join artist ar on al.artist = ar.id " +
-            "WHERE al.artist=:artistId";
-    private static final String GET_ALBUMS_BY_MASK_SQL = "SELECT  al.id ,al.title, " +
-            "al.picture_link, ar.name as artist_name " +
-            "FROM album al join artist ar on al.artist = ar.id " +
-            "WHERE lower(title) like lower(:mask)";
-    private static final String GET_ALBUM_BY_ID_SQL = "SELECT  al.id ,al.title, " +
-            "al.picture_link, ar.name as artist_name " +
-            "FROM album al join artist ar on al.artist = ar.id " +
-            "WHERE al.id=:id;";
+    private String getAllAlbumsByArtistIdSql;
+    private String getAlbumsByMaskSql;
+    private String getAlbumByIdSql;
 
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    public JdbcAlbumDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public JdbcAlbumDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public List<Album> getAlbumsByArtistId(int artistId) {
-        logger.info("start receiving albums by artist with id {}", artistId);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("artistId", artistId);
-        return namedParameterJdbcTemplate.query(GET_ALL_ALBUMS_BY_ARTIST_ID_SQL, params, ALBUM_ROW_MAPPER);
+        logger.info("Start query to get albums by artist with id {} from DB", artistId);
+        long startTime = System.currentTimeMillis();
+        List<Album> albums = jdbcTemplate.query(getAllAlbumsByArtistIdSql, ALBUM_ROW_MAPPER, artistId);
+        logger.info("Finish query to get albums by artist with id {} from DB. It took {} ms", artistId, System.currentTimeMillis() - startTime);
+        return albums;
     }
 
     @Override
     public List<Album> getAlbumsByMask(String mask) {
-        logger.info("Start receiving albums by mask {}", mask);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("mask", "%"+mask+"%");
-        return namedParameterJdbcTemplate.query(GET_ALBUMS_BY_MASK_SQL, params, ALBUM_ROW_MAPPER);
+        logger.info("Start query to get albums by mask {} from DB", mask);
+        long startTime = System.currentTimeMillis();
+        List<Album> albums = jdbcTemplate.query(getAlbumsByMaskSql, ALBUM_ROW_MAPPER, "%" + mask + "%");
+        logger.info("Finish query to get albums by mask {} from DB. It took {} ms", mask, System.currentTimeMillis() - startTime);
+        return albums;
     }
 
     @Override
     public Album getById(int id) {
-        logger.info("Start receiving album {}", id);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id",id);
-        return namedParameterJdbcTemplate.queryForObject(GET_ALBUM_BY_ID_SQL, params, ALBUM_ROW_MAPPER);
+        logger.info("Start query to get album {} from DB", id);
+        long startTime = System.currentTimeMillis();
+        Album album = jdbcTemplate.queryForObject(getAlbumByIdSql, ALBUM_ROW_MAPPER, id);
+        logger.info("Finish query to get album {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
+        return album;
+    }
+
+    @Autowired
+    public void setGetAllAlbumsByArtistIdSql(String getAllAlbumsByArtistIdSql) {
+        this.getAllAlbumsByArtistIdSql = getAllAlbumsByArtistIdSql;
+    }
+
+    @Autowired
+    public void setGetAlbumsByMaskSql(String getAlbumsByMaskSql) {
+        this.getAlbumsByMaskSql = getAlbumsByMaskSql;
+    }
+
+    @Autowired
+    public void setGetAlbumByIdSql(String getAlbumByIdSql) {
+        this.getAlbumByIdSql = getAlbumByIdSql;
     }
 }

@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SecurityInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/registration", "/assets/**");
+                .excludePathPatterns("/login", "/registration", "/assets/**", "/dist/**");
 
     }
 
@@ -33,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         registry.addResourceHandler("/assets/**").addResourceLocations("WEB-INF/assets/");
+        registry.addResourceHandler("/dist/**").addResourceLocations("dist/");
     }
 
     @Bean

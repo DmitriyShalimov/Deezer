@@ -17,12 +17,12 @@ import javax.sql.DataSource;
         excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
                 pattern = "com\\.deezer\\.web\\.controller.*"))
 public class RootConfig implements WebMvcConfigurer {
-    private @Value("${DB_URL}")
-    String url;
-    private @Value("${DB_USERNAME}")
-    String username;
-    private @Value("${DB_PASSWORD}")
-    String password;
+    @Value("${DB_URL}")
+    private String url;
+    @Value("${DB_USERNAME}")
+    private String username;
+    @Value("${DB_PASSWORD}")
+    private String password;
 
     @Bean
     NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
@@ -34,7 +34,7 @@ public class RootConfig implements WebMvcConfigurer {
         return new JdbcTemplate(getDataSource());
     }
 
-
+    @Bean
     DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl(url);

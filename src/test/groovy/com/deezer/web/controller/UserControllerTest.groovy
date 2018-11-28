@@ -2,7 +2,7 @@ package com.deezer.web.controller
 
 import com.deezer.UnitTest
 import com.deezer.entity.User
-import com.deezer.security.SecurityService
+import com.deezer.service.security.SecurityService
 import com.deezer.web.controller.view.UserController
 import org.junit.Before
 import org.junit.Test
@@ -39,7 +39,7 @@ class UserControllerTest {
     void setup() {
         User user = new User(login: 'login')
         Mockito.when(securityService.authenticate(Mockito.anyString(), Mockito.anyString())).thenReturn(Optional.of(user))
-        Mockito.when(securityService.register((User)Mockito.notNull())).thenReturn(true)
+        Mockito.when(securityService.register((User) Mockito.notNull())).thenReturn(true)
         MockitoAnnotations.initMocks(this)
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build()
     }
@@ -56,11 +56,9 @@ class UserControllerTest {
         RequestBuilder requestBuilder = post("/login")
                 .param("login", 'login')
                 .param("password", 'password')
-        def result = mockMvc.perform(requestBuilder)
+        mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andReturn()
-        def response = result.getResponse().contentAsString
-        assertEquals("success", response)
     }
 
     @Test

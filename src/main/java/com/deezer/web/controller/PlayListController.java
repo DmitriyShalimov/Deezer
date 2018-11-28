@@ -2,148 +2,105 @@ package com.deezer.web.controller;
 
 import com.deezer.entity.Access;
 import com.deezer.entity.PlayList;
-import com.deezer.entity.Song;
-import com.deezer.entity.User;
 import com.deezer.service.PlayListService;
-import com.deezer.service.SongService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
+@RequestMapping("/playlist")
 public class PlayListController {
-    private static final String LOGGED_USER_KEY = "loggedUser";
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final SongService songService;
     private final PlayListService playListService;
-    private static final String RESPONSE_SUCCESS = "success";
-    private static final String RESPONSE_ERROR = "error";
 
 
-    public PlayListController(SongService songService, PlayListService playListService) {
-        this.songService = songService;
+    public PlayListController(PlayListService playListService) {
         this.playListService = playListService;
     }
 
-    @GetMapping(value = "/album/{id}/songs")
-    @ResponseBody
-    List<Song> getSongsByAlbum(@PathVariable int id, HttpSession session) {
-        logger.info("Retrieving songs of album {}", id);
-        List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
-        logger.info("Songs of album {} are {}", id, songsByAlbum);
-        return songsByAlbum;
+    @PostMapping
+    public void addPlaylist(@RequestParam String access, @RequestParam String title,
+                            @RequestParam int song, HttpSession session) {
+        logger.info("Sending request to create playlist {} and song {} to it", title, song);
+        int userId = Util.getUserIdFromHttpSession(session);
+        long start = System.currentTimeMillis();
+        playListService.addPlaylist(title, Access.getTypeById(access), userId, song);
+        logger.info("Playlist {} created. It took {} ms", title, System.currentTimeMillis() - start);
     }
 
-    @GetMapping(value = "/genre/{id}/songs")
-    @ResponseBody
-    List<Song> getSongsByGenre(@PathVariable int id, HttpSession session) {
-        logger.info("Retrieving songs of genre {}", id);
-        List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
-        logger.info("Songs of genre {} are {}", id, songsByGenre);
-        return songsByGenre;
-    }
-
-    @GetMapping(value = "/artist/{id}/songs")
-    @ResponseBody
-    List<Song> getSongsByArtist(@PathVariable int id, HttpSession session) {
-        logger.info("Retrieving songs of artist {}", id);
-        List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
-        logger.info("Songs of artist {} are {}", id, songs);
-        return songs;
-    }
-
-    @GetMapping(value = "/playlist/{id}/songs")
-    @ResponseBody
-    List<Song> getSongsByPlaylist(@PathVariable int id, HttpSession session) {
-        logger.info("Retrieving songs from playlist {}", id);
-        List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
-        logger.info("Songs from playlist {} are {}", id, songs);
-        return songs;
-    }
-
-    @PostMapping(value = "/playlist")
-    @ResponseBody
-    public String addPlaylist(@RequestParam String access, @RequestParam String title,
-                              @RequestParam int song, HttpSession session) {
-        logger.info("Saving playlist {} and adding song {} to it", title, song);
-        User user = (User) session.getAttribute(LOGGED_USER_KEY);
-        boolean isAdded = playListService.addPlaylist(title, Access.getTypeById(access), user.getId(), song);
-        if (isAdded) {
-            return RESPONSE_SUCCESS;
-        }
-        return RESPONSE_ERROR;
-    }
-
-    @GetMapping(value = "/playlist/{id}")
-    @ResponseBody
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PlayList getPlaylistById(@PathVariable int id, HttpSession session) {
-        logger.info("Getting playlist {} metadata", id);
-        return playListService.getById(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Sending request to get playlist {} metadata", id);
+        long start = System.currentTimeMillis();
+        PlayList playList = playListService.getById(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Received playlist {}. It took {} ms", playList, System.currentTimeMillis() - start);
+        return playList;
     }
 
-    @GetMapping(value = "/playlist/user")
-    @ResponseBody
-    List<PlayList> getUserPlayLists(HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute(LOGGED_USER_KEY);
-        int id = user.getId();
-        logger.info("Start retrieving playlists of user {}", id);
+    @GetMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PlayList> getUserPlayLists(HttpSession httpSession) {
+        int id = Util.getUserIdFromHttpSession(httpSession);
+        logger.info("Sending request to get playlists of user {}", id);
+        long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getUserPlaylist(id);
-        logger.info("Playlists of user {} are {}", id, playLists);
+        logger.info("Playlists of user {} are {}.It took {} ms", id, playLists, System.currentTimeMillis() - start);
         return playLists;
     }
 
-    @PostMapping(value = "/playlist/{playlistId}/song/{songId}")
-    @ResponseBody
-    public String addSongToPlaylist(@PathVariable int playlistId, @PathVariable int songId) {
-        boolean isAdded = playListService.addSongToPlaylist(playlistId, songId);
-        if (isAdded) {
-            return RESPONSE_SUCCESS;
-        }
-        return RESPONSE_ERROR;
+    @PostMapping(value = "{playlistId}/song/{songId}")
+    public void addSongToPlaylist(@PathVariable int playlistId, @PathVariable int songId) {
+        logger.info("Sending request to add song {} to playlist {}", songId, playlistId);
+        long start = System.currentTimeMillis();
+        playListService.addSongToPlaylist(playlistId, songId);
+        logger.info("Song {} added to playlist {}.It took {} ms", songId, playlistId, System.currentTimeMillis() - start);
     }
 
-    @PostMapping(value = "/playlist/{id}/like")
-    @ResponseBody
-    public String likePlaylist(@PathVariable int id, HttpSession session) {
-        boolean isLiked = playListService.likePlaylist(id, Util.getUserIdFromHttpSession(session));
-        if (isLiked) {
-            return RESPONSE_SUCCESS;
-        }
-        return RESPONSE_ERROR;
+    @PostMapping(value = "{id}/like")
+    public void likePlaylist(@PathVariable int id, HttpSession session) {
+        logger.info("Sending request to add like to playlist {}", id);
+        long start = System.currentTimeMillis();
+        playListService.likePlaylist(id, Util.getUserIdFromHttpSession(session));
+        logger.info("Like added to playlist {}.It took {} ms", id, System.currentTimeMillis() - start);
     }
 
-    @GetMapping(value = "/playlist/like/{id}")
-    @ResponseBody
-    String getSongLikeCount(@PathVariable int id) {
-        return playListService.getPlaylistLikeCount(id);
+    @GetMapping(value = "/like/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getSongLikeCount(@PathVariable int id) {
+        logger.info("Sending request to get like count of playlist {}", id);
+        long start = System.currentTimeMillis();
+        Integer likeCount = playListService.getPlaylistLikeCount(id);
+        logger.info("Playlist {} has {} likes. It took {} ms", id, likeCount, System.currentTimeMillis() - start);
+        return likeCount;
     }
 
-    @GetMapping(value = "/top-playlists")
-    @ResponseBody
+    @GetMapping(value = "top", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getTopPlaylists(HttpSession session) {
-        logger.info("Start retrieving top playlists");
+        logger.info("Sending request to get top playlists");
+        long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getTopPlaylists(Util.getUserIdFromHttpSession(session));
-        logger.info("Top playlists are {}", playLists);
+        logger.info("Top playlists are {}. It took {} ms", playLists, System.currentTimeMillis() - start);
         return playLists;
     }
 
-    @GetMapping(value = "/playlists/liked")
-    @ResponseBody
+    @GetMapping(value = "/liked", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getLikedPlaylists(HttpSession session) {
         int userId = Util.getUserIdFromHttpSession(session);
-        logger.info("Start retrieving playlists liked by user {}", userId);
+        logger.info("Sending request to get playlists liked by user {}", userId);
+        long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getLikedPlaylists(userId);
-        logger.info("User {} likes {} playlists",userId, playLists);
+        logger.info("User {} likes {} playlists. It took {} ms", userId, playLists, System.currentTimeMillis() - start);
         return playLists;
     }
 
-    @GetMapping(value = "/playlists")
-    @ResponseBody
+    @GetMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getAllPublicPlaylists(HttpSession session) {
-        logger.info("Start retrieving all public playlists");
-        return playListService.getAllPublicPlaylists(Util.getUserIdFromHttpSession(session));
+        logger.info("Sending request to get all public playlists");
+        long start = System.currentTimeMillis();
+        List<PlayList> playlists = playListService.getAllPublicPlaylists(Util.getUserIdFromHttpSession(session));
+        logger.info("Public playlists are {}. It took {} ms", playlists, System.currentTimeMillis() - start);
+        return playlists;
     }
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface PlayListService {
 
-    boolean addPlaylist(String playlistTitle, Access access, int userId, int songId);
+    void addPlaylist(String playlistTitle, Access access, int userId, int songId);
 
-    boolean addSongToPlaylist(int playlistId, int songId);
+    void addSongToPlaylist(int playlistId, int songId);
 
     List<PlayList> getUserPlaylist(int id);
 
-    boolean likePlaylist(int playlistId, int userId);
+    void likePlaylist(int playlistId, int userId);
 
-    String getPlaylistLikeCount(int id);
+    Integer getPlaylistLikeCount(int id);
 
     List<PlayList> getTopPlaylists(int userId);
 

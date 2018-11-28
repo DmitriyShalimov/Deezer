@@ -30,6 +30,7 @@ CREATE TABLE SONG
   album integer,
   picture_link VARCHAR(500),
   like_count integer,
+  lyrics text,
   foreign key (album) REFERENCES ALBUM (id),
   CONSTRAINT unique_song_album UNIQUE (title, album)
 );
@@ -42,4 +43,11 @@ CREATE TABLE SONG_GENRE
   foreign key (song) REFERENCES SONG (id),
   foreign key (genre) REFERENCES GENRE (id),
   CONSTRAINT unique_song_genre UNIQUE (song, genre)
+);
+
+CREATE TABLE SONG_USER
+(
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  song integer NOT NULL,
+  user integer NOT NULL
 )

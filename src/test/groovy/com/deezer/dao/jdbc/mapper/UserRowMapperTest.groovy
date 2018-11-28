@@ -25,7 +25,7 @@ class UserRowMapperTest {
         UserRowMapper userRowMapper = new UserRowMapper()
 
         //then
-        def actualResult = userRowMapper.mapRow(resultSet)
+        def actualResult = userRowMapper.mapRow(resultSet, 0)
         assertEquals(expectedUser, actualResult)
     }
 }

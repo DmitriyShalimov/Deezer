@@ -44,7 +44,7 @@ class AlbumControllerTest {
 
     @Test
     void getAlbumsByArtist() {
-        def result = mockMvc.perform(get("/artist/{id}/albums", 1))
+        def result = mockMvc.perform(get("/album/artist/{id}", 1))
                 .andExpect(status().isOk()).andReturn()
         def response = result.getResponse().getContentAsString()
         assertTrue(response.contains(album.title))

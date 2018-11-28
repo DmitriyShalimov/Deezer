@@ -29,21 +29,14 @@ class UserController {
 
     doLogin(user, onError) {
         $.post('/login', {login: user.login, password: user.password}, function (data) {
-            if (data === 'success') {
                 $(location).attr('pathname', '/');
-            } else {
-                if (onError) onError();
-            }
         }.bind(this));
     }
 
     doRegister(user, onError) {
         $.post('/registration', {login: user.login, password: user.password}, function (data) {
-            if (data === 'success') {
                 this.doLogin(user);
-            } else {
-                if (onError) onError();
-            }
+
         }.bind(this));
 
     }

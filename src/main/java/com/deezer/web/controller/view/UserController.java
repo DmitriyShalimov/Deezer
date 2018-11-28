@@ -1,10 +1,12 @@
 package com.deezer.web.controller.view;
 
 import com.deezer.entity.User;
-import com.deezer.security.SecurityService;
+import com.deezer.service.security.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,15 +33,15 @@ public class UserController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String doLogin(@RequestParam String login, @RequestParam String password, HttpSession session) {
+    public ResponseEntity doLogin(@RequestParam String login, @RequestParam String password, HttpSession session) {
         Optional<User> optionalUser = securityService.authenticate(login, password);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             session.setAttribute("loggedUser", user);
             logger.info("User {} logged in", user.getLogin());
-            return "success";
+            return ResponseEntity.ok().build();
         }
-        return "error";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

@@ -5,8 +5,8 @@ plugins {
     id "com.bmuschko.tomcat" version "2.5"
     id 'groovy'
     id "org.sonarqube" version "2.6"
+    id "com.moowork.node" version "1.2.0"
 }
-
 
 group 'com.deezer'
 version '1.0-SNAPSHOT'
@@ -49,6 +49,19 @@ tomcat {
     ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
     contextPath = "/"
 }
+
+node {
+    download = true
+    workDir = file("${project.buildDir}/react/nodejs")
+    npmWorkDir = file("${project.buildDir}/react/npm")
+    nodeModulesDir = file("${project.projectDir}")
+}
+task webpack(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('node_modules/.bin/webpack')
+}
+
+processResources.dependsOn 'webpack'
+
 test {
     useJUnit {
         includeCategories 'com.deezer.UnitTest'

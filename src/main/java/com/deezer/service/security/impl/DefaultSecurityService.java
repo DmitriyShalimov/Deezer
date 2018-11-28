@@ -1,7 +1,7 @@
-package com.deezer.security.impl;
+package com.deezer.service.security.impl;
 
 import com.deezer.entity.User;
-import com.deezer.security.SecurityService;
+import com.deezer.service.security.SecurityService;
 import com.deezer.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +36,10 @@ public class DefaultSecurityService implements SecurityService {
 
     public Optional<User> authenticate(String login, String password) {
         Optional<User> optionalUser = userService.getByLogin(login);
-        return optionalUser.map(user -> checkPassword(user, password));
+        return optionalUser.map(user -> getUserIfPasswordIsValid(user, password));
     }
 
-    private User checkPassword(User user, String password) {
+    private User getUserIfPasswordIsValid(User user, String password) {
         String expectedPassword = DigestUtils.sha1Hex(password + user.getSalt());
         if (user.getPassword().equals(expectedPassword)) {
             user.setPassword(null);
