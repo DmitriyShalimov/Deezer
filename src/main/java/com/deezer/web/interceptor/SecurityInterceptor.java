@@ -15,6 +15,7 @@ import java.util.UUID;
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
     private static final String LOGGED_USER_ATTRIBUTE = "loggedUser";
     private static final String USER_KEY = "username";
+    private static final String REQUEST_ID_KEY = "request";
     private static final String REDIRECT_URI = "/login";
     private static final long MAX_INACTIVE_SESSION_TIME = 24 * 60 * 60 * 1000;// 24 hours
 
@@ -22,24 +23,22 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle( HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        MDC.put(REQUEST_ID_KEY, UUID.randomUUID().toString());
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute(LOGGED_USER_ATTRIBUTE);
         if (loggedUser == null) {
             logger.info("User in not logged. Redirecting to login");
-            MDC.clear();
             response.sendRedirect(REDIRECT_URI);
             return false;
         } else {
             long lastAccessedTime = session.getLastAccessedTime();
             if (System.currentTimeMillis() - lastAccessedTime > MAX_INACTIVE_SESSION_TIME) {
                 session.removeAttribute(LOGGED_USER_ATTRIBUTE);
-                MDC.clear();
                 logger.info("Session for user {} has expired. Redirecting to login", loggedUser.getLogin());
                 response.sendRedirect(REDIRECT_URI);
                 return false;
             } else {
                 MDC.put(USER_KEY, loggedUser.getLogin());
-                MDC.put("Request-Id", UUID.randomUUID().toString());
                 logger.info("Session for user {} is valid", loggedUser.getLogin());
                 return true;
             }
@@ -49,6 +48,5 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         MDC.clear();
-        super.afterCompletion(request, response, handler, ex);
     }
 }

@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -26,12 +23,7 @@ public class UserController {
         this.securityService = securityService;
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String showLogin() {
-        return "login.html";
-    }
-
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    @PostMapping(path = "/login")
     @ResponseBody
     public ResponseEntity doLogin(@RequestParam String login, @RequestParam String password, HttpSession session) {
         Optional<User> optionalUser = securityService.authenticate(login, password);
@@ -44,26 +36,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loggedUser");
         return "redirect:/login";
     }
 
-    @RequestMapping(path = "/registration", method = RequestMethod.GET)
-    public String registration() {
-        return "registration.html";
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/registration")
     @ResponseBody
-    public String register(@RequestParam String login, @RequestParam String password, HttpSession session) {
+    public ResponseEntity register(@RequestParam String login, @RequestParam String password, HttpSession session) {
         User user = new User(login, password);
         boolean registered = securityService.register(user);
         if (registered) {
             session.setAttribute("loggedUser", user);
-            return "success";
+            return ResponseEntity.ok().build();
         }
-        return "error";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
