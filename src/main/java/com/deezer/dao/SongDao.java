@@ -22,4 +22,6 @@ public interface SongDao {
     void likeSong(int songId, int userId);
 
     Integer getSongLikeCount(int id);
+
+    List<Song> getRecommendedSongForGenre(int userId, List<Integer> genres);
 }

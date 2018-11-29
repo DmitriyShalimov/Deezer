@@ -207,66 +207,88 @@ public class QueryContextConfig {
     }
 
     @Bean
-    public String getAllSongsByArtistSql(){
+    public String getAllSongsByArtistSql() {
         return "select s.id ,s.title," +
                 "s.track_url, s.picture_link, " +
                 "al.title as  album_title, art.name as artist_name  " +
-                ", su.id as liked , s.lyrics "+
+                ", su.id as liked , s.lyrics " +
                 "from  song s join album al on s.album = al.id " +
-                "join artist art  on al.artist = art.id "+
-                "left join song_user su on su.user =?  and su.song = s.id "+
+                "join artist art  on al.artist = art.id " +
+                "left join song_user su on su.user =?  and su.song = s.id " +
                 "WHERE art.id=?";
     }
 
     @Bean
-    public String getAllSongsByAlbumSql(){
+    public String getAllSongsByAlbumSql() {
         return "select s.id ,s.title,  " +
                 "s.track_url,  s.picture_link, " +
                 "al.title as album_title,  art.name as artist_name " +
-                ", su.id as liked,   s.lyrics "+
+                ", su.id as liked,   s.lyrics " +
                 "from song s join album al on  s.album = al.id " +
-                "join artist  art on al.artist = art.id "+
-                "left join song_user su on su.user  = ?  and su.song = s.id "+
+                "join artist  art on al.artist = art.id " +
+                "left join song_user su on su.user  = ?  and su.song = s.id " +
                 "WHERE al.id=?";
     }
 
     @Bean
-    public String getAllSongsByMaskSql(){
+    public String getAllSongsByMaskSql() {
         return "select s.id ,s.title, s.track_url,s.picture_link,  " +
                 " al.title as album_title, art.name as artist_name " +
-                ",su.id as liked, s.lyrics "+
+                ",su.id as liked, s.lyrics " +
                 "from song s join album al on s.album =al.id " +
-                "join  artist art on al.artist = art.id "+
-                "left join song_user su on su.user= ?  and su.song = s.id "+
+                "join  artist art on al.artist = art.id " +
+                "left join song_user su on su.user= ?  and su.song = s.id " +
                 "WHERE lower(s.title) like lower(?);";
     }
 
     @Bean
-    public String getRandomSongs(){
+    public String getRandomSongs() {
         return "select s.id ,s.title,  s.track_url,s.picture_link , " +
                 "al.title as  album_title, art.name as artist_name " +
-                ",  su.id as liked, s.lyrics "+
+                ",  su.id as liked, s.lyrics " +
                 "from song s join album al on s.album =  al.id " +
-                "join artist art on al.artist  = art.id "+
-                "left join song_user su on  su.user = ?  and su.song = s.id "+
+                "join artist art on al.artist  = art.id " +
+                "left join song_user su on  su.user = ?  and su.song = s.id " +
                 "order by random() limit 42";
     }
 
     @Bean
-    public String getAllSongsByPlaylistSql(){
+    public String getAllSongsByPlaylistSql() {
         return "select s.id, s.title, " +
                 "s.track_url, s.picture_link , " +
                 "al.title  as album_title, art.name as artist_name " +
-                ", su.id  as liked, s.lyrics "+
+                ", su.id  as liked, s.lyrics " +
                 "from song s join album al on s.album = al.id " +
-                " join artist art on al.artist = art.id "+
+                " join artist art on al.artist = art.id " +
                 "join playlist_song pls on pls.song = s.id " +
-                "left join song_user su  on su.user = ?  and su.song = s.id "+
+                "left join song_user su  on su.user = ?  and su.song = s.id " +
                 "where pls.playlist =?";
     }
 
     @Bean
-    public String getSongLikeCountSql(){
+    public String getSongLikeCountSql() {
         return "SELECT COUNT(*) FROM song_user WHERE song =?";
+    }
+
+    @Bean
+    public String getAllSongsByGenresSql() {
+        return "select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title, art.name as artist_name " +
+                ", su.id as liked, s.lyrics " +
+                "from song s join album al on s.album = al.id " +
+                "join artist art on al.artist = art.id " +
+                "join song_genre sg on sg.song = s.id " +
+                "left join song_user su on su.user = :userId  and su.song = s.id " +
+                "where sg.genre=? or sg.genre=?";
+    }
+
+    @Bean
+    public String getUserLikedGenresSql(){
+        return "select g.id  from genre as g " +
+                " join song_genre sg on sg.genre = g.id" +
+                " join song s on s.id=sg.song\n" +
+                " join song_user as su on su.song=s.id" +
+                " where su.user=:userId " +
+                " group by g.id" +
+                " order by count (g.id) desc limit 2";
     }
 }

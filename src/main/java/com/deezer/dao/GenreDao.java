@@ -8,5 +8,7 @@ public interface GenreDao {
     List<Genre> getGenres();
 
     Genre getById(int id);
+
+    List<Integer> getUserLikedGenres(int userId);
 }
 

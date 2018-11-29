@@ -2,6 +2,7 @@ package com.deezer.service.impl;
 
 import com.deezer.dao.SongDao;
 import com.deezer.entity.Song;
+import com.deezer.service.PlayListService;
 import com.deezer.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import java.util.List;
 @Service
 public class DefaultSongService implements SongService {
     private final SongDao songDao;
+    private final PlayListService playListService;
 
     @Autowired
-    public DefaultSongService(SongDao songDao) {
+    public DefaultSongService(SongDao songDao, PlayListService playListService) {
         this.songDao = songDao;
+        this.playListService = playListService;
     }
 
     @Override
@@ -34,7 +37,11 @@ public class DefaultSongService implements SongService {
 
     @Override
     public List<Song> getSongsByPlayList(int playListId, int userId) {
-        return songDao.getSongsByPlayList(playListId, userId);
+        if (playListId < 0) {
+            return playListService.getSongsFromRecommendedPlayList(playListId, userId);
+        } else {
+            return songDao.getSongsByPlayList(playListId, userId);
+        }
     }
 
     @Override

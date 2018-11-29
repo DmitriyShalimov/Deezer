@@ -25,6 +25,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-web', version: '5.0.9.RELEASE'
     compile 'org.thymeleaf:thymeleaf-spring5:3.0.9.RELEASE'
     compile 'commons-codec:commons-codec:1.11'
+    compile 'org.apache.commons:commons-collections4:4.0'
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'

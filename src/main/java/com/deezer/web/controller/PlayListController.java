@@ -103,4 +103,13 @@ public class PlayListController {
         logger.info("Public playlists are {}. It took {} ms", playlists, System.currentTimeMillis() - start);
         return playlists;
     }
+
+    @GetMapping(value = "/playlist/recommended")
+    public List<PlayList> getRecommendedPlaylist(HttpSession session) {
+        logger.info("Start retrieving recommended playlists");
+        long start = System.currentTimeMillis();
+        List<PlayList> playLists = playListService.getRecommendedPlayList(Util.getUserIdFromHttpSession(session));
+        logger.info("Recommended playlist for user are {}. It took {} ms", playLists, System.currentTimeMillis() - start);
+        return playLists;
+    }
 }
