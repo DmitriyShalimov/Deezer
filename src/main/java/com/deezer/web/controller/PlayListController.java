@@ -104,7 +104,7 @@ public class PlayListController {
         return playlists;
     }
 
-    @GetMapping(value = "/playlist/recommended")
+    @GetMapping(value = "/recommended")
     public List<PlayList> getRecommendedPlaylist(HttpSession session) {
         logger.info("Start retrieving recommended playlists");
         long start = System.currentTimeMillis();
