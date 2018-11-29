@@ -2,6 +2,7 @@ package com.deezer.service;
 
 import com.deezer.entity.Access;
 import com.deezer.entity.PlayList;
+import com.deezer.entity.Song;
 
 import java.util.List;
 
@@ -24,4 +25,8 @@ public interface PlayListService {
     List<PlayList> getLikedPlaylists(int userId);
 
     List<PlayList> getAllPublicPlaylists(int userId);
+
+    List<PlayList> getRecommendedPlayList(int userId);
+
+    List<Song> getSongsFromRecommendedPlayList(int playListId, int userId);
 }

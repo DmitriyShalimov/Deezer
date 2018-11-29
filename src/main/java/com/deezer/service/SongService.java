@@ -21,5 +21,5 @@ public interface SongService {
 
     void likeSong(int songId, int userId);
 
-    Integer getSongLikeCount(int id);
+    Integer getSongLikeCount(int userId);
 }

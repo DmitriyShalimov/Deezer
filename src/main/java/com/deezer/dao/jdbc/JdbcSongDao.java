@@ -30,6 +30,7 @@ public class JdbcSongDao implements SongDao {
     private String getRandomSongs;
     private String getAllSongsByPlaylistSql;
     private String getSongLikeCountSql;
+    private String getAllSongsByGenresSql;
 
 
     @Autowired
@@ -119,6 +120,22 @@ public class JdbcSongDao implements SongDao {
         return songLikeCount;
     }
 
+    @Override
+    public List<Song> getRecommendedSongForGenre(int userId, List<Integer> genres) {
+        logger.info("start receiving recommended songs for user  with id {}", userId);
+        long startTime = System.currentTimeMillis();
+        if (genres.size() == 1) {
+            List<Song> songs = jdbcTemplate.query(getAllSongsByGenreSql, SONG_ROW_MAPPER, userId, genres.get(0));
+            logger.info("Finish query to get all songs of genre {} from DB. It took {} ms", genres.get(0), System.currentTimeMillis() - startTime);
+            return songs;
+        } else {
+            List<Song> songs = jdbcTemplate.query(getAllSongsByGenresSql, SONG_ROW_MAPPER, userId, genres.get(0), genres.get(1));
+            logger.info("Finish query to get all songs of genres {} ,{}  from DB. It took {} ms", genres.get(0), genres.get(1),
+                    System.currentTimeMillis() - startTime);
+            return songs;
+        }
+    }
+
     @Autowired
     public void setGetSongByIdSql(String getSongByIdSql) {
         this.getSongByIdSql = getSongByIdSql;
@@ -157,5 +174,10 @@ public class JdbcSongDao implements SongDao {
     @Autowired
     public void setGetSongLikeCountSql(String getSongLikeCountSql) {
         this.getSongLikeCountSql = getSongLikeCountSql;
+    }
+
+    @Autowired
+    public void setGetAllSongsByGenresSql(String getAllSongsByGenresSql) {
+        this.getAllSongsByGenresSql = getAllSongsByGenresSql;
     }
 }
