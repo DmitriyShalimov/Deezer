@@ -54,7 +54,9 @@ public class JdbcGenreDao implements GenreDao {
         long startTime = System.currentTimeMillis();
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("userId", userId);
-        return namedParameterJdbcTemplate.query(getUserLikedGenresSql, params, (rs, rowNum) -> rs.getInt(1));
+        List<Integer> genreIds = namedParameterJdbcTemplate.query(getUserLikedGenresSql, params, (rs, rowNum) -> rs.getInt(1));
+        logger.info("Finish query to get liked genres for user with id {} from DB. It took {} ms", userId, System.currentTimeMillis() - startTime);
+        return genreIds;
     }
 
     @Autowired

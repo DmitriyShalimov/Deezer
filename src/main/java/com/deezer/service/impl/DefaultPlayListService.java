@@ -113,11 +113,11 @@ public class DefaultPlayListService implements PlayListService {
     @Override
     public List<PlayList> getRecommendedPlayList(int userId) {
         List<Integer> genres = genreDao.getUserLikedGenres(userId);
-        if (genres.size() > 0) {
+        if (genres.isEmpty()) {
+            return getTopPlaylists(userId);
+        } else {
             initSongsForRecommendedPlayList(genres, userId);
             return recommendedPlaylist;
-        } else {
-            return getTopPlaylists(userId);
         }
     }
 
