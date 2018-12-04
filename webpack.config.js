@@ -7,7 +7,7 @@ const DEST = path.resolve(__dirname, 'src/main/webapp/dist');
 module.exports = {
     devtool: 'source-map',
     entry: {
-        app: SRC + '/index.jsx',
+        app: SRC + '/index.jsx'
     },
     mode: 'development',
     output: {
@@ -23,9 +23,15 @@ module.exports = {
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        presets: ["@babel/preset-env", "@babel/preset-react"]
+                        presets: ["@babel/preset-env", "@babel/preset-react", {
+                            'plugins': ['@babel/plugin-proposal-class-properties']
+                        }]
                     }
                 }]
+            },
+            {
+                test: /\.(s*)css$/,
+                use: ['style-loader', 'css-loader', "sass-loader"]
             }
         ]
     }

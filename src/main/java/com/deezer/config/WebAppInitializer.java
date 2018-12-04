@@ -1,13 +1,16 @@
 package com.deezer.config;
 
+import com.deezer.web.security.AuthFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.util.EnumSet;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
@@ -33,6 +36,11 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //web context
         AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
         webContext.register(WebConfig.class);
+
+        //filter
+        servletContext.addFilter("authFilter", AuthFilter.class)
+                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD),
+                        false, "/api/v1/*");
 
         //dispatcher for web
         DispatcherServlet webDispatcher = new DispatcherServlet(webContext);

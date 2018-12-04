@@ -16,7 +16,7 @@ class DefaultSecurityServiceTest {
         def user = new User(id: 1, login: 'user', password: 'pass')
         def userService = [isLoginUnique: { login -> true }, add: { userToAdd -> user }] as UserService
         SecurityService securityService = new DefaultSecurityService(userService)
-        assertTrue(securityService.register(user))
+        assertTrue(securityService.register(user) != null)
     }
 
     @Test
@@ -25,7 +25,7 @@ class DefaultSecurityServiceTest {
         def userService = { getByLogin -> Optional.of(expectedUser) } as UserService
         SecurityService securityService = new DefaultSecurityService(userService)
         def actualUser = securityService.authenticate('zhenya', '333')
-        assertTrue(actualUser.isPresent())
+        assertTrue(actualUser.uuid != null)
     }
 
     @Test
@@ -34,6 +34,6 @@ class DefaultSecurityServiceTest {
         def userService = { getByLogin -> Optional.of(expectedUser) } as UserService
         SecurityService securityService = new DefaultSecurityService(userService)
         def actualUser = securityService.authenticate('zhenya', 'wrongPass')
-        assertFalse(actualUser.isPresent())
+        assertTrue(actualUser == null)
     }
 }

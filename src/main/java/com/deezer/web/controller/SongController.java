@@ -2,12 +2,12 @@ package com.deezer.web.controller;
 
 import com.deezer.entity.Song;
 import com.deezer.service.SongService;
+import com.deezer.web.security.AuthPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -21,44 +21,44 @@ public class SongController {
     }
 
     @GetMapping(value = "/album/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getSongsByAlbum(@PathVariable int id, HttpSession session) {
+    public List<Song> getSongsByAlbum(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Start request to get songs of album {}", id);
         long start = System.currentTimeMillis();
-        List<Song> songsByAlbum = songService.getSongsByAlbum(id, Util.getUserIdFromHttpSession(session));
+        List<Song> songsByAlbum = songService.getSongsByAlbum(id, principal.getUser().getId());
         logger.info("Songs of album {} are {}. It took {} ms", id, songsByAlbum, System.currentTimeMillis() - start);
         return songsByAlbum;
     }
 
     @GetMapping(value = "/genre/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getSongsByGenre(@PathVariable int id, HttpSession session) {
+    public List<Song> getSongsByGenre(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Start request to get songs of genre {}", id);
         long start = System.currentTimeMillis();
-        List<Song> songsByGenre = songService.getSongsByGenre(id, Util.getUserIdFromHttpSession(session));
+        List<Song> songsByGenre = songService.getSongsByGenre(id, principal.getUser().getId());
         logger.info("Songs of genre {} are {}. It took {} ms", id, songsByGenre, System.currentTimeMillis() - start);
         return songsByGenre;
     }
 
     @GetMapping(value = "/artist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getSongsByArtist(@PathVariable int id, HttpSession session) {
+    public List<Song> getSongsByArtist(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Start request to get songs of artist {}", id);
         long start = System.currentTimeMillis();
-        List<Song> songs = songService.getSongsByArtist(id, Util.getUserIdFromHttpSession(session));
+        List<Song> songs = songService.getSongsByArtist(id, principal.getUser().getId());
         logger.info("Songs of artist {} are {}. It took {} ms", id, songs, System.currentTimeMillis() - start);
         return songs;
     }
 
     @GetMapping(value = "/playlist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getSongsByPlaylist(@PathVariable int id, HttpSession session) {
+    public List<Song> getSongsByPlaylist(@PathVariable int id,AuthPrincipal principal) {
         logger.info("Start request to get songs from playlist {}", id);
         long start = System.currentTimeMillis();
-        List<Song> songs = songService.getSongsByPlayList(id, Util.getUserIdFromHttpSession(session));
+        List<Song> songs = songService.getSongsByPlayList(id, principal.getUser().getId());
         logger.info("Songs from playlist {} are {}. It took {} ms", id, songs, System.currentTimeMillis() - start);
         return songs;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Song getSong(@PathVariable int id, HttpSession session) {
-        int userId = Util.getUserIdFromHttpSession(session);
+    public Song getSong(@PathVariable int id, AuthPrincipal principal) {
+        int userId = principal.getUser().getId();
         logger.info("Start request to get song {}", id);
         long start = System.currentTimeMillis();
         Song song = songService.getSong(id, userId);
@@ -67,8 +67,8 @@ public class SongController {
     }
 
     @GetMapping(value = "search/{mask}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getSongsByMask(@PathVariable String mask, HttpSession session) {
-        int userId = Util.getUserIdFromHttpSession(session);
+    public List<Song> getSongsByMask(@PathVariable String mask, AuthPrincipal principal) {
+        int userId = principal.getUser().getId();
         logger.info("Start request to get songs by mask {}", mask);
         long start = System.currentTimeMillis();
         List<Song> songs = songService.getSongsByMask(mask, userId);
@@ -77,19 +77,19 @@ public class SongController {
     }
 
     @GetMapping(value = "/random", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Song> getRandomSongs(HttpSession session) {
+    public List<Song> getRandomSongs(AuthPrincipal principal) {
         logger.info("Start request to get random songs ");
         long start = System.currentTimeMillis();
-        List<Song> songs = songService.getRandomSongs(Util.getUserIdFromHttpSession(session));
+        List<Song> songs = songService.getRandomSongs(principal.getUser().getId());
         logger.info("Random songs are {}. It took {} ms", songs, System.currentTimeMillis() - start);
         return songs;
     }
 
     @PostMapping(value = "{id}/like")
-    public void likeSong(@PathVariable int id, HttpSession session) {
+    public void likeSong(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Start request to add like to song {}", id);
         long start = System.currentTimeMillis();
-        songService.likeSong(id, Util.getUserIdFromHttpSession(session));
+        songService.likeSong(id, principal.getUser().getId());
         logger.info("Like added to song {}. It took {} ms", id, System.currentTimeMillis() - start);
     }
 

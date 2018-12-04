@@ -4,6 +4,7 @@ import com.deezer.UnitTest
 import com.deezer.entity.Song
 import com.deezer.entity.User
 import com.deezer.service.SongService
+import com.deezer.web.security.AuthPrincipal
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -43,7 +44,7 @@ class SongControllerTest {
     void getSong() {
         def user = new User(id:1)
         mockMvc.perform(get("/song/{id}", 1)
-                .sessionAttr('loggedUser', user))
+                .principal(new AuthPrincipal(user)))
                 .andExpect(status().isOk())
     }
 
@@ -51,7 +52,7 @@ class SongControllerTest {
     void getSongsByMask() {
         def user = new User(id:1)
         mockMvc.perform(get("/song/search/{mask}", "song")
-                .sessionAttr('loggedUser', user))
+                .principal(new AuthPrincipal(user)))
                 .andExpect(status().isOk())
     }
 
@@ -59,7 +60,7 @@ class SongControllerTest {
     void getSongsByAlbum() {
         def user = new User(id:1)
         def result = mockMvc.perform(get("/song/album/{id}", 1)
-                .sessionAttr('loggedUser', user))
+                .principal(new AuthPrincipal(user)))
                 .andExpect(status().isOk()).andReturn()
 
     }
@@ -68,7 +69,7 @@ class SongControllerTest {
     void getSongsByGenre() {
         def user = new User(id:1)
         mockMvc.perform(get("/song/genre/{id}", 1)
-                .sessionAttr('loggedUser', user))
+                .principal(new AuthPrincipal(user)))
                 .andExpect(status().isOk()).andReturn()
     }
 
@@ -76,7 +77,7 @@ class SongControllerTest {
     void getSongsByArtist() {
         def user = new User(id:1)
         mockMvc.perform(get("/song/artist/{id}", 1)
-                .sessionAttr('loggedUser', user))
+                .principal(new AuthPrincipal(user)))
                 .andExpect(status().isOk()).andReturn()
     }
 }

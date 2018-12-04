@@ -3,6 +3,7 @@ package com.deezer.web.controller;
 import com.deezer.entity.Access;
 import com.deezer.entity.PlayList;
 import com.deezer.service.PlayListService;
+import com.deezer.web.security.AuthPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -24,26 +25,26 @@ public class PlayListController {
 
     @PostMapping
     public void addPlaylist(@RequestParam String access, @RequestParam String title,
-                            @RequestParam int song, HttpSession session) {
+                            @RequestParam int song, AuthPrincipal principal) {
         logger.info("Sending request to create playlist {} and song {} to it", title, song);
-        int userId = Util.getUserIdFromHttpSession(session);
+        int userId = principal.getUser().getId();
         long start = System.currentTimeMillis();
         playListService.addPlaylist(title, Access.getTypeById(access), userId, song);
         logger.info("Playlist {} created. It took {} ms", title, System.currentTimeMillis() - start);
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PlayList getPlaylistById(@PathVariable int id, HttpSession session) {
+    public PlayList getPlaylistById(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Sending request to get playlist {} metadata", id);
         long start = System.currentTimeMillis();
-        PlayList playList = playListService.getById(id, Util.getUserIdFromHttpSession(session));
+        PlayList playList = playListService.getById(id, principal.getUser().getId());
         logger.info("Received playlist {}. It took {} ms", playList, System.currentTimeMillis() - start);
         return playList;
     }
 
     @GetMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayList> getUserPlayLists(HttpSession httpSession) {
-        int id = Util.getUserIdFromHttpSession(httpSession);
+    public List<PlayList> getUserPlayLists(AuthPrincipal principal) {
+        int id = principal.getUser().getId();
         logger.info("Sending request to get playlists of user {}", id);
         long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getUserPlaylist(id);
@@ -60,10 +61,10 @@ public class PlayListController {
     }
 
     @PostMapping(value = "{id}/like")
-    public void likePlaylist(@PathVariable int id, HttpSession session) {
+    public void likePlaylist(@PathVariable int id, AuthPrincipal principal) {
         logger.info("Sending request to add like to playlist {}", id);
         long start = System.currentTimeMillis();
-        playListService.likePlaylist(id, Util.getUserIdFromHttpSession(session));
+        playListService.likePlaylist(id, principal.getUser().getId());
         logger.info("Like added to playlist {}.It took {} ms", id, System.currentTimeMillis() - start);
     }
 
@@ -77,17 +78,17 @@ public class PlayListController {
     }
 
     @GetMapping(value = "top", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayList> getTopPlaylists(HttpSession session) {
+    public List<PlayList> getTopPlaylists(AuthPrincipal principal) {
         logger.info("Sending request to get top playlists");
         long start = System.currentTimeMillis();
-        List<PlayList> playLists = playListService.getTopPlaylists(Util.getUserIdFromHttpSession(session));
+        List<PlayList> playLists = playListService.getTopPlaylists(principal.getUser().getId());
         logger.info("Top playlists are {}. It took {} ms", playLists, System.currentTimeMillis() - start);
         return playLists;
     }
 
     @GetMapping(value = "/liked", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayList> getLikedPlaylists(HttpSession session) {
-        int userId = Util.getUserIdFromHttpSession(session);
+    public List<PlayList> getLikedPlaylists(AuthPrincipal principal) {
+        int userId = principal.getUser().getId();
         logger.info("Sending request to get playlists liked by user {}", userId);
         long start = System.currentTimeMillis();
         List<PlayList> playLists = playListService.getLikedPlaylists(userId);
@@ -96,10 +97,11 @@ public class PlayListController {
     }
 
     @GetMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayList> getAllPublicPlaylists(HttpSession session) {
+    public List<PlayList> getAllPublicPlaylists(AuthPrincipal principal, HttpSession session) {
+        Util.getUserIdFromHttpSession(session);
         logger.info("Sending request to get all public playlists");
         long start = System.currentTimeMillis();
-        List<PlayList> playlists = playListService.getAllPublicPlaylists(Util.getUserIdFromHttpSession(session));
+        List<PlayList> playlists = playListService.getAllPublicPlaylists(principal.getUser().getId());
         logger.info("Public playlists are {}. It took {} ms", playlists, System.currentTimeMillis() - start);
         return playlists;
     }

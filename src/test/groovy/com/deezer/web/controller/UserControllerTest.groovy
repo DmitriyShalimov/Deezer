@@ -3,6 +3,7 @@ package com.deezer.web.controller
 import com.deezer.UnitTest
 import com.deezer.entity.User
 import com.deezer.service.security.SecurityService
+import com.deezer.service.security.entity.UserToken
 import com.deezer.web.controller.view.UserController
 import org.junit.Before
 import org.junit.Test
@@ -16,6 +17,8 @@ import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.RequestBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+
+import java.time.LocalDateTime
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -38,18 +41,13 @@ class UserControllerTest {
     @Before
     void setup() {
         User user = new User(login: 'login')
-        Mockito.when(securityService.authenticate(Mockito.anyString(), Mockito.anyString())).thenReturn(Optional.of(user))
-        Mockito.when(securityService.register((User) Mockito.notNull())).thenReturn(true)
+        def token = new UserToken('1', user, LocalDateTime.now())
+        Mockito.when(securityService.authenticate(Mockito.anyString(), Mockito.anyString())).thenReturn(token)
+        Mockito.when(securityService.register((User) Mockito.notNull())).thenReturn(token)
         MockitoAnnotations.initMocks(this)
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build()
     }
 
-    @Test
-    void showLogin() {
-        mockMvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("login.html"))
-    }
 
     @Test
     void doLogin() {
@@ -61,12 +59,6 @@ class UserControllerTest {
                 .andReturn()
     }
 
-    @Test
-    void registration() {
-        mockMvc.perform(get("/registration"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("registration.html"))
-    }
 
     @Test
     void register() {
@@ -77,6 +69,6 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn()
         def response = result.getResponse().contentAsString
-        assertEquals("success", response)
+        assertTrue(response.contains("\"uuid\":\"1\""));
     }
 }
