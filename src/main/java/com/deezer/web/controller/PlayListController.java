@@ -98,7 +98,6 @@ public class PlayListController {
 
     @GetMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getAllPublicPlaylists(AuthPrincipal principal, HttpSession session) {
-        //TODO:remove
         Util.getUserIdFromHttpSession(session);
         logger.info("Sending request to get all public playlists");
         long start = System.currentTimeMillis();
