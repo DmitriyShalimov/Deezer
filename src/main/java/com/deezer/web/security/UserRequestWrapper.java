@@ -2,7 +2,6 @@ package com.deezer.web.security;
 
 import com.deezer.entity.User;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.security.Principal;

@@ -3,14 +3,11 @@ package com.deezer.web.interceptor;
 
 import com.deezer.entity.User;
 import com.deezer.web.security.AuthPrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.UUID;
 
