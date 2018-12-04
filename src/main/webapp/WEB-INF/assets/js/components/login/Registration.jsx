@@ -3,7 +3,7 @@ import './css/index.css'
 import LoginHeader from "./LoginHeader.jsx";
 import SocialButtons from "./SocialButtons.jsx";
 import CreateAccount from "./CreateAccount.jsx";
-import {signUp} from "../../store/actions/login.js";
+import {register} from "../../store/actions/login.js";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
@@ -72,7 +72,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signUp: bindActionCreators(signUp, dispatch)
+        signUp: bindActionCreators(register, dispatch)
     };
 };
 export default connect(

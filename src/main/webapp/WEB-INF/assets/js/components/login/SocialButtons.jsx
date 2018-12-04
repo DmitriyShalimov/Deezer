@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import './css/index.css'
 import {fbLogin, initGoogleLogin, initFbLogin} from "./util/social-login-functions.js"
 import {bindActionCreators} from "redux";
-import {signIn, signUp} from "../../store/actions/login.js";
+import {signIn, register} from "../../store/actions/login.js";
 import {connect} from "react-redux";
 
 class SocialButtons extends Component {
@@ -27,12 +27,6 @@ class SocialButtons extends Component {
     }
 
     render() {
-        const {login, password} = this.state;
-        const {signIn, signUp, errorMessage} = this.props;
-        if (errorMessage) {
-            signUp(login, password, password);
-            signIn(login, password);
-        }
         return (
             <div className="login-box-social-section-inner">
                 <a className="login-box-social-button-facebook " id="fb-login"
@@ -50,14 +44,14 @@ class SocialButtons extends Component {
         let user = fbLogin();
         if (user) {
             this.setState({login: user.login, password: user.password});
-            signIn(user.login, user.password);
+            signIn(user.login, user.password, true);
         }
     }
 
     handleGoogleLogin(login, password) {
         const {signIn} = this.props;
         this.setState({login, password});
-        signIn(login, password);
+        signIn(login, password, true);
     }
 }
 
@@ -70,7 +64,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         signIn: bindActionCreators(signIn, dispatch),
-        signUp: bindActionCreators(signUp, dispatch),
+        signUp: bindActionCreators(register, dispatch),
     };
 };
 export default connect(

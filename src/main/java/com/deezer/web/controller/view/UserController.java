@@ -2,18 +2,20 @@ package com.deezer.web.controller.view;
 
 import com.deezer.entity.User;
 import com.deezer.service.security.SecurityService;
+import com.deezer.service.security.entity.UserToken;
+import com.deezer.web.controller.view.dto.AuthResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final SecurityService securityService;
@@ -24,33 +26,31 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    @ResponseBody
-    public ResponseEntity doLogin(@RequestParam String login, @RequestParam String password, HttpSession session) {
-        Optional<User> optionalUser = securityService.authenticate(login, password);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            session.setAttribute("loggedUser", user);
-            logger.info("User {} logged in", user.getLogin());
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public UserToken doLogin(@RequestParam String login, @RequestParam String password) {
+        UserToken userToken = securityService.authenticate(login, password);
+        logger.info("User {} logged in", login);
+        return userToken;
+    }
+
+    @GetMapping(path = "/validate/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public AuthResponse validateToken(@PathVariable String token) {
+        Optional<User> userByToken = securityService.getUserByToken(token);
+        boolean isValid = userByToken.isPresent();
+        logger.info("Token {} is valid: {}", token, isValid);
+        return new AuthResponse(isValid);
     }
 
     @GetMapping(value = "/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("loggedUser");
-        return "redirect:/login";
+    public void logout(@RequestHeader("User-Token") String token) {
+        logger.info("Logging out user with token {}", token);
+        securityService.logout(token);
     }
 
-    @PostMapping(value = "/registration")
-    @ResponseBody
-    public ResponseEntity register(@RequestParam String login, @RequestParam String password, HttpSession session) {
+    @PostMapping(value = "/registration", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserToken register(@RequestParam String login, @RequestParam String password) {
         User user = new User(login, password);
-        boolean registered = securityService.register(user);
-        if (registered) {
-            session.setAttribute("loggedUser", user);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        UserToken userToken = securityService.register(user);
+        logger.info("User {} registered and logged in", login);
+        return userToken;
     }
 }
