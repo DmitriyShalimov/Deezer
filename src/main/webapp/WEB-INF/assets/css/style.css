@@ -19,6 +19,26 @@ li:focus {
     outline: none;
 }
 
+a {
+    color: inherit;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: inherit;
+}
+
+a.underline-link:hover,
+a.underline-link:focus,
+a.underline-link:active {
+    text-decoration: underline;
+}
+
+h3 {
+    margin-left: 13px;
+}
+
 body {
     font-family: 'Roboto', arial, 'Noto Sans Japanese', sans-serif;
     background-color: #f5f5f5;
@@ -31,21 +51,12 @@ body {
 }
 
 main {
+    margin-top: 64px;
     height: calc(100% - 90px - 64px);
     overflow-y: auto !important;
 }
 
-
-
-
-
-
-
 /* header moved to header/css/index.scss*/
-
-
-
-
 
 /* main */
 .grid-container {
@@ -55,11 +66,13 @@ main {
 
 .cell {
     cursor: pointer;
-    padding-bottom: 0.9375rem ;
+    padding-bottom: 0.9375rem;
 }
+
 .artist-page .followers-count.suggestion-subtitle {
     margin: 0 0 5% 15%;
 }
+
 i[class^='fa'] {
     font-size: 1.2rem;
     cursor: pointer;
@@ -244,15 +257,6 @@ i.fa-dice-three {
     font-size: 1.7vw;
 }
 
-.songs-playlist,
-.artists-playlists,
-.album-playlists,
-.all-public-playlists,
-.genres-playlists,
-.top-public-playlists {
-    display: none;
-}
-
 .genres-playlists {
     margin: 5vh 0 10vh 0;
 }
@@ -261,25 +265,7 @@ div#topPlaylist {
     margin-top: 32px;
 }
 
-
-
-
-
-
-
-
-
-
 /*player moved to player/css/index.scss*/
-
-
-
-
-
-
-
-
-
 
 /*-----------------------
     Playlist Player
@@ -290,7 +276,6 @@ div#topPlaylist {
     position: fixed;
     border: 1px solid #ddd;
     margin-left: -50px;
-    display: none;
     top: auto;
     left: auto;
     right: 32px;
@@ -391,7 +376,6 @@ div#topPlaylist {
 }
 
 .playlist-menu {
-    display: none;
     background: #fff;
     cursor: default;
     font: normal 13px Arial, sans-serif;
@@ -755,6 +739,10 @@ aside.right {
 
 .track-lyrics-dropdown {
     transition: all 0.3ms ease-in;
+}
+
+.lyrics-text {
+    font-size: 16px;
 }
 
 /*media*/

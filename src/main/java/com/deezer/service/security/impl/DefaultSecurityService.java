@@ -68,8 +68,7 @@ public class DefaultSecurityService implements SecurityService {
             user.setSalt(null);
             return getTokenForUser(user);
         } else {
-            logger.info("User {} credentials are invalid", user.getLogin());
-            return null;
+            throw new SecurityException("User credentials are invalid");
         }
     }
 

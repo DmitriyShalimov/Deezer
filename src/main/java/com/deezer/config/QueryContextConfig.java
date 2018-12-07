@@ -8,7 +8,7 @@ public class QueryContextConfig {
     @Bean
     public String getAllAlbumsByArtistIdSql() {
         return "SELECT al.id ,al.title, " +
-                "al.picture_link,  ar.name as artist_name " +
+                "al.picture_link,  ar.name as artist_name, ar.id as artist_id " +
                 "FROM album al join artist ar on al.artist = ar.id  " +
                 "WHERE al.artist=?";
     }
@@ -17,6 +17,7 @@ public class QueryContextConfig {
     public String getAlbumsByMaskSql() {
         return "SELECT  al.id ,al.title," +
                 "al.picture_link, ar.name as artist_name " +
+                ", ar.id as artist_id " +
                 "FROM album al join artist ar on al.artist = ar.id" +
                 " WHERE lower(title) like lower(?)";
     }
@@ -25,6 +26,7 @@ public class QueryContextConfig {
     public String getAlbumByIdSql() {
         return "SELECT  al.id ,al.title,  " +
                 " al.picture_link, ar.name as artist_name " +
+                ", ar.id as artist_id  " +
                 " FROM album al join artist ar on al.artist = ar.id " +
                 "WHERE al.id=?";
     }
@@ -65,7 +67,7 @@ public class QueryContextConfig {
     @Bean
     public String getAlbumsForSearchSql() {
         return "SELECT  al.id ,al.title, " +
-                "al.picture_link, ar.name as artist_name " +
+                "al.picture_link, ar.name as artist_name,  ar.id as artist_id " +
                 "FROM album al join artist ar on al.artist = ar.id;";
     }
 
@@ -168,7 +170,7 @@ public class QueryContextConfig {
                 " , -1 as likeCount " +
                 "FROM playlist AS pl " +
                 "left join playlist_user pu on pu.user=? and pu.playlist=pl.id " +
-                "WHERE pl.id = ?";
+                "WHERE pl.id = ? and (pl.access='public' or pl.user=?)";
     }
 
     @Bean
@@ -186,7 +188,7 @@ public class QueryContextConfig {
     @Bean
     public String getSongByIdSql() {
         return "select s.id ,s.title, s.track_url,s.picture_link,  " +
-                "al.title as album_title, art.name as artist_name" +
+                "al.title as album_title, al.id as album_id, art.name as artist_name, art.id as artist_id" +
                 ", su.id as liked,s.lyrics " +
                 "from song s  join album al on s.album = al.id " +
                 "join artist art on al.artist = art.id  " +
@@ -261,8 +263,9 @@ public class QueryContextConfig {
                 "from song s join album al on s.album = al.id " +
                 " join artist art on al.artist = art.id " +
                 "join playlist_song pls on pls.song = s.id " +
+                "join playlist pl on pls.playlist = pl.id " +
                 "left join song_user su  on su.user = ?  and su.song = s.id " +
-                "where pls.playlist =?";
+                "where pls.playlist =? and (pl.access='public' or pl.user=?)";
     }
 
     @Bean
@@ -282,7 +285,7 @@ public class QueryContextConfig {
     }
 
     @Bean
-    public String getUserLikedGenresSql(){
+    public String getUserLikedGenresSql() {
         return "select g.id  from genre as g " +
                 " join song_genre sg on sg.genre = g.id" +
                 " join song s on s.id=sg.song\n" +

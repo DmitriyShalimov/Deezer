@@ -28,7 +28,7 @@ class DefaultSecurityServiceTest {
         assertTrue(actualUser.uuid != null)
     }
 
-    @Test
+    @Test(expected = SecurityException.class)
     void authenticateInvalidCredentials() {
         def expectedUser = new User(login: 'zhenya', password: 'e5cb3d32c13cb96fb7ceae9841115ac6ca4794cf', salt: "501d77d5-ffa4-46a9-a862-3b4b7c661c03")
         def userService = { getByLogin -> Optional.of(expectedUser) } as UserService
