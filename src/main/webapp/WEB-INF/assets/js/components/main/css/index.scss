@@ -1,0 +1,251 @@
+/* main */
+.grid-container {
+  max-width: 80%;
+  margin-top: 2%;
+}
+
+.cell {
+  cursor: pointer;
+  padding-bottom: 0.9375rem;
+}
+
+.artist-page .followers-count.suggestion-subtitle {
+  margin: 0 0 5% 15%;
+}
+
+i[class^='fa'] {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+aside {
+  margin-top: 5vh;
+}
+
+.random__song {
+  position: fixed;
+  background-color: #ff5722;
+  cursor: pointer;
+  border-radius: 50%;
+  right: 2%;
+  z-index: 5;
+}
+
+.random__song:focus {
+  outline: none;
+}
+
+.random__song:hover {
+  filter: alpha(opacity=80);
+  opacity: .8;
+}
+
+i.fa-dice-three {
+  color: #ffffff;
+  padding: 0.7em 0.8em;
+  font-size: 1.5em;
+}
+
+.outline-pagination {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginationjs-pages ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.paginationjs-pages ul li {
+  background-color: #e2e2e2;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 0.5%;
+}
+
+.paginationjs-pages ul li.disabled {
+  background-color: #f0f0f0;
+}
+
+.paginationjs-pages ul li.disabled .fa-arrow-right,
+.paginationjs-pages ul li.disabled .fa-arrow-left {
+  color: #e2e2e2;
+}
+
+.paginationjs-pages ul li .fa-arrow-right,
+.paginationjs-pages ul li .fa-arrow-left {
+  padding: 0.25em 0.4em;
+  color: #6e6e6e;
+}
+
+.card-playlist-hover-title {
+  font-size: 1.1vw;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+
+.card-playlist-hover-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #616161;
+}
+
+.card-playlist-hover {
+  position: relative;
+  transition: all 0.35s ease;
+}
+
+.card-playlist-hover-details {
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+}
+
+.card-playlist-hover-details > :last-child {
+  margin-bottom: 0;
+}
+
+.card-playlist-hover-icons {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  height: 2.7rem;
+}
+
+.card-playlist-hover-icons button i {
+  display: block;
+  font-size: 2.5vw;
+  text-align: center;
+  color: #fefefe;
+}
+
+.card-playlist-hover-icons button i:hover {
+  cursor: pointer;
+  outline: none;
+  color: #ff5722;
+  font-size: 2.7vw;
+}
+
+.card-playlist-hover-icons button {
+  margin: 2px;
+  opacity: 0;
+  -webkit-transform: translateY(50%);
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
+  transition: all 0.35s ease;
+}
+
+.card-playlist-hover:hover img {
+  filter: alpha(opacity=80);
+  opacity: .8;
+}
+
+.card-playlist-hover:hover button {
+  transition: all 0.35s ease;
+  opacity: 1;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.card-playlist-hover-icons button:focus {
+  outline: none;
+}
+
+.card-playlist-hover:hover button:nth-child(2),
+.card-playlist-hover.hover a:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.card-playlist-hover:hover button:nth-child(3),
+.card-playlist-hover.hover button:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.card-playlist-hover img {
+  border-radius: 2%;
+  width: 100%;
+}
+
+.card {
+  border: none;
+  background: transparent;
+}
+
+.underline {
+  width: 100px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: #ff5722;
+  margin: 12px 15px;
+}
+
+#playlist-section h3 {
+  margin-left: 15px;
+  font-size: 1.7vw;
+}
+
+.genres-playlists {
+  margin: 5vh 0 10vh 0;
+}
+
+div#topPlaylist {
+  margin-top: 32px;
+}
+.card-playlist-like {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3px 3px 3px;
+}
+
+/*lyrics*/
+.track__lyrics {
+  margin-left: auto;
+}
+
+.track-lyrics-dropdown {
+  max-height: calc(100% - 90px - 64px - 20px);
+  width: 50%;
+  overflow-y: auto;
+  z-index: 20000;
+  white-space: pre-line;
+  text-align: center;
+  font-size: 24px;
+  line-height: 32px;
+
+}
+
+.track-lyrics-dropdown {
+  transition: all 0.3ms ease-in;
+}
+
+.lyrics-text {
+  font-size: 16px;
+}
+
+
+/*404*/
+.not-found{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 150px;
+  }
+  .empty-submessage.fas.fa-search {
+    cursor: initial;
+  }
+}

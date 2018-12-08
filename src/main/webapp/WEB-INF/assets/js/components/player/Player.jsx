@@ -17,7 +17,6 @@ import {
 import {toArray} from "../main/MainPage.jsx";
 
 
-//TODO:split!!, remove autoplay, mouse drag on progress and volume
 class Player extends Component {
     state = {
         progress: 0,
@@ -57,7 +56,6 @@ class Player extends Component {
                         <div className="progress-container">
                             <div className="progress" onClick={(e) => this.handleProgressClick(e)} ref={this.progress}>
                                 <div className="progress__bar" style={{width: `${progress}%`}}/>
-                                <div className="progress__preload"/>
                             </div>
                         </div>
                         <div className="track">

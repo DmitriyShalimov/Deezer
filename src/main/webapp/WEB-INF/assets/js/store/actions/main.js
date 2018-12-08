@@ -4,6 +4,8 @@ import {
     SET_USER_PLAYLISTS,
     SET_PUBLIC_PLAYLISTS,
     SET_FAVOURITE_PLAYLISTS,
+    SET_TOP_PLAYLISTS,
+    SET_RECOMMENDED_PLAYLISTS,
     SET_PAGE_PLAYLIST_META,
     SET_PAGE_PLAYLIST,
     SET_ARTISTS,
@@ -52,6 +54,20 @@ const setPublicPlaylists = playlists => {
 const setFavouritePlaylists = playlists => {
     return {
         type: SET_FAVOURITE_PLAYLISTS,
+        payload: playlists
+    }
+};
+
+const setTopPlaylists = playlists =>{
+    return {
+        type: SET_TOP_PLAYLISTS,
+        payload: playlists
+    }
+};
+
+const setRecommendedPlaylists = playlists =>{
+    return{
+        type: SET_RECOMMENDED_PLAYLISTS,
         payload: playlists
     }
 };
@@ -156,13 +172,32 @@ export const likeTrack = (id) => {
             }
         })
             .then(res => {
-                    if (res.status != 200) {
+                    if (res.status !== 200) {
                         console.log(res);
                     }
                 }
             )
     };
 };
+
+export const likePlaylist =(id) =>{
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}playlist/${id}/like`, {
+            method: 'POST',
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => {
+                    if (res.status !== 200) {
+                        console.log(res);
+                    }
+                }
+            )
+    };
+}
 
 export const getUserPlaylists = () => {
     return dispatch => {
@@ -203,6 +238,34 @@ export const getFavouritePlaylists = () => {
         })
             .then(res => res.json())
             .then(res => dispatch(setFavouritePlaylists(res)));
+    };
+};
+
+export const getTopPlaylists =()=>{
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}playlist/top`, {
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => res.json())
+            .then(res => dispatch(setTopPlaylists(res)));
+    };
+};
+
+export const getRecommendedPlaylists = ()=>{
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}playlist/recommended`, {
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => res.json())
+            .then(res => dispatch(setRecommendedPlaylists(res)));
     };
 };
 

@@ -13819,7 +13819,64 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../../../no
 
 
 // module
-exports.push([module.i, ".login-logo img {\n  width: 50px;\n  height: 50px; }\n\n.login-logo {\n  display: flex;\n  text-decoration: none;\n  justify-content: center;\n  cursor: initial; }\n\n.login-logo p {\n  margin-top: 1%;\n  font-family: 'Indie Flower', serif;\n  text-transform: uppercase;\n  font-weight: bold;\n  font-size: 20px;\n  margin-bottom: 0; }\n\n.card.login-box {\n  max-width: 40%;\n  margin: 0 auto;\n  border-radius: 4px;\n  border: 1px #ddd solid;\n  background-color: #fff; }\n\n.login-box.card {\n  border: 1px solid #e6e6e6;\n  background: #fefefe; }\n\n.login-box-title {\n  margin-bottom: 10px;\n  font-weight: 400;\n  font-size: 28px;\n  line-height: 1.2; }\n\n.login-box-social-section-inner {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  padding: 10px; }\n\n.login-box-input {\n  margin-bottom: 1.25rem;\n  height: 2rem;\n  border: 0;\n  padding-left: 0;\n  box-shadow: none;\n  border-bottom: 1px solid #cc4f27;\n  font-weight: 400; }\n\n.login-box-input:focus {\n  color: #212121;\n  transition: 0.2s ease-in-out;\n  box-shadow: none;\n  border: 0;\n  border-bottom: 2px solid #cc4f27; }\n\n.cell {\n  padding: 20px 26px; }\n\n.button {\n  background-color: #cc4f27;\n  opacity: .01;\n  outline: 0; }\n\n.button.hollow {\n  border: 1px solid #cc4f27;\n  color: #cc4f27; }\n\n.login-box-submit-button {\n  vertical-align: middle;\n  padding: 0.6rem;\n  -webkit-appearance: none;\n  border: 1px solid transparent;\n  border-radius: 0;\n  transition: background-color 0.25s ease-out, color 0.25s ease-out;\n  font-size: 0.9rem;\n  line-height: 1;\n  text-align: center;\n  cursor: pointer;\n  background-color: #cc4f27;\n  color: #fefefe;\n  display: block;\n  width: 100%;\n  margin: 0; }\n\n[data-whatinput='mouse'] .login-box-submit-button {\n  outline: 0; }\n\n.login-box-submit-button:hover, .login-box-submit-button:focus {\n  background-color: #b33e1c;\n  color: #fefefe; }\n\n.button:hover {\n  background-color: #b33e1c; }\n\n.button.hollow:hover {\n  border: 1px solid #b33e1c;\n  color: #b33e1c; }\n\n.register-btn {\n  color: #111;\n  text-decoration: none !important;\n  background: linear-gradient(to bottom, #f7f8fa, #e7e9ec); }\n\n.login-box-submit-button:hover,\n.login-box-submit-button:focus {\n  box-shadow: 0 2px 4px rgba(10, 10, 10, 0.4); }\n\n.login-box-submit-button:active {\n  box-shadow: 0 1px 2px rgba(10, 10, 10, 0.4); }\n\n.register-btn:hover,\n.register-btn:focus,\n.register-btn:active {\n  color: #111; }\n\n.login-box-social-button-facebook {\n  width: 16px;\n  height: 16px;\n  text-align: center;\n  cursor: pointer;\n  color: #3b5998;\n  background-color: #fefefe;\n  margin-right: 10px; }\n\n.login-box-social-button-facebook:hover,\n.login-box-social-button-facebook:focus {\n  color: #3b5998; }\n\n.login-box-social-button-google {\n  width: 16px;\n  height: 16px;\n  text-align: center;\n  cursor: pointer;\n  color: #dd4b39;\n  background-color: #fefefe;\n  margin-right: 10px; }\n\n.login-box-social-button-google:hover,\n.login-box-social-button-google:focus {\n  color: #dd4b39; }\n\n.registration {\n  display: flex;\n  margin: 1rem 0;\n  justify-content: center; }\n\n.registration p {\n  margin-right: 1rem; }\n\n#error {\n  color: darkred; }\n\n.divider {\n  text-align: center;\n  position: relative;\n  top: 2px;\n  padding-top: 1px;\n  margin-bottom: 14px;\n  line-height: 0; }\n\n.divider:after {\n  content: \"\";\n  width: 100%;\n  background-color: transparent;\n  display: block;\n  height: 1px;\n  border-top: 1px solid #e7e7e7;\n  position: absolute;\n  top: 50%;\n  margin-top: -1px;\n  z-index: 1; }\n\n.divider h5 {\n  line-height: 1;\n  font-size: 12px;\n  color: #767676;\n  font-weight: 400;\n  z-index: 2;\n  position: relative;\n  display: inline-block;\n  background-color: #fff;\n  padding: 0 8px 0 7px; }\n", ""]);
+exports.push([module.i, ".login-logo img {\n  width: 50px;\n  height: 50px; }\n\n.login-logo {\n  display: flex;\n  text-decoration: none;\n  justify-content: center;\n  cursor: initial; }\n\n.login-logo p {\n  margin-top: 1%;\n  font-family: 'Indie Flower', serif;\n  text-transform: uppercase;\n  font-weight: bold;\n  font-size: 20px;\n  margin-bottom: 0; }\n\n.login-box.card {\n  width: 510px;\n  max-width: 40%;\n  margin: 0 auto;\n  border-radius: 4px;\n  border: 1px #ddd solid;\n  background-color: #fff; }\n\n.login-box-title {\n  margin-bottom: 10px;\n  font-weight: 400;\n  font-size: 28px;\n  line-height: 1.2; }\n\n.login-box-social-section-inner {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  padding: 10px; }\n\n.login-box-input {\n  margin-bottom: 1.25rem;\n  height: 2rem;\n  border: 0;\n  padding-left: 0;\n  box-shadow: none;\n  border-bottom: 1px solid #cc4f27;\n  font-weight: 400; }\n\n.login-box-input:focus {\n  color: #212121;\n  transition: 0.2s ease-in-out;\n  box-shadow: none;\n  border: 0;\n  border-bottom: 2px solid #cc4f27; }\n\n.cell {\n  padding: 20px 26px; }\n\n.button {\n  background-color: #cc4f27;\n  opacity: .01;\n  outline: 0; }\n\n.button.hollow {\n  border: 1px solid #cc4f27;\n  color: #cc4f27; }\n\n.login-box-submit-button {\n  vertical-align: middle;\n  padding: 0.6rem;\n  -webkit-appearance: none;\n  border: 1px solid transparent;\n  border-radius: 0;\n  transition: background-color 0.25s ease-out, color 0.25s ease-out;\n  font-size: 0.9rem;\n  line-height: 1;\n  text-align: center;\n  cursor: pointer;\n  background-color: #cc4f27;\n  color: #fefefe;\n  display: block;\n  width: 100%;\n  margin: 0; }\n\n[data-whatinput='mouse'] .login-box-submit-button {\n  outline: 0; }\n\n.login-box-submit-button:hover, .login-box-submit-button:focus {\n  background-color: #b33e1c;\n  color: #fefefe; }\n\n.button:hover {\n  background-color: #b33e1c; }\n\n.button.hollow:hover {\n  border: 1px solid #b33e1c;\n  color: #b33e1c; }\n\n.register-btn {\n  color: #111;\n  text-decoration: none !important;\n  background: linear-gradient(to bottom, #f7f8fa, #e7e9ec); }\n\n.login-box-submit-button:hover,\n.login-box-submit-button:focus {\n  box-shadow: 0 2px 4px rgba(10, 10, 10, 0.4); }\n\n.login-box-submit-button:active {\n  box-shadow: 0 1px 2px rgba(10, 10, 10, 0.4); }\n\n.register-btn:hover,\n.register-btn:focus,\n.register-btn:active {\n  color: #111; }\n\n.login-box-social-button-facebook {\n  width: 16px;\n  height: 16px;\n  text-align: center;\n  cursor: pointer;\n  color: #3b5998;\n  background-color: #fefefe;\n  margin-right: 10px; }\n\n.login-box-social-button-facebook:hover,\n.login-box-social-button-facebook:focus {\n  color: #3b5998; }\n\n.login-box-social-button-google {\n  width: 16px;\n  height: 16px;\n  text-align: center;\n  cursor: pointer;\n  color: #dd4b39;\n  background-color: #fefefe;\n  margin-right: 10px; }\n\n.login-box-social-button-google:hover,\n.login-box-social-button-google:focus {\n  color: #dd4b39; }\n\n.registration {\n  display: flex;\n  margin: 1rem 0;\n  justify-content: center; }\n\n.registration p {\n  margin-right: 1rem; }\n\n#error {\n  color: darkred; }\n\n.divider {\n  text-align: center;\n  position: relative;\n  top: 2px;\n  padding-top: 1px;\n  margin-bottom: 14px;\n  line-height: 0; }\n\n.divider:after {\n  content: \"\";\n  width: 100%;\n  background-color: transparent;\n  display: block;\n  height: 1px;\n  border-top: 1px solid #e7e7e7;\n  position: absolute;\n  top: 50%;\n  margin-top: -1px;\n  z-index: 1; }\n\n.divider h5 {\n  line-height: 1;\n  font-size: 12px;\n  color: #767676;\n  font-weight: 400;\n  z-index: 2;\n  position: relative;\n  display: inline-block;\n  background-color: #fff;\n  padding: 0 8px 0 7px; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss ***!
+  \*********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* main */\n.grid-container {\n  max-width: 80%;\n  margin-top: 2%; }\n\n.cell {\n  cursor: pointer;\n  padding-bottom: 0.9375rem; }\n\n.artist-page .followers-count.suggestion-subtitle {\n  margin: 0 0 5% 15%; }\n\ni[class^='fa'] {\n  font-size: 1.2rem;\n  cursor: pointer; }\n\naside {\n  margin-top: 5vh; }\n\n.random__song {\n  position: fixed;\n  background-color: #ff5722;\n  cursor: pointer;\n  border-radius: 50%;\n  right: 2%;\n  z-index: 5; }\n\n.random__song:focus {\n  outline: none; }\n\n.random__song:hover {\n  filter: alpha(opacity=80);\n  opacity: .8; }\n\ni.fa-dice-three {\n  color: #ffffff;\n  padding: 0.7em 0.8em;\n  font-size: 1.5em; }\n\n.outline-pagination {\n  display: flex;\n  justify-content: space-between; }\n\n.paginationjs-pages ul {\n  display: flex;\n  justify-content: flex-end;\n  list-style: none; }\n\n.paginationjs-pages ul li {\n  background-color: #e2e2e2;\n  cursor: pointer;\n  border-radius: 50%;\n  margin-left: 0.5%; }\n\n.paginationjs-pages ul li.disabled {\n  background-color: #f0f0f0; }\n\n.paginationjs-pages ul li.disabled .fa-arrow-right,\n.paginationjs-pages ul li.disabled .fa-arrow-left {\n  color: #e2e2e2; }\n\n.paginationjs-pages ul li .fa-arrow-right,\n.paginationjs-pages ul li .fa-arrow-left {\n  padding: 0.25em 0.4em;\n  color: #6e6e6e; }\n\n.card-playlist-hover-title {\n  font-size: 1.1vw;\n  font-weight: 400;\n  margin-bottom: 0.2rem; }\n\n.card-playlist-hover-subtitle {\n  font-size: 1rem;\n  font-weight: 400;\n  color: #616161; }\n\n.card-playlist-hover {\n  position: relative;\n  transition: all 0.35s ease; }\n\n.card-playlist-hover-details {\n  -webkit-flex: 1 0 auto;\n  -ms-flex: 1 0 auto;\n  flex: 1 0 auto; }\n\n.card-playlist-hover-details > :last-child {\n  margin-bottom: 0; }\n\n.card-playlist-hover-icons {\n  position: absolute;\n  top: 50%;\n  bottom: 0;\n  left: 50%;\n  right: 0;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-direction: column;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-justify-content: flex-start;\n  -ms-flex-pack: start;\n  justify-content: flex-start;\n  height: 2.7rem; }\n\n.card-playlist-hover-icons button i {\n  display: block;\n  font-size: 2.5vw;\n  text-align: center;\n  color: #fefefe; }\n\n.card-playlist-hover-icons button i:hover {\n  cursor: pointer;\n  outline: none;\n  color: #ff5722;\n  font-size: 2.7vw; }\n\n.card-playlist-hover-icons button {\n  margin: 2px;\n  opacity: 0;\n  -webkit-transform: translateY(50%);\n  -ms-transform: translateY(50%);\n  transform: translateY(50%);\n  transition: all 0.35s ease; }\n\n.card-playlist-hover:hover img {\n  filter: alpha(opacity=80);\n  opacity: .8; }\n\n.card-playlist-hover:hover button {\n  transition: all 0.35s ease;\n  opacity: 1;\n  -webkit-transform: translateX(0);\n  -ms-transform: translateX(0);\n  transform: translateX(0); }\n\n.card-playlist-hover-icons button:focus {\n  outline: none; }\n\n.card-playlist-hover:hover button:nth-child(2),\n.card-playlist-hover.hover a:nth-child(2) {\n  transition-delay: 0.1s; }\n\n.card-playlist-hover:hover button:nth-child(3),\n.card-playlist-hover.hover button:nth-child(3) {\n  transition-delay: 0.2s; }\n\n.card-playlist-hover img {\n  border-radius: 2%;\n  width: 100%; }\n\n.card {\n  border: none;\n  background: transparent; }\n\n.underline {\n  width: 100px;\n  height: 2px;\n  border-radius: 1px;\n  background-color: #ff5722;\n  margin: 12px 15px; }\n\n#playlist-section h3 {\n  margin-left: 15px;\n  font-size: 1.7vw; }\n\n.genres-playlists {\n  margin: 5vh 0 10vh 0; }\n\ndiv#topPlaylist {\n  margin-top: 32px; }\n\n.card-playlist-like {\n  display: flex;\n  justify-content: space-between;\n  padding: 0 3px 3px 3px; }\n\n/*lyrics*/\n.track__lyrics {\n  margin-left: auto; }\n\n.track-lyrics-dropdown {\n  max-height: calc(100% - 90px - 64px - 20px);\n  width: 50%;\n  overflow-y: auto;\n  z-index: 20000;\n  white-space: pre-line;\n  text-align: center;\n  font-size: 24px;\n  line-height: 32px; }\n\n.track-lyrics-dropdown {\n  transition: all 0.3ms ease-in; }\n\n.lyrics-text {\n  font-size: 16px; }\n\n/*404*/\n.not-found {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center; }\n  .not-found img {\n    width: 150px; }\n  .not-found .empty-submessage.fas.fa-search {\n    cursor: initial; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss ***!
+  \*****************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/*music library*/\n.user-library {\n  margin-top: 2%; }\n\naside.right {\n  display: flex;\n  flex-direction: column;\n  position: fixed;\n  left: 2%;\n  z-index: 5;\n  cursor: pointer; }\n\n.all-playlists {\n  margin-top: 20px; }\n\n.music-library:hover,\n.all-playlists:hover {\n  opacity: 0.8; }\n\n.music-library:active,\n.all-playlists:active {\n  background-color: rgba(255, 87, 34, 0.22); }\n\n.music-library i,\n.all-playlists i {\n  display: flex;\n  justify-content: center;\n  color: #ff5722;\n  font-size: 1.5em; }\n\n.music-library p,\n.all-playlists p {\n  overflow: hidden;\n  margin-top: 4px;\n  font-size: 10px;\n  line-height: 10px;\n  text-align: center;\n  color: #212121; }\n\n.tabs, .tabs-content {\n  background-color: transparent;\n  border: none;\n  color: #212121; }\n\n.tabs {\n  border-bottom: 1px solid rgba(0, 0, 0, 0.37); }\n\n.tabs-title a {\n  color: #212121;\n  text-transform: uppercase;\n  font-weight: bolder;\n  opacity: 0.8;\n  font-size: 0.9rem; }\n\n.tabs-title.is-active a {\n  opacity: 1;\n  border-bottom: 2px solid #ff5722;\n  background-color: inherit;\n  color: #212121;\n  outline: none; }\n\n.tabs-title a:hover {\n  background-color: inherit;\n  color: inherit; }\n\n.tabs-panel.is-active {\n  display: flex; }\n\n#playlist-section .all-public-playlists h3,\n#playlist-section .all-public-playlists .underline {\n  margin-left: 22px; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss":
+/*!************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss ***!
+  \************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* playlist */\n.playlist__section {\n  background-color: #fefefe;\n  position: fixed;\n  border: 1px solid #ddd;\n  margin-left: -50px;\n  top: auto;\n  left: auto;\n  right: 32px;\n  margin-right: 0;\n  bottom: 110px;\n  margin-bottom: 0;\n  width: 100vw;\n  max-height: calc(100vh - 110px - 64px - 24px);\n  border-radius: 3px;\n  transition: width 0.3s ease;\n  outline: none;\n  box-sizing: border-box;\n  max-width: 732px;\n  z-index: 103; }\n\n.pl-img {\n  overflow: hidden;\n  border-radius: 3px 3px 0 0;\n  width: 100%;\n  height: 120px; }\n\n.pl-img img {\n  width: 100%;\n  filter: brightness(50%);\n  vertical-align: top; }\n\n.pl-info {\n  height: 120px;\n  padding: 0 16px 25px 16px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  overflow: hidden;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end; }\n\n.pl-title {\n  font-size: 16px;\n  font-weight: 500;\n  color: white;\n  margin: 0; }\n\n.mini-playlist {\n  overflow-y: scroll;\n  height: calc(100% - 120px);\n  transform: translate(0, 0);\n  max-height: calc(100vh - 110px - 64px - 24px - 120px);\n  min-height: 260px; }\n\n.search-pl-info p.pl-track__title {\n  font-size: 15px; }\n\n.search-pl-info p.pl-album-artist__title {\n  font-size: 13px; }\n\n.queue-empty {\n  height: 100%;\n  margin: 2%; }\n\n.material-empty {\n  justify-content: center;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-content: center;\n  flex-direction: column; }\n\n.empty-message {\n  margin: 16px auto 12px;\n  font-size: 20px;\n  font-weight: 500; }\n\n.empty-message,\n.empty-submessage {\n  text-align: center;\n  color: #616161; }\n\n.empty-submessage {\n  margin: 0 auto;\n  font-size: 14px;\n  line-height: 20px; }\n\n.playlist-menu {\n  background: #fff;\n  cursor: default;\n  font: normal 13px Arial, sans-serif;\n  margin: 0;\n  outline: none;\n  position: absolute;\n  z-index: 20000;\n  border: 0 solid transparent !important;\n  border-radius: 2px;\n  padding: 16px 0;\n  box-sizing: border-box;\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37) !important;\n  width: auto;\n  transition: height 0.3s ease;\n  transform: translate(0, 0);\n  min-height: 0;\n  overflow-y: auto;\n  max-height: 100%; }\n\n.user-playlist-list {\n  list-style: none;\n  margin-left: 0;\n  margin-bottom: 0; }\n\n.create-playlist,\n.user-playlist-list li {\n  font-size: 15px;\n  height: 32px;\n  line-height: 32px;\n  padding: 0 24px;\n  margin: 0 !important;\n  color: #212121;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  cursor: pointer; }\n\n.create-playlist:hover,\n.user-playlist-list li:hover {\n  background-color: #eeeeee; }\n\n.create-playlist:focus {\n  outline: none; }\n\n.menu-separator {\n  background: #eeeeee !important;\n  margin: 6px 0 !important;\n  height: 1px !important; }\n\nh2.title {\n  position: relative;\n  margin: 0;\n  font-family: 'Roboto', 'Noto', sans-serif;\n  -webkit-font-smoothing: antialiased;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  font-size: 20px;\n  font-weight: 500;\n  line-height: 28px; }\n\n.new-playlist__name {\n  width: 100%;\n  max-width: 100%;\n  background: #ffffff;\n  color: #212121;\n  font-family: 'Roboto', 'Noto', sans-serif;\n  -webkit-font-smoothing: antialiased;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 20px;\n  margin: 30px 0; }\n\n.new-playlist__name label,\n.new-playlist__access label {\n  font: inherit;\n  color: #616161;\n  -webkit-transition: -webkit-transform 0.25s, width 0.25s;\n  transition: transform 0.25s, width 0.25s;\n  -webkit-transform-origin: left top;\n  transform-origin: left top;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 24px; }\n\n.new-playlist__name input {\n  color: #212121;\n  width: 100%;\n  font-size: 16px;\n  font-weight: 400;\n  border: none;\n  border-bottom: 1px solid #212121;\n  transition: border-bottom-color 0.5s ease; }\n\n.new-playlist__name input:focus {\n  outline: none;\n  border-bottom: 1px solid #c34920; }\n\n.buttons {\n  float: right; }\n\n.buttons button {\n  color: #ff5722;\n  margin: 0 0.29em;\n  text-transform: uppercase;\n  outline-width: 0;\n  cursor: pointer;\n  z-index: 0;\n  padding: 0.7em 0.57em;\n  font-family: 'Roboto', 'Noto', sans-serif;\n  -webkit-font-smoothing: antialiased;\n  font-weight: 500; }\n\n.buttons button:focus {\n  background-color: rgba(255, 87, 34, 0.22); }\n\n.new-playlist__access {\n  display: flex; }\n\n.new-playlist__access__input {\n  opacity: 0; }\n\n.new-playlist__access__label:before {\n  content: '';\n  margin-right: 10px;\n  display: inline-block;\n  vertical-align: text-top;\n  width: 20px;\n  height: 20px;\n  border: 1px solid #212121; }\n\n.new-playlist__access__input:focus + .new-playlist__access__label:before {\n  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12); }\n\n.new-playlist__access__input:checked + .new-playlist__access__label:after {\n  content: '\\2713   ';\n  position: absolute;\n  top: .17em;\n  left: 1.15em;\n  font-size: 1.3em;\n  line-height: 0.8;\n  color: #ff5722;\n  transition: all .2s; }\n\nspan.user-playlist-subtitle {\n  text-transform: lowercase;\n  color: #757575;\n  font-style: italic;\n  font-size: 12px; }\n\n.playlist__header {\n  flex-direction: row; }\n\n.playlist__picture {\n  width: 15%;\n  border-radius: 2%; }\n\n.playlist__picture img {\n  width: 100%; }\n\n.artist .playlist__picture img {\n  border-radius: 50%; }\n\n.playlist__details {\n  display: flex;\n  flex-direction: column;\n  justify-content: center; }\n\n.playlist__subtitle {\n  font-size: 1rem;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  color: #616161;\n  margin-left: 15px; }\n\n.playlist__title {\n  margin-left: 15px;\n  font-size: 1.7vw; }\n\n.artist-page .outline-pagination .underline {\n  display: none; }\n\n.artist-page .outline-pagination {\n  float: right; }\n\n#playlist-section .artist-page h3 {\n  font-size: 18px;\n  font-weight: bolder;\n  line-height: 24px;\n  color: #212121;\n  cursor: default;\n  margin: 0 0 0 30px; }\n\n.artist-page .card-playlist-hover-subtitle {\n  display: none; }\n\n.artist-page .card {\n  overflow: visible;\n  white-space: nowrap;\n  background-color: white;\n  margin: 8px;\n  border-radius: 2px;\n  font-weight: 300;\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);\n  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1); }\n\n.artist-page .card:hover {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3); }\n\n.artist-page .card .card-playlist-hover-details {\n  padding: 5%; }\n\n.artist-page .card .card-playlist-hover-title {\n  font-size: 0.9rem;\n  color: #212121; }\n\n#album .card-playlist-hover-details {\n  display: block; }\n", ""]);
 
 // exports
 
@@ -48828,6 +48885,134 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./src/main/webapp/WEB-INF/assets/js/components/main/DeezerMain.jsx":
+/*!**************************************************************************!*\
+  !*** ./src/main/webapp/WEB-INF/assets/js/components/main/DeezerMain.jsx ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PlaylistsList.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/PlaylistsList.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+var DeezerMain =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(DeezerMain, _Component);
+
+  function DeezerMain() {
+    _classCallCheck(this, DeezerMain);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(DeezerMain).apply(this, arguments));
+  }
+
+  _createClass(DeezerMain, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.props.getTopPlaylists(); //  this.props.getRecommendedPlaylists();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          topPlaylists = _this$props.topPlaylists,
+          typeSearch = _this$props.typeSearch,
+          likePlaylist = _this$props.likePlaylist,
+          recommendedPlaylists = _this$props.recommendedPlaylists;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "playlist-section"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "genres-playlists"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Explore by genre"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "outline-pagination"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "underline"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "pagination-container-genre"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "grid-x grid-padding-x small-up-2 medium-up-4 large-up-5",
+        id: "genre"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recommended-playlists"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Recommendations for you"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "underline"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "grid-x grid-padding-x small-up-2 medium-up-4 large-up-5",
+        id: "recommendedPlaylist"
+      }, recommendedPlaylists.length > 0 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        playlists: recommendedPlaylists,
+        play: typeSearch
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-public-playlists"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Deezer Top 10"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "underline"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "grid-x grid-padding-x small-up-2 medium-up-4 large-up-5",
+        id: "topPlaylist"
+      }, topPlaylists.length > 0 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        playlists: topPlaylists,
+        play: typeSearch,
+        like: likePlaylist,
+        showlike: true
+      }))));
+    }
+  }]);
+
+  return DeezerMain;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    topPlaylists: state.rootReducer.topPlaylists,
+    recommendedPlaylists: state.rootReducer.recommendedPlaylists
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    getTopPlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_3__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_1__["getTopPlaylists"], dispatch),
+    getRecommendedPlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_3__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_1__["getRecommendedPlaylists"], dispatch),
+    typeSearch: function typeSearch(type, id, title) {
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_1__["typeSearch"])(type, id, title));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(DeezerMain)));
+
+/***/ }),
+
 /***/ "./src/main/webapp/WEB-INF/assets/js/components/main/Genre.jsx":
 /*!*********************************************************************!*\
   !*** ./src/main/webapp/WEB-INF/assets/js/components/main/Genre.jsx ***!
@@ -48970,24 +49155,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toArray", function() { return toArray; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _player_Player_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../player/Player.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/player/Player.jsx");
-/* harmony import */ var _header_Header_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/Header.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/header/Header.jsx");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
-/* harmony import */ var _store_actions_login_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../store/actions/login.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/login.js");
-/* harmony import */ var _store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../store/actions/track-actions.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/track-actions.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _Genre_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Genre.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Genre.jsx");
-/* harmony import */ var _Album_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Album.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Album.jsx");
-/* harmony import */ var _Song_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Song.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Song.jsx");
-/* harmony import */ var _Artist_jsx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Artist.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Artist.jsx");
-/* harmony import */ var _SearchPage_jsx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SearchPage.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/SearchPage.jsx");
-/* harmony import */ var _Playlist_jsx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Playlist.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Playlist.jsx");
-/* harmony import */ var _NotFound_jsx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NotFound.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/NotFound.jsx");
-/* harmony import */ var _RandomSong_jsx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./RandomSong.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/RandomSong.jsx");
-/* harmony import */ var _MusicLibrary_jsx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./MusicLibrary.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/MusicLibrary.jsx");
-/* harmony import */ var _MusicLibraryPage_jsx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./MusicLibraryPage.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/MusicLibraryPage.jsx");
+/* harmony import */ var _css_index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/index.scss */ "./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss");
+/* harmony import */ var _css_index_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_index_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_playlist_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/playlist.scss */ "./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss");
+/* harmony import */ var _css_playlist_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_playlist_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _player_Player_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../player/Player.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/player/Player.jsx");
+/* harmony import */ var _header_Header_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../header/Header.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/header/Header.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
+/* harmony import */ var _store_actions_login_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../store/actions/login.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/login.js");
+/* harmony import */ var _store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../store/actions/track-actions.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/track-actions.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _Genre_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Genre.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Genre.jsx");
+/* harmony import */ var _Album_jsx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Album.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Album.jsx");
+/* harmony import */ var _Song_jsx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Song.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Song.jsx");
+/* harmony import */ var _Artist_jsx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Artist.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Artist.jsx");
+/* harmony import */ var _SearchPage_jsx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SearchPage.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/SearchPage.jsx");
+/* harmony import */ var _Playlist_jsx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Playlist.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/Playlist.jsx");
+/* harmony import */ var _NotFound_jsx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NotFound.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/NotFound.jsx");
+/* harmony import */ var _RandomSong_jsx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./RandomSong.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/RandomSong.jsx");
+/* harmony import */ var _MusicLibrary_jsx__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./MusicLibrary.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/MusicLibrary.jsx");
+/* harmony import */ var _MusicLibraryPage_jsx__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./MusicLibraryPage.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/MusicLibraryPage.jsx");
+/* harmony import */ var _DeezerMain_jsx__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./DeezerMain.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/DeezerMain.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -49007,6 +49197,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
 
 
 
@@ -49069,71 +49262,86 @@ function (_Component) {
           getRandom = _this$props.getRandom;
 
       if (isAuth) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_Header_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_Header_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
           logout: logout
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "grid-container"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RandomSong_jsx__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RandomSong_jsx__WEBPACK_IMPORTED_MODULE_18__["default"], {
           playRandomSong: getRandom
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MusicLibrary_jsx__WEBPACK_IMPORTED_MODULE_17__["default"], null), notFound ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NotFound_jsx__WEBPACK_IMPORTED_MODULE_15__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MusicLibrary_jsx__WEBPACK_IMPORTED_MODULE_19__["default"], null), notFound ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NotFound_jsx__WEBPACK_IMPORTED_MODULE_17__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/genre/:id(\\d+)",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Genre_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Genre_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], _extends({}, props.match, {
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/album/:id(\\d+)",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Album_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Album_jsx__WEBPACK_IMPORTED_MODULE_12__["default"], _extends({}, props.match, {
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/song/:id(\\d+)",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Song_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Song_jsx__WEBPACK_IMPORTED_MODULE_13__["default"], _extends({}, props.match, {
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/artist/:id(\\d+)",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Artist_jsx__WEBPACK_IMPORTED_MODULE_12__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Artist_jsx__WEBPACK_IMPORTED_MODULE_14__["default"], _extends({}, props.match, {
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/search/:mask",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchPage_jsx__WEBPACK_IMPORTED_MODULE_13__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchPage_jsx__WEBPACK_IMPORTED_MODULE_15__["default"], _extends({}, props.match, {
+              key: _this.props.location.key,
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/playlist/:id(\\d+)",
           render: function render(props) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Playlist_jsx__WEBPACK_IMPORTED_MODULE_14__["default"], _extends({}, props.match, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Playlist_jsx__WEBPACK_IMPORTED_MODULE_16__["default"], _extends({}, props.match, {
               handleLike: _this.handleLike.bind(_this),
               playTrack: _this.playTrack.bind(_this)
             }));
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
           exact: true,
           path: "/music-library",
-          component: _MusicLibraryPage_jsx__WEBPACK_IMPORTED_MODULE_18__["default"]
-        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_player_Player_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          render: function render() {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MusicLibraryPage_jsx__WEBPACK_IMPORTED_MODULE_20__["default"], {
+              key: _this.props.location.key,
+              likePlaylist: _this.likePlaylist.bind(_this)
+            });
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
+          exact: true,
+          path: "/",
+          render: function render() {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeezerMain_jsx__WEBPACK_IMPORTED_MODULE_21__["default"], {
+              key: _this.props.location.key,
+              likePlaylist: _this.likePlaylist.bind(_this)
+            });
+          }
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_player_Player_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
           handleLike: this.handleLike.bind(this),
           playTrack: this.playTrack.bind(this)
         }));
@@ -49204,6 +49412,14 @@ function (_Component) {
         trackInPlaylist.liked = like;
       }
     }
+  }, {
+    key: "likePlaylist",
+    value: function likePlaylist(playlist) {
+      this.props.likePlaylist(playlist.id);
+      playlist.liked = !playlist.liked;
+      playlist.liked ? playlist.likeCount++ : playlist.likeCount--;
+      this.forceUpdate();
+    }
   }]);
 
   return MainPage;
@@ -49232,29 +49448,32 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     redirect: function redirect(redirectUrl) {
-      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["redirect"])(redirectUrl));
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__["redirect"])(redirectUrl));
     },
     validateToken: function validateToken(token, redirectOnSuccess) {
-      return dispatch(Object(_store_actions_login_js__WEBPACK_IMPORTED_MODULE_5__["validateToken"])(token, redirectOnSuccess));
+      return dispatch(Object(_store_actions_login_js__WEBPACK_IMPORTED_MODULE_7__["validateToken"])(token, redirectOnSuccess));
     },
-    logout: Object(redux__WEBPACK_IMPORTED_MODULE_7__["bindActionCreators"])(_store_actions_login_js__WEBPACK_IMPORTED_MODULE_5__["logout"], dispatch),
+    logout: Object(redux__WEBPACK_IMPORTED_MODULE_9__["bindActionCreators"])(_store_actions_login_js__WEBPACK_IMPORTED_MODULE_7__["logout"], dispatch),
     likeTrack: function likeTrack(id) {
-      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["likeTrack"])(id));
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__["likeTrack"])(id));
     },
     setTrackIndex: function setTrackIndex(idx) {
-      return dispatch(Object(_store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_6__["setTrackIndex"])(idx));
+      return dispatch(Object(_store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_8__["setTrackIndex"])(idx));
     },
     setTrack: function setTrack(track) {
-      return dispatch(Object(_store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_6__["setTrack"])(track));
+      return dispatch(Object(_store_actions_track_actions_js__WEBPACK_IMPORTED_MODULE_8__["setTrack"])(track));
     },
     setCurrentPlaylist: function setCurrentPlaylist(playlist, title) {
-      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["setCurrentPlaylist"])(playlist, title));
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__["setCurrentPlaylist"])(playlist, title));
     },
-    getRandom: Object(redux__WEBPACK_IMPORTED_MODULE_7__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["getRandom"], dispatch)
+    getRandom: Object(redux__WEBPACK_IMPORTED_MODULE_9__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__["getRandom"], dispatch),
+    likePlaylist: function likePlaylist(playlist) {
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_6__["likePlaylist"])(playlist));
+    }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(MainPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(mapStateToProps, mapDispatchToProps)(MainPage)));
 
 /***/ }),
 
@@ -49301,10 +49520,13 @@ var MusicLibrary = function MusicLibrary() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlaylistsList.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/PlaylistsList.jsx");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
+/* harmony import */ var _css_music_library_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/music-library.scss */ "./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss");
+/* harmony import */ var _css_music_library_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_music_library_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PlaylistsList.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/PlaylistsList.jsx");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49322,6 +49544,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -49359,7 +49583,8 @@ function (_Component) {
           userPlaylists = _this$props.userPlaylists,
           publicPlaylists = _this$props.publicPlaylists,
           favouritePlaylists = _this$props.favouritePlaylists,
-          typeSearch = _this$props.typeSearch;
+          typeSearch = _this$props.typeSearch,
+          likePlaylist = _this$props.likePlaylist;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-library"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -49386,7 +49611,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: " tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-6",
         id: "privatePl"
-      }, userPlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, userPlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
         playlists: userPlaylists,
         play: typeSearch
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -49394,18 +49619,20 @@ function (_Component) {
       }, "Nothing to show. Create you first private playlist and it will be here.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6",
         id: "publicPl"
-      }, publicPlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, publicPlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
         playlists: publicPlaylists,
         play: typeSearch,
+        like: likePlaylist,
         showlike: true
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "empty-message"
       }, "Nothing to show. Create you first public playlist and it will be here.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: " tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6",
         id: "favouritesPl"
-      }, favouritePlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, favouritePlaylists.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PlaylistsList_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
         playlists: favouritePlaylists,
         play: typeSearch,
+        like: likePlaylist,
         showlike: true
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "empty-message"
@@ -49426,15 +49653,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getPublicPlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_3__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["getPublicPlaylists"], dispatch),
-    getFavouritePlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_3__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["getFavouritePlaylists"], dispatch),
+    getPublicPlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_4__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_5__["getPublicPlaylists"], dispatch),
+    getFavouritePlaylists: Object(redux__WEBPACK_IMPORTED_MODULE_4__["bindActionCreators"])(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_5__["getFavouritePlaylists"], dispatch),
     typeSearch: function typeSearch(type, id, title) {
-      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__["typeSearch"])(type, id, title));
+      return dispatch(Object(_store_actions_main_js__WEBPACK_IMPORTED_MODULE_5__["typeSearch"])(type, id, title));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(MusicLibraryPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(MusicLibraryPage)));
 
 /***/ }),
 
@@ -49452,13 +49679,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var NotFound = function NotFound() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "grid-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "not-found"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "/assets/img/404.png",
+    alt: ""
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "empty-message"
   }, "404"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "empty-submessage"
-  }, "We tried hard but could not find this page.")));
+  }, "We tried hard but could not find this page."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "empty-submessage"
+  }, "Please use form above ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-search"
+  }), " to find artists, albums and songs."));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NotFound);
@@ -49617,16 +49851,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
- //TODO:style followers + handle likes
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 var PlaylistsList =
 /*#__PURE__*/
@@ -49634,19 +49870,36 @@ function (_Component) {
   _inherits(PlaylistsList, _Component);
 
   function PlaylistsList() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, PlaylistsList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(PlaylistsList).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlaylistsList)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "getFollowerWord", function (likeCount) {
+      return likeCount === 1 ? 'follower' : 'followers';
+    });
+
+    return _this;
   }
 
   _createClass(PlaylistsList, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
           playlists = _this$props.playlists,
           showlike = _this$props.showlike,
-          play = _this$props.play;
-      console.log(playlists);
+          play = _this$props.play,
+          like = _this$props.like;
+      console.log("playlists", playlists);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, playlists.map(function (playlist) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "cell",
@@ -49673,26 +49926,26 @@ function (_Component) {
         }, playlist.title)), showlike && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card-playlist-like"
         }, !playlist.liked && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-heart top pl-like"
+          className: "far fa-heart top pl-like",
+          onClick: function onClick() {
+            return like(playlist);
+          }
         }), playlist.liked && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-heart top pl-dislike"
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "fas fa-heart top pl-dislike",
+          onClick: function onClick() {
+            return like(playlist);
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "followers-count suggestion-subtitle"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "like-count"
-        }, playlist.likeCount), " ", getFollowerWord(playlist.likeCount)))));
+        }, playlist.likeCount), " ", _this2.getFollowerWord(playlist.likeCount))))));
       }));
     }
   }]);
 
   return PlaylistsList;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-var getFollowerWord = function getFollowerWord(likeCount) {
-  return likeCount === 1 ? 'follower' : 'followers';
-};
-/*${like ? DeezerUtil.addFollowers(playlist) : ''}*/
-
 
 /* harmony default export */ __webpack_exports__["default"] = (PlaylistsList);
 
@@ -49748,6 +50001,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_actions_main_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../store/actions/main.js */ "./src/main/webapp/WEB-INF/assets/js/store/actions/main.js");
 /* harmony import */ var _ArtistsList_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ArtistsList.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/ArtistsList.jsx");
 /* harmony import */ var _AlbumsList_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AlbumsList.jsx */ "./src/main/webapp/WEB-INF/assets/js/components/main/AlbumsList.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49765,6 +50019,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -49796,7 +50051,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var mask = this.props.params.mask;
       var _this$props = this.props,
           pagePlaylist = _this$props.pagePlaylist,
           artists = _this$props.artists,
@@ -49808,7 +50062,6 @@ function (_Component) {
           currentTime = _this$props.currentTime,
           duration = _this$props.duration,
           typeSearch = _this$props.typeSearch;
-      console.log(mask);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, artists.length > 0 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArtistsList_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
         artists: artists,
         play: typeSearch
@@ -49864,7 +50117,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(SearchPage));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(SearchPage)));
 
 /***/ }),
 
@@ -50135,6 +50388,84 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss":
+/*!**************************************************************************!*\
+  !*** ./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../../../../../../../node_modules/css-loader!../../../../../../../../../node_modules/sass-loader/lib/loader.js!./index.scss */ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/index.scss");
+
+if (typeof content === 'string') content = [[module.i, content, '']];
+var transform;
+var insertInto;
+var options = {
+  "hmr": true
+};
+options.transform = transform;
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if (content.locals) module.exports = content.locals;
+
+if (false) {}
+
+/***/ }),
+
+/***/ "./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss":
+/*!**********************************************************************************!*\
+  !*** ./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../../../../../../../node_modules/css-loader!../../../../../../../../../node_modules/sass-loader/lib/loader.js!./music-library.scss */ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/music-library.scss");
+
+if (typeof content === 'string') content = [[module.i, content, '']];
+var transform;
+var insertInto;
+var options = {
+  "hmr": true
+};
+options.transform = transform;
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if (content.locals) module.exports = content.locals;
+
+if (false) {}
+
+/***/ }),
+
+/***/ "./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss":
+/*!*****************************************************************************!*\
+  !*** ./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../../../../../../../node_modules/css-loader!../../../../../../../../../node_modules/sass-loader/lib/loader.js!./playlist.scss */ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./src/main/webapp/WEB-INF/assets/js/components/main/css/playlist.scss");
+
+if (typeof content === 'string') content = [[module.i, content, '']];
+var transform;
+var insertInto;
+var options = {
+  "hmr": true
+};
+options.transform = transform;
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if (content.locals) module.exports = content.locals;
+
+if (false) {}
+
+/***/ }),
+
 /***/ "./src/main/webapp/WEB-INF/assets/js/components/player/AddToPlaylist.jsx":
 /*!*******************************************************************************!*\
   !*** ./src/main/webapp/WEB-INF/assets/js/components/player/AddToPlaylist.jsx ***!
@@ -50206,7 +50537,9 @@ function (_Component) {
         className: "menu-separator"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "user-playlist-list"
-      }, playlists.length > 0 && playlists.map(function (playlist) {
+      }, playlists.length > 0 && playlists.filter(function (playlist) {
+        return playlist.title !== 'Favourites';
+      }).map(function (playlist) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "user-playlist",
           key: playlist.id,
@@ -50612,7 +50945,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- //TODO:split!!, remove autoplay, mouse drag on progress and volume
+
 
 var Player =
 /*#__PURE__*/
@@ -50715,8 +51048,6 @@ function (_Component) {
         style: {
           width: "".concat(progress, "%")
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "progress__preload"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "track"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -51124,7 +51455,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_
 /*!************************************************************************!*\
   !*** ./src/main/webapp/WEB-INF/assets/js/store/actions/actionTypes.js ***!
   \************************************************************************/
-/*! exports provided: ERROR, SET_IS_AUTHENTICATED, FILL_SEARCH_OPTIONS, SET_CURRENT_PLAYLIST, SET_USER_PLAYLISTS, SET_PAGE_PLAYLIST_META, SET_PAGE_PLAYLIST, SET_TRACK_INDEX, SET_TRACK, SET_PLAYING, SET_AUDIO, SET_TIME, SET_DURATION, SET_ALBUMS, SET_ARTISTS, NOT_FOUND, SET_PUBLIC_PLAYLISTS, SET_FAVOURITE_PLAYLISTS */
+/*! exports provided: ERROR, SET_IS_AUTHENTICATED, FILL_SEARCH_OPTIONS, SET_CURRENT_PLAYLIST, SET_USER_PLAYLISTS, SET_PAGE_PLAYLIST_META, SET_PAGE_PLAYLIST, SET_TRACK_INDEX, SET_TRACK, SET_PLAYING, SET_AUDIO, SET_TIME, SET_DURATION, SET_ALBUMS, SET_ARTISTS, NOT_FOUND, SET_PUBLIC_PLAYLISTS, SET_FAVOURITE_PLAYLISTS, SET_TOP_PLAYLISTS, SET_RECOMMENDED_PLAYLISTS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51147,6 +51478,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NOT_FOUND", function() { return NOT_FOUND; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_PUBLIC_PLAYLISTS", function() { return SET_PUBLIC_PLAYLISTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_FAVOURITE_PLAYLISTS", function() { return SET_FAVOURITE_PLAYLISTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TOP_PLAYLISTS", function() { return SET_TOP_PLAYLISTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_RECOMMENDED_PLAYLISTS", function() { return SET_RECOMMENDED_PLAYLISTS; });
 var ERROR = "ERROR";
 var SET_IS_AUTHENTICATED = "SET_IS_AUTHENTICATED";
 var FILL_SEARCH_OPTIONS = "FILL_SEARCH_OPTIONS";
@@ -51165,6 +51498,8 @@ var SET_ARTISTS = "SET_ARTISTS";
 var NOT_FOUND = "NOT_FOUND";
 var SET_PUBLIC_PLAYLISTS = "SET_PUBLIC_PLAYLISTS";
 var SET_FAVOURITE_PLAYLISTS = "SET_FAVOURITE_PLAYLISTS";
+var SET_TOP_PLAYLISTS = "SET_TOP_PLAYLISTS";
+var SET_RECOMMENDED_PLAYLISTS = "SET_RECOMMENDED_PLAYLISTS";
 
 /***/ }),
 
@@ -51300,7 +51635,7 @@ var validateToken = function validateToken(token, redirectOnSuccess) {
 /*!*****************************************************************!*\
   !*** ./src/main/webapp/WEB-INF/assets/js/store/actions/main.js ***!
   \*****************************************************************/
-/*! exports provided: setCurrentPlaylist, getSearchOptions, redirect, typeSearch, likeTrack, getUserPlaylists, getPublicPlaylists, getFavouritePlaylists, createPlaylist, addTrackToPlaylist, getPagePlaylistMeta, getPagePlaylist, getSearchResult, getRandom */
+/*! exports provided: setCurrentPlaylist, getSearchOptions, redirect, typeSearch, likeTrack, likePlaylist, getUserPlaylists, getPublicPlaylists, getFavouritePlaylists, getTopPlaylists, getRecommendedPlaylists, createPlaylist, addTrackToPlaylist, getPagePlaylistMeta, getPagePlaylist, getSearchResult, getRandom */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51310,9 +51645,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "redirect", function() { return redirect; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "typeSearch", function() { return typeSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "likeTrack", function() { return likeTrack; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "likePlaylist", function() { return likePlaylist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserPlaylists", function() { return getUserPlaylists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPublicPlaylists", function() { return getPublicPlaylists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFavouritePlaylists", function() { return getFavouritePlaylists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTopPlaylists", function() { return getTopPlaylists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRecommendedPlaylists", function() { return getRecommendedPlaylists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPlaylist", function() { return createPlaylist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addTrackToPlaylist", function() { return addTrackToPlaylist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPagePlaylistMeta", function() { return getPagePlaylistMeta; });
@@ -51372,6 +51710,20 @@ var setPublicPlaylists = function setPublicPlaylists(playlists) {
 var setFavouritePlaylists = function setFavouritePlaylists(playlists) {
   return {
     type: _actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_FAVOURITE_PLAYLISTS"],
+    payload: playlists
+  };
+};
+
+var setTopPlaylists = function setTopPlaylists(playlists) {
+  return {
+    type: _actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_TOP_PLAYLISTS"],
+    payload: playlists
+  };
+};
+
+var setRecommendedPlaylists = function setRecommendedPlaylists(playlists) {
+  return {
+    type: _actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_RECOMMENDED_PLAYLISTS"],
     payload: playlists
   };
 };
@@ -51470,7 +51822,20 @@ var likeTrack = function likeTrack(id) {
       method: 'POST',
       headers: _defineProperty({}, USER_TOKEN_HEADER, token)
     }).then(function (res) {
-      if (res.status != 200) {
+      if (res.status !== 200) {
+        console.log(res);
+      }
+    });
+  };
+};
+var likePlaylist = function likePlaylist(id) {
+  return function (dispatch) {
+    var token = localStorage.getItem('user-token');
+    return fetch("".concat(URL_PREFIX, "playlist/").concat(id, "/like"), {
+      method: 'POST',
+      headers: _defineProperty({}, USER_TOKEN_HEADER, token)
+    }).then(function (res) {
+      if (res.status !== 200) {
         console.log(res);
       }
     });
@@ -51509,6 +51874,30 @@ var getFavouritePlaylists = function getFavouritePlaylists() {
       return res.json();
     }).then(function (res) {
       return dispatch(setFavouritePlaylists(res));
+    });
+  };
+};
+var getTopPlaylists = function getTopPlaylists() {
+  return function (dispatch) {
+    var token = localStorage.getItem('user-token');
+    return fetch("".concat(URL_PREFIX, "playlist/top"), {
+      headers: _defineProperty({}, USER_TOKEN_HEADER, token)
+    }).then(function (res) {
+      return res.json();
+    }).then(function (res) {
+      return dispatch(setTopPlaylists(res));
+    });
+  };
+};
+var getRecommendedPlaylists = function getRecommendedPlaylists() {
+  return function (dispatch) {
+    var token = localStorage.getItem('user-token');
+    return fetch("".concat(URL_PREFIX, "playlist/recommended"), {
+      headers: _defineProperty({}, USER_TOKEN_HEADER, token)
+    }).then(function (res) {
+      return res.json();
+    }).then(function (res) {
+      return dispatch(setRecommendedPlaylists(res));
     });
   };
 };
@@ -51698,6 +52087,8 @@ var initialState = {
   userPlaylists: [],
   publicPlaylists: [],
   favouritePlaylists: [],
+  topPlaylists: [],
+  recommendedPlaylists: [],
   pagePlaylistMeta: {},
   pagePlaylist: [],
   albums: [],
@@ -51738,6 +52129,16 @@ var rootReducer = function rootReducer() {
     case _actions_actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_FAVOURITE_PLAYLISTS"]:
       return _objectSpread({}, state, {
         favouritePlaylists: payload
+      });
+
+    case _actions_actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_TOP_PLAYLISTS"]:
+      return _objectSpread({}, state, {
+        topPlaylists: payload
+      });
+
+    case _actions_actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_RECOMMENDED_PLAYLISTS"]:
+      return _objectSpread({}, state, {
+        recommendedPlaylists: payload
       });
 
     case _actions_actionTypes_js__WEBPACK_IMPORTED_MODULE_0__["SET_PAGE_PLAYLIST_META"]:

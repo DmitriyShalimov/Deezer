@@ -1,13 +1,15 @@
 import React, {Component} from "react";
 
+import "./css/index.scss";
+import "./css/playlist.scss";
 import Player from "../player/Player.jsx";
 import Header from "../header/Header.jsx";
 import {connect} from "react-redux";
-import {redirect, likeTrack, setCurrentPlaylist, getRandom} from "../../store/actions/main.js";
+import {redirect, likeTrack, setCurrentPlaylist, getRandom, likePlaylist} from "../../store/actions/main.js";
 import {validateToken, logout} from "../../store/actions/login.js";
 import {setTrack, setTrackIndex} from "../../store/actions/track-actions.js";
 import {bindActionCreators} from "redux";
-import {Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import Genre from "./Genre.jsx";
 import Album from "./Album.jsx";
 import Song from "./Song.jsx";
@@ -18,6 +20,7 @@ import NotFound from "./NotFound.jsx";
 import RandomSong from "./RandomSong.jsx";
 import MusicLibrary from "./MusicLibrary.jsx";
 import MusicLibraryPage from "./MusicLibraryPage.jsx";
+import DeezerMain from "./DeezerMain.jsx";
 
 //TODO:style 404
 class MainPage extends Component {
@@ -64,7 +67,7 @@ class MainPage extends Component {
                                                                     handleLike={this.handleLike.bind(this)}
                                                                     playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/search/:mask"
-                                           render={props => <SearchPage {...props.match}
+                                           render={props => <SearchPage {...props.match} key={this.props.location.key}
                                                                         handleLike={this.handleLike.bind(this)}
                                                                         playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/playlist/:id(\d+)"
@@ -72,7 +75,10 @@ class MainPage extends Component {
                                                                       handleLike={this.handleLike.bind(this)}
                                                                       playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/music-library"
-                                           component={MusicLibraryPage}/>
+                                           render={() => <MusicLibraryPage key={this.props.location.key}
+                                               likePlaylist={this.likePlaylist.bind(this)}/>}/>
+                                    <Route exact path="/"
+                                           render={() => <DeezerMain key={this.props.location.key} likePlaylist={this.likePlaylist.bind(this)}/>}/>
                                 </React.Fragment>
                             }
                         </div>
@@ -127,7 +133,12 @@ class MainPage extends Component {
         }
     }
 
-
+    likePlaylist(playlist) {
+        this.props.likePlaylist(playlist.id);
+        playlist.liked = !playlist.liked;
+        playlist.liked ? playlist.likeCount++ : playlist.likeCount--;
+        this.forceUpdate();
+    }
 }
 
 export const toArray = (playlist) => {
@@ -159,12 +170,13 @@ const mapDispatchToProps = dispatch => {
         setTrackIndex: (idx) => dispatch(setTrackIndex(idx)),
         setTrack: (track) => dispatch(setTrack(track)),
         setCurrentPlaylist: (playlist, title) => dispatch(setCurrentPlaylist(playlist, title)),
-        getRandom: bindActionCreators(getRandom, dispatch)
+        getRandom: bindActionCreators(getRandom, dispatch),
+        likePlaylist: (playlist) => dispatch(likePlaylist(playlist))
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(MainPage);
+)(MainPage));
 
 

@@ -14,11 +14,12 @@ class AddToPlaylist extends Component {
                 <div className="create-playlist" data-open="createPlaylistModal">Create new playlist</div>
                 <div className="menu-separator"/>
                 <ul className="user-playlist-list">
-                    {playlists.length > 0 && playlists.map(playlist =>
-                        <li className="user-playlist" key={playlist.id}
-                            onClick={() => this.handleAddToPlaylist(playlist.id, track.id)}>{playlist.title}<span
-                            className="user-playlist-subtitle"> - {playlist.access}</span></li>
-                    )}
+                    {playlists.length > 0 && playlists.filter(playlist => playlist.title !== 'Favourites')
+                        .map(playlist =>
+                            <li className="user-playlist" key={playlist.id}
+                                onClick={() => this.handleAddToPlaylist(playlist.id, track.id)}>{playlist.title}<span
+                                className="user-playlist-subtitle"> - {playlist.access}</span></li>
+                        )}
                 </ul>
                 <CreateNewPlaylist track={track} createPlaylist={createPlaylist}/>
             </section>

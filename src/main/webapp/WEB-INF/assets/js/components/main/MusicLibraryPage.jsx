@@ -1,9 +1,11 @@
 import React, {Component} from "react"
+import "./css/music-library.scss";
 import {connect} from "react-redux";
 import PlaylistsList from "./PlaylistsList.jsx";
 import {bindActionCreators} from "redux";
 import {getPublicPlaylists, getFavouritePlaylists} from "../../store/actions/main.js";
 import {typeSearch} from "../../store/actions/main";
+import {withRouter} from "react-router-dom";
 
 class MusicLibraryPage extends Component {
     componentWillMount() {
@@ -16,7 +18,7 @@ class MusicLibraryPage extends Component {
     }
 
     render() {
-        const {userPlaylists, publicPlaylists, favouritePlaylists, typeSearch} = this.props;
+        const {userPlaylists, publicPlaylists, favouritePlaylists, typeSearch, likePlaylist} = this.props;
         return (
             <section>
                 <div className="user-library">
@@ -38,14 +40,14 @@ class MusicLibraryPage extends Component {
                         <div className="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6"
                              id="publicPl">
                             {publicPlaylists.length > 0 ?
-                                <PlaylistsList playlists={publicPlaylists} play={typeSearch} showlike/> :
+                                <PlaylistsList playlists={publicPlaylists} play={typeSearch}  like={likePlaylist} showlike/> :
                                 <p className="empty-message">Nothing to show. Create you first public playlist and it
                                     will be here.</p>}
                         </div>
                         <div className=" tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6"
                              id="favouritesPl">
                             {favouritePlaylists.length > 0 ?
-                                <PlaylistsList playlists={favouritePlaylists} play={typeSearch} showlike/> :
+                                <PlaylistsList playlists={favouritePlaylists} play={typeSearch}  like={likePlaylist} showlike/> :
                                 <p className="empty-message">Nothing to show. Click 'like' on any playlist and it will
                                     be here.</p>
                             }
@@ -73,8 +75,8 @@ const mapDispatchToProps = dispatch => {
         typeSearch: (type, id, title) => dispatch(typeSearch(type, id, title)),
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(MusicLibraryPage);
+)(MusicLibraryPage));
 

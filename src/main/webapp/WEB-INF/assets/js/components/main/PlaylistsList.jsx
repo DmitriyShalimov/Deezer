@@ -1,12 +1,11 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom";
 
-//TODO:style followers + handle likes
 class PlaylistsList extends Component {
 
     render() {
-        const {playlists, showlike, play} = this.props;
-        console.log(playlists);
+        const {playlists, showlike, play, like} = this.props;
+        console.log("playlists", playlists);
         return (
             <React.Fragment>
                 {playlists.map(playlist =>
@@ -28,13 +27,16 @@ class PlaylistsList extends Component {
                             {showlike &&
                             <React.Fragment>
                                 <div className="card-playlist-like">
-                                    {!playlist.liked && <i className="far fa-heart top pl-like"/>}
-                                    {playlist.liked && <i className="fas fa-heart top pl-dislike"/>}
-                                </div>
-                                <div className="followers-count suggestion-subtitle">
+                                    {!playlist.liked &&
+                                    <i className="far fa-heart top pl-like" onClick={() => like(playlist)}/>}
+                                    {playlist.liked &&
+                                    <i className="fas fa-heart top pl-dislike" onClick={() => like(playlist)}/>}
+                                    <div className="followers-count suggestion-subtitle">
                                 <span
-                                    className="like-count">{playlist.likeCount}</span> {getFollowerWord(playlist.likeCount)}
+                                    className="like-count">{playlist.likeCount}</span> {this.getFollowerWord(playlist.likeCount)}
+                                    </div>
                                 </div>
+
                             </React.Fragment>}
                         </div>
                     </div>
@@ -44,11 +46,9 @@ class PlaylistsList extends Component {
         );
     }
 
+    getFollowerWord = (likeCount) => likeCount === 1 ? 'follower' : 'followers';
+
 }
-
-const getFollowerWord = (likeCount) => likeCount === 1 ? 'follower' : 'followers';
-
-/*${like ? DeezerUtil.addFollowers(playlist) : ''}*/
 
 
 export default PlaylistsList;

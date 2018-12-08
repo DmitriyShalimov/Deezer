@@ -256,7 +256,7 @@ public class QueryContextConfig {
 
     @Bean
     public String getAllSongsByPlaylistSql() {
-        return "select s.id, s.title, " +
+        return "select distinct s.id, s.title, " +
                 "s.track_url, s.picture_link , " +
                 "al.title  as album_title, art.name as artist_name " +
                 ", su.id  as liked, s.lyrics " +

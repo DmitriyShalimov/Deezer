@@ -76,7 +76,7 @@ public class PlayListController {
         return likeCount;
     }
 
-    @GetMapping(value = "top", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/top", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getTopPlaylists(AuthPrincipal principal) {
         logger.info("Sending request to get top playlists");
         long start = System.currentTimeMillis();

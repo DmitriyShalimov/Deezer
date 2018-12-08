@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {getSearchResult, typeSearch} from "../../store/actions/main.js";
 import ArtistsList from "./ArtistsList.jsx";
 import AlbumsList from "./AlbumsList.jsx";
+import {withRouter} from "react-router-dom";
 
 class SearchPage extends Component {
     componentWillMount() {
@@ -15,9 +16,7 @@ class SearchPage extends Component {
     }
 
     render() {
-        const mask = this.props.params.mask;
         const {pagePlaylist, artists, albums, handleLike, playTrack, playing, track, currentTime, duration, typeSearch} = this.props;
-        console.log(mask);
         return (
             <React.Fragment>
                 {artists.length > 0 && <ArtistsList artists={artists} play={typeSearch}/>}
@@ -63,8 +62,8 @@ const mapDispatchToProps = dispatch => {
         typeSearch: (type, id) => dispatch(typeSearch(type, id))
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(SearchPage);
+)(SearchPage));
 
