@@ -280,7 +280,7 @@ public class QueryContextConfig {
                 "from song s join album al on s.album = al.id " +
                 "join artist art on al.artist = art.id " +
                 "join song_genre sg on sg.song = s.id " +
-                "left join song_user su on su.user = :userId  and su.song = s.id " +
+                "left join song_user su on su.user =? and su.song = s.id " +
                 "where sg.genre=? or sg.genre=?";
     }
 
