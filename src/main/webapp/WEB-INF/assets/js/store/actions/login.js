@@ -1,6 +1,7 @@
 import {ERROR, SET_IS_AUTHENTICATED} from "./actionTypes.js";
 import {push} from 'react-router-redux';
 import 'babel-polyfill';
+import {redirect} from "./main.js";
 
 const error = message => {
     return {
@@ -32,13 +33,14 @@ export const signIn = (login, password, signUpOnError) => {
                     if (signUpOnError) {
                         dispatch(register(login, password, password));
                     } else {
-                        return dispatch(error("Invalid Login/Password"));
+                        dispatch(error("Invalid Login/Password"));
                     }
                 }
             }).then(res => {
                 if (res) {
                     localStorage.setItem('user-token', res.uuid);
-                    dispatch(push("/"))
+                    dispatch(isAuth({auth: true}));
+                    dispatch(push("/"));
                 }
             });
     };
@@ -63,8 +65,10 @@ export const register = (login, password, password2) => {
                         dispatch(error(`User with login '${login}' already exists`))
                     }
                 }).then(res => {
-                    localStorage.setItem('user-token', res.uuid);
-                    dispatch(push("/"))
+                    if(res) {
+                        localStorage.setItem('user-token', res.uuid);
+                        dispatch(push("/"))
+                    }
                 });
     };
 };
@@ -81,21 +85,25 @@ export const logout = () => {
             .then(res => {
                     if (res.status == 200) {
                         dispatch(isAuth({auth: false}));
+                        dispatch(push("/login"))
                     }
                 }
             );
     }
 };
 
-export const validateToken = (token) => {
+export const validateToken = (token, redirectOnSuccess) => {
     return dispatch => {
-        return fetch(`validate/${token}`)
+        return fetch(`/validate/${token}`)
             .then(res => res.json())
             .then(res => {
                     if (res.auth) {
-                        dispatch(push('/'));
+                        dispatch(push(redirectOnSuccess));
                     }
                     dispatch(isAuth(res));
+                    if (!res.auth) {
+                        dispatch(redirect("/login"));
+                    }
                 }
             );
     }

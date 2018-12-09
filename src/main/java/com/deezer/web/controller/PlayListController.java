@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -77,7 +76,7 @@ public class PlayListController {
         return likeCount;
     }
 
-    @GetMapping(value = "top", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/top", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayList> getTopPlaylists(AuthPrincipal principal) {
         logger.info("Sending request to get top playlists");
         long start = System.currentTimeMillis();
@@ -97,8 +96,7 @@ public class PlayListController {
     }
 
     @GetMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayList> getAllPublicPlaylists(AuthPrincipal principal, HttpSession session) {
-        Util.getUserIdFromHttpSession(session);
+    public List<PlayList> getAllPublicPlaylists(AuthPrincipal principal) {
         logger.info("Sending request to get all public playlists");
         long start = System.currentTimeMillis();
         List<PlayList> playlists = playListService.getAllPublicPlaylists(principal.getUser().getId());
@@ -107,10 +105,10 @@ public class PlayListController {
     }
 
     @GetMapping(value = "/recommended")
-    public List<PlayList> getRecommendedPlaylist(HttpSession session) {
+    public List<PlayList> getRecommendedPlaylist(AuthPrincipal principal) {
         logger.info("Start retrieving recommended playlists");
         long start = System.currentTimeMillis();
-        List<PlayList> playLists = playListService.getRecommendedPlayList(Util.getUserIdFromHttpSession(session));
+        List<PlayList> playLists = playListService.getRecommendedPlayList(principal.getUser().getId());
         logger.info("Recommended playlist for user are {}. It took {} ms", playLists, System.currentTimeMillis() - start);
         return playLists;
     }

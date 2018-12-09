@@ -1,0 +1,85 @@
+/*music library*/
+.user-library {
+  margin-top: 2%;
+}
+
+aside.right {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 2%;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.all-playlists {
+  margin-top: 20px;
+}
+
+.music-library:hover,
+.all-playlists:hover {
+  opacity: 0.8;
+}
+
+.music-library:active,
+.all-playlists:active {
+  background-color: rgba(255, 87, 34, 0.22);
+}
+
+.music-library i,
+.all-playlists i {
+  display: flex;
+  justify-content: center;
+  color: #ff5722;
+  font-size: 1.5em;
+}
+
+.music-library p,
+.all-playlists p {
+  overflow: hidden;
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 10px;
+  text-align: center;
+  color: #212121;
+}
+
+.tabs, .tabs-content {
+  background-color: transparent;
+  border: none;
+  color: #212121;
+}
+
+.tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+}
+
+.tabs-title a {
+  color: #212121;
+  text-transform: uppercase;
+  font-weight: bolder;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.tabs-title.is-active a {
+  opacity: 1;
+  border-bottom: 2px solid #ff5722;
+  background-color: inherit;
+  color: #212121;
+  outline: none;
+}
+
+.tabs-title a:hover {
+  background-color: inherit;
+  color: inherit;
+}
+
+.tabs-panel.is-active {
+  display: flex;
+}
+
+#playlist-section .all-public-playlists h3,
+#playlist-section .all-public-playlists .underline {
+  margin-left: 22px;
+}

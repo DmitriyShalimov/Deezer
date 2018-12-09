@@ -5,14 +5,15 @@ import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
 import {createStore, compose, applyMiddleware, combineReducers} from "redux";
 import {connectRouter, routerMiddleware} from "connected-react-router";
-import {rootReducer} from "./store/reducers/root-reducer";
+import {rootReducer} from "./store/reducers/root-reducer.js";
 
 import App from './App.jsx';
+import {trackReducer} from "./store/reducers/track-reducer";
 
 export const history = createHistory();
 
 const reducers = combineReducers({
-    rootReducer
+    rootReducer, trackReducer
 });
 const middleware = [thunk, routerMiddleware(history)];
 

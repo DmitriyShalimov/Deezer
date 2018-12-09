@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         registry.addResourceHandler("/assets/**").addResourceLocations("WEB-INF/assets/");
         registry.addResourceHandler("/dist/**").addResourceLocations("dist/");
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("WEB-INF/favicon.ico");
     }
 
     @Bean

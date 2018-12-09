@@ -1,9 +1,40 @@
-import {ERROR, FILL_SEARCH_OPTIONS, SET_IS_AUTHENTICATED, SET_CURRENT_PLAYLIST} from "../actions/actionTypes.js";
+import {
+    ERROR,
+    FILL_SEARCH_OPTIONS,
+    SET_IS_AUTHENTICATED,
+    SET_CURRENT_PLAYLIST,
+    SET_USER_PLAYLISTS,
+    SET_PUBLIC_PLAYLISTS,
+    SET_FAVOURITE_PLAYLISTS,
+    SET_TOP_PLAYLISTS,
+    SET_RECOMMENDED_PLAYLISTS,
+    SET_PAGE_PLAYLIST_META,
+    SET_PAGE_PLAYLIST,
+    SET_ARTISTS,
+    SET_ALBUMS,
+    NOT_FOUND
+} from "../actions/actionTypes.js";
 
-const initialState = {user: {}, errorMessage: '', searchOptions: [], isAuth: '', currentPlaylist:[]};
+const initialState = {
+    notFound: false,
+    user: {},
+    errorMessage: '',
+    searchOptions: [],
+    isAuth: '',
+    currentPlaylist: [],
+    currentPlaylistTitle: "",
+    userPlaylists: [],
+    publicPlaylists: [],
+    favouritePlaylists: [],
+    topPlaylists: [],
+    recommendedPlaylists: [],
+    pagePlaylistMeta: {},
+    pagePlaylist: [],
+    albums: [],
+    artists: [],
+};
 
 export const rootReducer = (state = initialState, action) => {
-    console.log(action);
     const {payload} = action;
     switch (action.type) {
         case SET_IS_AUTHENTICATED:
@@ -11,7 +42,27 @@ export const rootReducer = (state = initialState, action) => {
         case FILL_SEARCH_OPTIONS:
             return {...state, searchOptions: payload};
         case SET_CURRENT_PLAYLIST:
-            return{...state, currentPlaylist: payload};
+            return {...state, currentPlaylist: payload.songs, currentPlaylistTitle: payload.title};
+        case SET_USER_PLAYLISTS:
+            return {...state, userPlaylists: payload};
+        case SET_PUBLIC_PLAYLISTS:
+            return {...state, publicPlaylists: payload};
+        case SET_FAVOURITE_PLAYLISTS:
+            return {...state, favouritePlaylists: payload};
+        case SET_TOP_PLAYLISTS:
+            return {...state, topPlaylists: payload};
+        case SET_RECOMMENDED_PLAYLISTS:
+            return {...state, recommendedPlaylists: payload};
+        case SET_PAGE_PLAYLIST_META:
+            return {...state, pagePlaylistMeta: payload};
+        case SET_PAGE_PLAYLIST:
+            return {...state, pagePlaylist: payload};
+        case SET_ARTISTS:
+            return {...state, artists: payload};
+        case SET_ALBUMS:
+            return {...state, albums: payload};
+        case NOT_FOUND:
+            return {...state, notFound: payload};
         case ERROR:
             return {...state, errorMessage: payload};
         default:

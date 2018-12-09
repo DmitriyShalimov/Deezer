@@ -1,18 +1,28 @@
 import React, {Component} from "react";
 import './css/index.scss';
 import {connect} from "react-redux";
+import MiniPlaylist from "./MiniPlaylist.jsx";
+import {getUserPlaylists, createPlaylist, addTrackToPlaylist} from "../../store/actions/main.js";
+import {bindActionCreators} from "redux";
+import AddToPlaylist from "./AddToPlaylist.jsx";
+import Lyrics from "./Lyrics.jsx";
+import {
+    setTrackIndex,
+    setTrack,
+    setPlaying,
+    setAudio,
+    setTrackTime,
+    setTrackDuration
+} from "../../store/actions/track-actions.js";
+import {toArray} from "../main/MainPage.jsx";
 
-//TODO:split!!, remove autoplay, mouse drag on process and volume
+
 class Player extends Component {
     state = {
-        track: null,
-        playing: false,
-        trackIndex: 0,
-        currentTime: '0:00',
-        duration: '0:00',
         progress: 0,
         volume: 0.8,
-        prevVolume: 0.8
+        prevVolume: 0.8,
+        showMiniPlaylist: false
     };
 
     constructor(props) {
@@ -22,22 +32,22 @@ class Player extends Component {
 
     componentDidMount() {
         this.audio = document.getElementById('audio');
+        this.props.setAudio(this.audio);
         this.audio.volume = this.state.volume;
+        this.props.getUserPlaylists();
+        $(document).foundation();
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({track: this.getTrack(props.currentPlaylist)});
-    };
-
     render() {
-        const {track, playing, currentTime, duration, progress, volume} = this.state;
+        const {progress, volume, showMiniPlaylist} = this.state;
+        const {currentTime, duration, playing, track, currentPlaylistTitle, currentPlaylist, userPlaylists, createPlaylist, addTrackToPlaylist, handleLike, playTrack, setPlaying} = this.props;
         return (
             <footer>
                 <audio preload="metadata" id="audio" controls="controls" src={track ? track.url : ""}
                        onTimeUpdate={() => this.handleTimeUpdate()}
                        onLoadedMetadata={() => this.handleLoadedTrack()}
-                       onPause={() => this.setState({playing: false})}
-                       onPlay={() => this.setState({playing: true})}
+                       onPause={() => setPlaying(false)}
+                       onPlay={() => setPlaying(true)}
                        onEnded={() => this.handleEndedTrack()}
                        autoPlay
                 />
@@ -46,7 +56,6 @@ class Player extends Component {
                         <div className="progress-container">
                             <div className="progress" onClick={(e) => this.handleProgressClick(e)} ref={this.progress}>
                                 <div className="progress__bar" style={{width: `${progress}%`}}/>
-                                <div className="progress__preload"/>
                             </div>
                         </div>
                         <div className="track">
@@ -80,9 +89,9 @@ class Player extends Component {
                                    title="previous track"/>
                             </button>
                             <button className="ap__controls ap__controls--toggle btnPlay"
-                                    onClick={() => this.playTrack(track)}>
+                                    onClick={() => playTrack(track)}>
                                 {!playing && <i className="fas fa-play main-play top has-tip"
-                                                data-tooltip aria-haspopup="true" tabIndex="1" title="play"/>}
+                                                data-tooltip aria-haspopup="true" title="play"/>}
                                 {playing && <i className="fas fa-pause main-pause"/>}
                             </button>
                             <button className="ap__controls ap__controls--next" id="btnNext"
@@ -93,13 +102,14 @@ class Player extends Component {
                         </div>
 
                         <div className="ap__item ap__item--settings">
-                            <button className="ap__controls ap__controls--playlist" id="addLike">
-                                {track ? track.liked && <i className="far fa-heart top main-like"
-                                                           data-tooltip aria-haspopup="true" tabIndex="1"
-                                                           title="Add to favourites"/> : ""}
-                                {track ? !track.liked && <i className="fas fa-heart top main-dislike"
+                            <button className="ap__controls ap__controls--playlist" id="addLike"
+                                    onClick={() => handleLike(track)}>
+                                {track ? !track.liked && <i className="far fa-heart top main-like"
                                                             data-tooltip aria-haspopup="true" tabIndex="1"
-                                                            title="Cancel like"/> : ""}
+                                                            title="Add to favourites"/> : ""}
+                                {track ? track.liked && <i className="fas fa-heart top main-dislike"
+                                                           data-tooltip aria-haspopup="true" tabIndex="1"
+                                                           title="Cancel like"/> : ""}
                             </button>
                             <button className="ap__controls ap__controls--playlist main-add-to-playlist"
                                     data-toggle="addToPlaylistMenu">
@@ -118,49 +128,51 @@ class Player extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <button className="ap__controls ap__controls--playlist" id="showPlaylist">
+                            <button className="ap__controls ap__controls--playlist" id="showPlaylist"
+                                    onClick={() => this.handleMiniPlaylist()}>
                                 <i className="fas fa-music top has-tip"
                                    data-tooltip aria-haspopup="true" tabIndex="1"
-                                   title="Current queue"/>
+                                   title="Current queue" style={this.getMiniPlaylistButtonColor()}/>
                             </button>
 
                         </div>
                     </div>
                 </div>
+                {showMiniPlaylist &&
+                <MiniPlaylist currentTrack={track} playlist={toArray(currentPlaylist)}
+                              title={currentPlaylistTitle}
+                              playing={playing}
+                              currentTime={currentTime}
+                              duration={duration}
+                              playTrack={playTrack}
+                              handleLike={handleLike}/>}
+                <AddToPlaylist playlists={userPlaylists} track={track}
+                               createPlaylist={createPlaylist} addTrackToPlaylist={addTrackToPlaylist}/>
+                <Lyrics lyrics={track ? track.lyrics : ""}/>
             </footer>
-        );
+
+        )
+            ;
 
     }
 
+    getMiniPlaylistButtonColor = () => this.state.showMiniPlaylist ? {color: '#ff5722'} : {color: 'black'};
 
-    getTrack(currentPlaylist) {
-        if (!currentPlaylist) return;
-        if (!Array.isArray(currentPlaylist)) {
-            currentPlaylist = [currentPlaylist];
-        }
-        if (currentPlaylist.length === 0) return;
-        return currentPlaylist[this.state.trackIndex];
+    handleMiniPlaylist() {
+        const isShown = this.state.showMiniPlaylist;
+        this.setState({showMiniPlaylist: !isShown});
     }
 
-    playTrack(track) {
-        if (!track) return;
-        if (this.state.playing) {
-            this.audio.pause();
-        } else {
-            this.audio.play();
-        }
-
-    }
 
     handleProgressClick({pageX}) {
-        if (!this.state.track) return;
+        if (!this.props.track) return;
         const progressWidth = this.progress.current.offsetWidth;
         const percent = (pageX / progressWidth);
         console.log(percent);
         const currentTime = this.audio.duration * percent;
         this.audio.currentTime = currentTime;
         console.log("time", currentTime);
-        this.setState({currentTime: this.getTrackTime(currentTime)});
+        this.props.setTrackTime(this.getTrackTime(currentTime));
     }
 
 
@@ -195,14 +207,15 @@ class Player extends Component {
         const duration = this.audio.duration;
         const current = this.audio.currentTime;
         let percent = (current / duration) * 100;
-        this.setState({currentTime: this.getTrackTime(this.audio.currentTime), progress: percent})
+        this.props.setTrackTime(this.getTrackTime(this.audio.currentTime));
+        this.setState({progress: percent});
     }
 
     handleLoadedTrack() {
-        this.setState({duration: this.getTrackTime(this.audio.duration)});
+        this.props.setTrackDuration(this.getTrackTime(this.audio.duration));
     }
 
-    handleEndedTrack(){
+    handleEndedTrack() {
         this.playNextTrack();
     }
 
@@ -220,7 +233,7 @@ class Player extends Component {
         this.audio.pause();
         const playlist = this.props.currentPlaylist;
         const trackCount = playlist.length;
-        let index = this.state.trackIndex;
+        let index = this.props.trackIndex;
         if ((index + 1) < trackCount) {
             index++;
         } else {
@@ -228,12 +241,13 @@ class Player extends Component {
         }
         const track = playlist[index];
         console.log("next track", track);
-        this.setState({track: track, trackIndex: index});
+        this.props.setTrack(track);
+        this.props.setTrackIndex(index);
     }
 
     playPrevTrack() {
         this.audio.pause();
-        let index = this.state.trackIndex;
+        let index = this.props.trackIndex;
         if ((index - 1) > -1) {
             index--;
         } else {
@@ -241,23 +255,39 @@ class Player extends Component {
         }
         const track = this.props.currentPlaylist[index];
         console.log("prev track", track);
-        this.setState({track: track, trackIndex: index});
+        this.props.setTrack(track);
+        this.props.setTrackIndex(index);
     }
 
 }
 
 const mapStateToProps = state => {
     return {
-        currentPlaylist: state.rootReducer.currentPlaylist
+        currentPlaylist: state.rootReducer.currentPlaylist,
+        currentPlaylistTitle: state.rootReducer.currentPlaylistTitle,
+        userPlaylists: state.rootReducer.userPlaylists,
+        trackIndex: state.trackReducer.trackIndex,
+        track: state.trackReducer.track,
+        playing: state.trackReducer.playing,
+        currentTime: state.trackReducer.currentTime,
+        duration: state.trackReducer.duration
     };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         getSearchOptions: bindActionCreators(getSearchOptions, dispatch),
-//         typeSearch: (type, id) => dispatch(typeSearch(type, id))
-//     };
-// };
+const mapDispatchToProps = dispatch => {
+    return {
+        getUserPlaylists: bindActionCreators(getUserPlaylists, dispatch),
+        createPlaylist: (playlistName, accessModifier, trackId) => dispatch(createPlaylist(playlistName, accessModifier, trackId)),
+        addTrackToPlaylist: (playlistId, trackId) => dispatch(addTrackToPlaylist(playlistId, trackId)),
+        setTrackIndex: (idx) => dispatch(setTrackIndex(idx)),
+        setTrack: (track) => dispatch(setTrack(track)),
+        setPlaying: (playing) => dispatch(setPlaying(playing)),
+        setAudio: (audio) => dispatch(setAudio(audio)),
+        setTrackTime: (time) => dispatch(setTrackTime(time)),
+        setTrackDuration: (duration) => dispatch(setTrackDuration(duration))
+    };
+};
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Player);

@@ -3,7 +3,7 @@ package com.deezer.dao.jdbc;
 import com.deezer.dao.SearchDao;
 import com.deezer.dao.jdbc.mapper.AlbumRowMapper;
 import com.deezer.dao.jdbc.mapper.ArtistRowMapper;
-import com.deezer.dao.jdbc.mapper.SongRowMapper;
+import com.deezer.dao.jdbc.mapper.SongSearchRowMapper;
 import com.deezer.entity.Album;
 import com.deezer.entity.Artist;
 import com.deezer.entity.SearchResult;
@@ -21,7 +21,7 @@ import java.util.List;
 @Repository
 public class JdbcSearchDao implements SearchDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
+    private final RowMapper<Song> SONG_ROW_MAPPER = new SongSearchRowMapper();
     private final RowMapper<Album> ALBUM_ROW_MAPPER = new AlbumRowMapper();
     private final RowMapper<Artist> ARTIST_ROW_MAPPER = new ArtistRowMapper();
     private final JdbcTemplate jdbcTemplate;

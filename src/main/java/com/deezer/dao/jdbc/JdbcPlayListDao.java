@@ -45,7 +45,7 @@ public class JdbcPlayListDao implements PlayListDao {
     public void addPlaylist(String playlistTitle, Access access, int userId, int songId) {
         logger.info("Start query to add playlist {} to DB", playlistTitle);
         long startTime = System.currentTimeMillis();
-        int result = jdbcTemplate.update(addNewUserPlaylistSql, playlistTitle, access, userId);
+        int result = jdbcTemplate.update(addNewUserPlaylistSql, playlistTitle, access.getId(), userId);
         if (result == 1) {
             logger.debug("Playlist {} uploaded", playlistTitle);
             logger.debug("Start upload song {} to playlist {}", songId, playlistTitle);
@@ -76,7 +76,7 @@ public class JdbcPlayListDao implements PlayListDao {
     public PlayList getById(int id, int userId) {
         logger.info("Start query to get playlist with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        PlayList playList = jdbcTemplate.queryForObject(getPlaylistById, PLAYLIST_ROW_MAPPER, userId, id);
+        PlayList playList = jdbcTemplate.queryForObject(getPlaylistById, PLAYLIST_ROW_MAPPER, userId, id, userId);
         logger.info("Finish query to get playlist with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return playList;
     }

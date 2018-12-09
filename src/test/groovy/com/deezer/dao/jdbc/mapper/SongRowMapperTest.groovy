@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 
 @Category(UnitTest.class)
-class SongDetailsRowMapperTest {
+class SongRowMapperTest {
     @Test
     void mapRow() {
         ResultSet resultSet = mock(ResultSet.class)
@@ -24,7 +24,7 @@ class SongDetailsRowMapperTest {
         def expectedSong = new Song(id: 1, title: 'title', url: 'track_url', artist: new Artist(id:0), album: new Album(id:0))
 
         //when
-        SongDetailsRowMapper songRowMapper = new SongDetailsRowMapper()
+        SongRowMapper songRowMapper = new SongRowMapper()
 
         //then
         def actualSong = songRowMapper.mapRow(resultSet, 0)

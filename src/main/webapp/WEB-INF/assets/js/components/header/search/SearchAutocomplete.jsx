@@ -3,9 +3,9 @@ import '../css/index.scss';
 import Autosuggest from 'react-autosuggest';
 import SearchForm from "./SearchForm.jsx";
 import {bindActionCreators} from "redux";
-import {getSearchOptions, typeSearch} from "../../../store/actions/main.js";
+import {getSearchOptions, typeSearch, redirect} from "../../../store/actions/main.js";
 import {connect} from "react-redux";
-
+import {history} from "../../../index.jsx";
 
 class SearchAutocomplete extends Component {
     state = {value: '', suggestions: []};
@@ -32,6 +32,16 @@ class SearchAutocomplete extends Component {
         });
     };
 
+    onKeyPressed = (event) => {
+        console.log(event.charCode);
+        if (event.key === 'Enter') {
+            this.generalSearch(this.state.value);
+        }
+    };
+
+    generalSearch(mask) {
+        history.push(`/search/${mask}`);
+    };
 
     getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
@@ -59,7 +69,8 @@ class SearchAutocomplete extends Component {
     }
 
     handleTypeSearch = (event, {suggestion}) => {
-        this.props.typeSearch(suggestion.type, suggestion.id);
+        // this.props.redirect(`/${suggestion.type}/${suggestion.id}`);
+        //typeSearch(suggestion.type, suggestion.id);
     };
 
 
@@ -68,27 +79,34 @@ class SearchAutocomplete extends Component {
         const inputProps = {
             placeholder: "Search",
             value,
-            onChange: this.onChange
+            onChange: this.onChange,
+            onKeyPress: this.onKeyPressed
         };
         return (
-            <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-                onSuggestionSelected={this.handleTypeSearch}
-            />
+            <div className="search-icon-form">
+                <i className="fas fa-search" onClick={() => this.generalSearch(this.state.value)}/>
+                <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion.bind(this)}
+                    inputProps={inputProps}
+                />
+            </div>
         );
     }
+
+    renderSuggestion(suggestion) {
+        return <SearchForm picture={suggestion.picture} title={suggestion.title} subtitle={getSubtitle(suggestion)}
+                           type={suggestion.type} id={suggestion.id}
+                           typeSearch={this.props.typeSearch}/>
+    };
+
 }
 
 const getSuggestionValue = suggestion => suggestion.title;
 
-const renderSuggestion = suggestion => (
-    <SearchForm picture={suggestion.picture} title={suggestion.title} subtitle={getSubtitle(suggestion)}/>
-);
 
 const getSubtitle = (item) => {
     return item.type + ((item.type !== 'artist') ? ` by ${item.artist.name}` : '');
@@ -104,7 +122,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getSearchOptions: bindActionCreators(getSearchOptions, dispatch),
-        typeSearch: (type, id) => dispatch(typeSearch(type, id))
+        typeSearch: (type, id) => dispatch(typeSearch(type, id)),
+        redirect: (url) => dispatch(redirect(url))
     };
 };
 export default connect(
