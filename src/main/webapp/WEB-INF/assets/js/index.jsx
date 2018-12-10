@@ -19,7 +19,7 @@ const middleware = [thunk, routerMiddleware(history)];
 
 const store = createStore(
     connectRouter(history)(reducers),
-    compose(applyMiddleware(...middleware))
+    compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 );
 
 ReactDOM.render(

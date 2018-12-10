@@ -5,7 +5,6 @@ class PlaylistsList extends Component {
 
     render() {
         const {playlists, showlike, play, like} = this.props;
-        console.log("playlists", playlists);
         return (
             <React.Fragment>
                 {playlists.map(playlist =>

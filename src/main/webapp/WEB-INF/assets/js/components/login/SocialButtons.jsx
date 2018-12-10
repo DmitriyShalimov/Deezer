@@ -39,11 +39,6 @@ class SocialButtons extends Component {
         )
     }
 
-    handleFbLogin() {
-        //this.fbLogin();
-        //console.log("user from component", user);
-    }
-
     handleGoogleLogin(login, password) {
         const {signIn} = this.props;
         this.setState({login, password});
@@ -55,12 +50,8 @@ class SocialButtons extends Component {
         FB.login(response => {
             if (response.authResponse) {
                 let password = response.authResponse.userID; //get FB UID
-                console.log("response", response);
-                console.log("auth response", response.authResponse);
                 FB.api('/me', response => {
                     let login = response.name;
-                    console.log("login-password", login, password);
-                    console.log("/me", response);
                     this.setState({login, password});
                     signIn(login, password, true);
                 });

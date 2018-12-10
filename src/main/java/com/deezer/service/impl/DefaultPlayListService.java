@@ -9,6 +9,7 @@ import com.deezer.entity.Song;
 import com.deezer.service.PlayListService;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -96,6 +97,9 @@ public class DefaultPlayListService implements PlayListService {
 
     @Override
     public PlayList getById(int id, int userId) {
+        if(id < 0){
+            return recommendedPlaylist.stream().filter(playList -> playList.getId() == id).findFirst().orElseThrow(() -> new EmptyResultDataAccessException(1));
+        }
         return playListDao.getById(id, userId);
 
     }
