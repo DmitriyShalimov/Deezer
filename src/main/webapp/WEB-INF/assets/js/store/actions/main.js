@@ -2,7 +2,7 @@ import {
     FILL_SEARCH_OPTIONS,
     SET_CURRENT_PLAYLIST,
     SET_USER_PLAYLISTS,
-    SET_PUBLIC_PLAYLISTS,
+    SET_ALL_PUBLIC_PLAYLISTS,
     SET_FAVOURITE_PLAYLISTS,
     SET_TOP_PLAYLISTS,
     SET_RECOMMENDED_PLAYLISTS,
@@ -44,9 +44,9 @@ const setUserPlaylists = playlists => {
     }
 };
 
-const setPublicPlaylists = playlists => {
+const setAllPublicPlaylists = playlists => {
     return {
-        type: SET_PUBLIC_PLAYLISTS,
+        type: SET_ALL_PUBLIC_PLAYLISTS,
         payload: playlists
     }
 };
@@ -197,7 +197,7 @@ export const likePlaylist =(id) =>{
                 }
             )
     };
-}
+};
 
 export const getUserPlaylists = () => {
     return dispatch => {
@@ -213,7 +213,7 @@ export const getUserPlaylists = () => {
     };
 };
 
-export const getPublicPlaylists = () => {
+export const getAllPublicPlaylists = () => {
     return dispatch => {
         const token = localStorage.getItem('user-token');
         return fetch(`${URL_PREFIX}playlist/public`, {
@@ -223,7 +223,7 @@ export const getPublicPlaylists = () => {
             }
         })
             .then(res => res.json())
-            .then(res => dispatch(setPublicPlaylists(res)));
+            .then(res => dispatch(setAllPublicPlaylists(res)));
     };
 };
 

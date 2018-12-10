@@ -56,9 +56,12 @@ main {
     overflow-y: auto !important;
 }
 
-
 /*media*/
 @media (max-width: 1024px) {
+    #recommendedPlaylist img {
+        height: 100px!important;
+    }
+
     .ap__item > .ap__controls {
         flex: 1;
     }
@@ -82,6 +85,10 @@ main {
 }
 
 @media (max-width: 600px) {
+    #recommendedPlaylist img {
+        height: 50px!important;
+    }
+
     .playlist__title {
         font-size: 1rem;
     }

@@ -21,6 +21,7 @@ import RandomSong from "./RandomSong.jsx";
 import MusicLibrary from "./MusicLibrary.jsx";
 import MusicLibraryPage from "./MusicLibraryPage.jsx";
 import DeezerMain from "./DeezerMain.jsx";
+import AllPlaylists from "./AllPlaylists.jsx";
 
 //TODO:style 404
 class MainPage extends Component {
@@ -77,6 +78,9 @@ class MainPage extends Component {
                                     <Route exact path="/music-library"
                                            render={() => <MusicLibraryPage key={this.props.location.key}
                                                likePlaylist={this.likePlaylist.bind(this)}/>}/>
+                                    <Route exact path="/all-playlists"
+                                           render={() => <AllPlaylists key={this.props.location.key}
+                                                                           likePlaylist={this.likePlaylist.bind(this)}/>}/>
                                     <Route exact path="/"
                                            render={() => <DeezerMain key={this.props.location.key} likePlaylist={this.likePlaylist.bind(this)}/>}/>
                                 </React.Fragment>

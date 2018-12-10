@@ -210,6 +210,16 @@ div#topPlaylist {
   padding: 0 3px 3px 3px;
 }
 
+#recommendedPlaylist{
+  img{
+    height:140px;
+
+  }
+  .card-playlist-hover-icons {
+    top: 30%;
+  }
+}
+
 /*lyrics*/
 .track__lyrics {
   margin-left: auto;

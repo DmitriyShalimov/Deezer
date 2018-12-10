@@ -37,24 +37,24 @@ public class DefaultPlayListService implements PlayListService {
     private void init() {
         PlayList firstPlayList = new PlayList();
         firstPlayList.setId(-1);
-        firstPlayList.setTitle("Recommended 1");
+        firstPlayList.setTitle("Hits only");
         firstPlayList.setPicture("https://apsuanews.com/wp-content/uploads/2018/07/d187d0b8d181d182d0bed0b5" +
                 "-d0bcd0bed180d0b5-d0b8-d0b3d180d18fd0b7d0bdd18bd0b5-d180d0b5d0bad0b8-d181d18dd181-d0b0d0b1d185d0b0d0b7d0b8d0b8-1-250x250.jpg");
         PlayList secondPlayList = new PlayList();
         secondPlayList.setId(-2);
-        secondPlayList.setTitle("Recommended 2");
+        secondPlayList.setTitle("Best tracks for you");
         secondPlayList.setPicture("http://www.worlds.ru//photo/italy_180720061452_21.jpg");
         PlayList thirdPlayList = new PlayList();
         thirdPlayList.setId(-3);
-        thirdPlayList.setTitle("Recommended 3");
+        thirdPlayList.setTitle("Feel good");
         thirdPlayList.setPicture("http://illustrators.ru/uploads/illustration/image/1193972/square_%D1%87%D1%82%D0%BE%D1%82%D0%BE12.png");
         PlayList fourthPlayList = new PlayList();
         fourthPlayList.setId(-4);
-        fourthPlayList.setTitle("Recommended 4");
+        fourthPlayList.setTitle("Come away");
         fourthPlayList.setPicture("https://ki.ill.in.ua/m/670x450/12111065.jpg");
         PlayList fifthPlayList = new PlayList();
         fifthPlayList.setId(-5);
-        fifthPlayList.setTitle("Recommended 5");
+        fifthPlayList.setTitle("Day and Night");
         fifthPlayList.setPicture("http://www.stroygrad.kr.ua/images/joomgallery/thumbnails/__2/_6/117448097_20170802_1276306513.jpg");
         recommendedPlaylist.add(firstPlayList);
         recommendedPlaylist.add(secondPlayList);

@@ -4,7 +4,7 @@ import {
     SET_IS_AUTHENTICATED,
     SET_CURRENT_PLAYLIST,
     SET_USER_PLAYLISTS,
-    SET_PUBLIC_PLAYLISTS,
+    SET_ALL_PUBLIC_PLAYLISTS,
     SET_FAVOURITE_PLAYLISTS,
     SET_TOP_PLAYLISTS,
     SET_RECOMMENDED_PLAYLISTS,
@@ -24,7 +24,7 @@ const initialState = {
     currentPlaylist: [],
     currentPlaylistTitle: "",
     userPlaylists: [],
-    publicPlaylists: [],
+    allPublicPlaylists: [],
     favouritePlaylists: [],
     topPlaylists: [],
     recommendedPlaylists: [],
@@ -45,8 +45,8 @@ export const rootReducer = (state = initialState, action) => {
             return {...state, currentPlaylist: payload.songs, currentPlaylistTitle: payload.title};
         case SET_USER_PLAYLISTS:
             return {...state, userPlaylists: payload};
-        case SET_PUBLIC_PLAYLISTS:
-            return {...state, publicPlaylists: payload};
+        case SET_ALL_PUBLIC_PLAYLISTS:
+            return {...state, allPublicPlaylists: payload};
         case SET_FAVOURITE_PLAYLISTS:
             return {...state, favouritePlaylists: payload};
         case SET_TOP_PLAYLISTS:

@@ -8,7 +8,7 @@ import {withRouter} from "react-router-dom";
 class DeezerMain extends Component {
     componentWillMount() {
         this.props.getTopPlaylists();
-      //  this.props.getRecommendedPlaylists();
+        this.props.getRecommendedPlaylists();
     }
 
     render() {
@@ -27,7 +27,7 @@ class DeezerMain extends Component {
                 <div className="recommended-playlists">
                     <h3>Recommendations for you</h3>
                     <div className="underline"/>
-                    <div className="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="recommendedPlaylist">
+                    <div className="grid-x grid-padding-x small-up-3 medium-up-4 large-up-5 artist-page" id="recommendedPlaylist">
                         {recommendedPlaylists.length > 0 &&
                         <PlaylistsList playlists={recommendedPlaylists} play={typeSearch}/>}
                     </div>

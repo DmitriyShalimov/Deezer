@@ -3,13 +3,11 @@ import "./css/music-library.scss";
 import {connect} from "react-redux";
 import PlaylistsList from "./PlaylistsList.jsx";
 import {bindActionCreators} from "redux";
-import {getPublicPlaylists, getFavouritePlaylists} from "../../store/actions/main.js";
-import {typeSearch} from "../../store/actions/main";
+import {getFavouritePlaylists,typeSearch} from "../../store/actions/main.js";
 import {withRouter} from "react-router-dom";
 
 class MusicLibraryPage extends Component {
     componentWillMount() {
-        this.props.getPublicPlaylists();
         this.props.getFavouritePlaylists();
     }
 
@@ -18,7 +16,10 @@ class MusicLibraryPage extends Component {
     }
 
     render() {
-        const {userPlaylists, publicPlaylists, favouritePlaylists, typeSearch, likePlaylist} = this.props;
+        const {userPlaylists, favouritePlaylists, typeSearch, likePlaylist} = this.props;
+        console.log(userPlaylists);
+        const privatePl = userPlaylists.filter(playlist => playlist.access==='PRIVATE');
+        const publicPl = userPlaylists.filter(playlist => playlist.access==='PUBLIC');
         return (
             <section>
                 <div className="user-library">
@@ -32,15 +33,15 @@ class MusicLibraryPage extends Component {
                         <div
                             className=" tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-6"
                             id="privatePl">
-                            {userPlaylists.length > 0 ?
-                                <PlaylistsList playlists={userPlaylists} play={typeSearch}/> :
+                            {privatePl.length > 0 ?
+                                <PlaylistsList playlists={privatePl} play={typeSearch}/> :
                                 <p className="empty-message">Nothing to show. Create you first private playlist and it
                                     will be here.</p>}
                         </div>
                         <div className="tabs-panel grid-x grid-padding-x small-up-3 medium-up-5 large-up-6"
                              id="publicPl">
-                            {publicPlaylists.length > 0 ?
-                                <PlaylistsList playlists={publicPlaylists} play={typeSearch}  like={likePlaylist} showlike/> :
+                            {publicPl.length > 0 ?
+                                <PlaylistsList playlists={publicPl} play={typeSearch}  like={likePlaylist} showlike/> :
                                 <p className="empty-message">Nothing to show. Create you first public playlist and it
                                     will be here.</p>}
                         </div>
@@ -63,14 +64,12 @@ class MusicLibraryPage extends Component {
 const mapStateToProps = state => {
     return {
         userPlaylists: state.rootReducer.userPlaylists,
-        publicPlaylists: state.rootReducer.publicPlaylists,
         favouritePlaylists: state.rootReducer.favouritePlaylists
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPublicPlaylists: bindActionCreators(getPublicPlaylists, dispatch),
         getFavouritePlaylists: bindActionCreators(getFavouritePlaylists, dispatch),
         typeSearch: (type, id, title) => dispatch(typeSearch(type, id, title)),
     };

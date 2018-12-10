@@ -13,15 +13,15 @@ class ArtistsList extends Component {
                 </div>
                 <div className="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="artist">
                     {artists.map(artist => <div className="cell" key={artist.id}>
-                        <div className="card card-playlist-hover">
-                            <Link to={`/artist/${artist.id}`}>
+                        <div className="card card-playlist-hover artist">
+                            <Link to={`/artist/${artist.id}`} className="playlist__picture" style={{width: '100%'}}>
                                 <img src={artist.picture}
                                      alt="artist photo"/>
                             </Link>
                             <div className="card-playlist-hover-icons">
                                 <button onClick={() => play("artist", artist.id)}><i className="fas fa-play"/></button>
                             </div>
-                            <div className="card-playlist-hover-details">
+                            <div className="card-playlist-hover-details" style={{justifyContent: 'center'}}>
                                 <p className="card-playlist-hover-title">{artist.name}</p>
                             </div>
                         </div>
