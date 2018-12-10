@@ -3,17 +3,40 @@ const webpack = require('webpack');
 const ROOT = path.resolve(__dirname, 'src/main/webapp');
 const SRC = path.resolve(ROOT, 'WEB-INF/assets/js');
 const DEST = path.resolve(__dirname, 'src/main/webapp/dist');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 module.exports = {
-    devtool: 'source-map',
+    mode: 'production',
     entry: {
         app: SRC + '/index.jsx'
     },
-    mode: 'development',
     output: {
         path: DEST,
         filename: 'bundle.js',
         publicPath: '/dist/'
+    },
+    plugins: [
+        new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            title: 'Production'
+        })
+    ],
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                uglifyOptions: {
+                    compress: false,
+                    ecma: 6,
+                    mangle: true
+                },
+                sourceMap: true
+            })
+        ]
     },
     module: {
         rules: [

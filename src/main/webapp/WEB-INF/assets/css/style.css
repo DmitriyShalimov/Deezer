@@ -151,6 +151,10 @@ main {
 }
 
 @media (max-height: 800px) {
+    #recommendedPlaylist img {
+        height: 100px!important;
+    }
+
     .genres-playlists {
         margin: 10vh 0 20vh;
     }
