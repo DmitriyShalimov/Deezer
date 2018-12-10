@@ -42,6 +42,7 @@ class SocialButtons extends Component {
     handleFbLogin() {
         const {signIn} = this.props;
         let user = fbLogin();
+        console.log("user from component", user);
         if (user) {
             this.setState({login: user.login, password: user.password});
             signIn(user.login, user.password, true);
