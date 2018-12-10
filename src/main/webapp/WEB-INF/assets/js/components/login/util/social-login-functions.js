@@ -1,24 +1,3 @@
-export const fbLogin = () => {
-    FB.login(response => {
-        if (response.authResponse) {
-            let password = response.authResponse.userID; //get FB UID
-            console.log("response", response);
-            console.log("auth response", response.authResponse);
-            FB.api('/me', response => {
-                let login = response.name;
-                console.log("login-password", login, password);
-                console.log("/me", response);
-                return {login, password};
-            });
-        } else {
-            //user hit cancel button
-            console.log('User cancelled login or did not fully authorize.');
-        }
-    }, {
-        scope: 'public_profile,email'
-    });
-};
-
 export const initGoogleLogin = loginCallback => {
     gapi.load('auth2', () => {
         let auth2 = gapi.auth2.init({
