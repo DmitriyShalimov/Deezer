@@ -3,7 +3,8 @@ import React from 'react';
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
-import {createStore, compose, applyMiddleware, combineReducers} from "redux";
+import {createStore, applyMiddleware, combineReducers} from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {connectRouter, routerMiddleware} from "connected-react-router";
 import {rootReducer} from "./store/reducers/root-reducer.js";
 
@@ -19,7 +20,7 @@ const middleware = [thunk, routerMiddleware(history)];
 
 const store = createStore(
     connectRouter(history)(reducers),
-    compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+    composeWithDevTools(applyMiddleware(...middleware))
 );
 
 ReactDOM.render(
