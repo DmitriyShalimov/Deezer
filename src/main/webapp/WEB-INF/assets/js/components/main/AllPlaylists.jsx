@@ -22,7 +22,7 @@ class AllPlaylists extends Component {
                         </li>
                     </ul>
                     <div className="tabs-content artist-page" data-tabs-content="collapsing-tabs">
-                        <div className="tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="allPl">
+                        <div className="tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-4 large-up-6" id="allPl">
                             {allPublicPlaylists.length > 0 ?
                                 <PlaylistsList playlists={allPublicPlaylists} play={typeSearch} like={likePlaylist}
                                                showlike/> :

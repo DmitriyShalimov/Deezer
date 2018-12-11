@@ -59,7 +59,7 @@ main {
 /*media*/
 @media (max-width: 1024px) {
     #recommendedPlaylist img {
-        height: 100px!important;
+        height: 100px !important;
     }
 
     .ap__item > .ap__controls {
@@ -84,9 +84,19 @@ main {
     }
 }
 
+@media (max-width: 800px) {
+    .card.card-playlist-hover.genre.slide {
+        height: 90px!important;
+    }
+
+    .card.card-playlist-hover.genre.slide .card-playlist-hover-details p {
+        font-size: 14px!important;
+    }
+}
+
 @media (max-width: 600px) {
     #recommendedPlaylist img {
-        height: 50px!important;
+        height: 50px !important;
     }
 
     .playlist__title {
@@ -152,7 +162,7 @@ main {
 
 @media (max-height: 800px) {
     #recommendedPlaylist img {
-        height: 100px!important;
+        height: 100px !important;
     }
 
     .genres-playlists {

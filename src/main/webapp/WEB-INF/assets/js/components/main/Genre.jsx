@@ -3,6 +3,7 @@ import TrackRow from "./TrackRow.jsx";
 import TrackHeader from "./TrackHeader.jsx";
 import {connect} from "react-redux";
 import {getPagePlaylistMeta, getPagePlaylist} from "../../store/actions/main.js";
+import {withRouter} from "react-router-dom";
 
 class Genre extends Component {
     componentWillMount() {
@@ -16,14 +17,12 @@ class Genre extends Component {
             <React.Fragment>
                 {pagePlaylistMeta && Array.isArray(pagePlaylist) &&
                 <section>
-
                     <div className="playlist__header card genre">
                         <div className="playlist__picture">
                             <img src={pagePlaylistMeta.picture}/>
                         </div>
                         <div className="playlist__details">
                             <h4 className="playlist__title">{pagePlaylistMeta.title}</h4>
-                            {/*<p className="playlist__subtitle">{subtitle || ''}</p>*/}
                         </div>
                     </div>
                     <div className="songs-playlist">
@@ -65,8 +64,8 @@ const mapDispatchToProps = dispatch => {
         getPagePlaylist: (type, id) => dispatch(getPagePlaylist(type, id))
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(Genre);
+)(Genre));
 

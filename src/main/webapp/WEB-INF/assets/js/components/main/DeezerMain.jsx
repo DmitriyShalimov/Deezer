@@ -21,9 +21,6 @@ class DeezerMain extends Component {
                     <h3>Explore by genre</h3>
                     <div className="outline-pagination">
                         <div className="underline"/>
-                        <div id="pagination-container-genre"/>
-                    </div>
-                    <div className="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="genre">
                         {genres.length > 0 &&
                         <GenreList genres={genres} play={typeSearch}/>}
                     </div>
@@ -45,8 +42,7 @@ class DeezerMain extends Component {
                         <PlaylistsList playlists={topPlaylists} play={typeSearch} like={likePlaylist} showlike/>}
                     </div>
                 </div>
-            </section>
-        );
+            </section>);
     }
 }
 

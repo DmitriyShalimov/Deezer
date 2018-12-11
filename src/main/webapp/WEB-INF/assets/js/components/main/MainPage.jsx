@@ -50,19 +50,19 @@ class MainPage extends Component {
                             {notFound ? <NotFound/> :
                                 <React.Fragment>
                                     <Route exact path="/genre/:id(\d+)"
-                                           render={props => <Genre {...props.match}
+                                           render={props => <Genre {...props.match} key={this.props.location.key}
                                                                    handleLike={this.handleLike.bind(this)}
                                                                    playTrack={this.playTrack.bind(this)}/>}/>
                                     < Route exact path="/album/:id(\d+)"
-                                            render={props => <Album {...props.match}
+                                            render={props => <Album {...props.match} key={this.props.location.key}
                                                                     handleLike={this.handleLike.bind(this)}
                                                                     playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/song/:id(\d+)"
-                                           render={props => <Song {...props.match}
+                                           render={props => <Song {...props.match} key={this.props.location.key}
                                                                   handleLike={this.handleLike.bind(this)}
                                                                   playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/artist/:id(\d+)"
-                                           render={props => <Artist {...props.match}
+                                           render={props => <Artist {...props.match} key={this.props.location.key}
                                                                     handleLike={this.handleLike.bind(this)}
                                                                     playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/search/:mask"

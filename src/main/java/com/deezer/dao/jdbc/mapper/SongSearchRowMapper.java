@@ -14,9 +14,13 @@ public class SongSearchRowMapper implements RowMapper<Song> {
         Song song = new Song();
         song.setId(resultSet.getInt("id"));
         song.setTitle(resultSet.getString("title"));
-        song.setAlbum(new Album(resultSet.getString("album_title")));
+        Album album = new Album(resultSet.getString("album_title"));
+        album.setId(resultSet.getInt("album_id"));
+        song.setAlbum(album);
         song.setPicture(resultSet.getString("picture_link"));
-        song.setArtist(new Artist(resultSet.getString("artist_name")));
+        Artist artist = new Artist(resultSet.getString("artist_name"));
+        artist.setId(resultSet.getInt("artist_id"));
+        song.setArtist(artist);
         return song;
     }
 }

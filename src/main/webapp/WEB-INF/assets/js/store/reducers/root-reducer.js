@@ -29,6 +29,7 @@ const initialState = {
     favouritePlaylists: [],
     topPlaylists: [],
     recommendedPlaylists: [],
+    genrePlaylists: [],
     pagePlaylistMeta: {},
     pagePlaylist: [],
     albums: [],

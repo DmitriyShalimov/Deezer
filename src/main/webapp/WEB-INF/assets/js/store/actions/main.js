@@ -412,3 +412,21 @@ export const getRandom = () => {
             })
     };
 };
+
+export const getAlbumsByArtist = (id) => {
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}album/artist/${id}`, {
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(res => {
+                dispatch(setAlbums(res));
+            })
+    };
+};

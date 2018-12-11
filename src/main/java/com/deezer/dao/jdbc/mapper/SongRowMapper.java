@@ -16,9 +16,13 @@ public class SongRowMapper implements RowMapper<Song> {
         song.setId(resultSet.getInt("id"));
         song.setTitle(resultSet.getString("title"));
         song.setUrl(resultSet.getString("track_url"));
-        song.setAlbum(new Album(resultSet.getString("album_title")));
+        Album album = new Album(resultSet.getString("album_title"));
+        album.setId(resultSet.getInt("album_id"));
+        song.setAlbum(album);
         song.setPicture(resultSet.getString("picture_link"));
-        song.setArtist(new Artist(resultSet.getString("artist_name")));
+        Artist artist = new Artist(resultSet.getString("artist_name"));
+        artist.setId(resultSet.getInt("artist_id"));
+        song.setArtist(artist);
         song.setLiked(resultSet.getInt("liked") != 0);
         song.setLyrics(resultSet.getString("lyrics"));
         return song;

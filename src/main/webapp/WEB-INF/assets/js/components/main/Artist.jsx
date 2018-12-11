@@ -2,16 +2,19 @@ import React, {Component} from "react"
 import TrackRow from "./TrackRow.jsx";
 import TrackHeader from "./TrackHeader.jsx";
 import {connect} from "react-redux";
-import {getPagePlaylistMeta, getPagePlaylist} from "../../store/actions/main.js";
+import {getPagePlaylistMeta, getPagePlaylist, getAlbumsByArtist, typeSearch} from "../../store/actions/main.js";
+import AlbumsList from "./AlbumsList.jsx";
+import {withRouter} from "react-router-dom";
 
 class Artist extends Component {
     componentWillMount() {
         this.props.getPagePlaylistMeta("artist", this.props.params.id);
         this.props.getPagePlaylist("artist", this.props.params.id);
+        this.props.getAlbumsByArtist(this.props.params.id);
     }
 
     render() {
-        const {pagePlaylistMeta, pagePlaylist, handleLike, playTrack, playing, track, currentTime, duration} = this.props;
+        const {pagePlaylistMeta, typeSearch,pagePlaylist, handleLike, playTrack, playing, track, currentTime, duration, albums} = this.props;
         return (
             <React.Fragment>
                 {pagePlaylistMeta && Array.isArray(pagePlaylist) &&
@@ -25,7 +28,7 @@ class Artist extends Component {
                             <h4 className="playlist__title">{pagePlaylistMeta.name}</h4>
                         </div>
                     </div>
-                    {/*albums!!!!!!!!!!!*/}
+                    <AlbumsList albums={albums} play={typeSearch} hideArtist/>
                     <div className="songs-playlist">
                         <table className="hover unstriped">
                             <TrackHeader/>
@@ -51,6 +54,7 @@ const mapStateToProps = state => {
     return {
         pagePlaylistMeta: state.rootReducer.pagePlaylistMeta,
         pagePlaylist: state.rootReducer.pagePlaylist,
+        albums: state.rootReducer.albums,
         playing: state.trackReducer.playing,
         track: state.trackReducer.track,
         currentTime: state.trackReducer.currentTime,
@@ -62,11 +66,14 @@ const mapDispatchToProps = dispatch => {
     return {
         getPagePlaylistMeta: (type, id) =>
             dispatch(getPagePlaylistMeta(type, id)),
-        getPagePlaylist: (type, id) => dispatch(getPagePlaylist(type, id))
+        getPagePlaylist: (type, id) => dispatch(getPagePlaylist(type, id)),
+        typeSearch: (type, id) => dispatch(typeSearch(type, id)),
+        getAlbumsByArtist: (id) => dispatch(getAlbumsByArtist(id))
+
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(Artist);
+)(Artist));
 

@@ -1,37 +1,31 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom";
+import {getItemRectangleWidth, getSettings} from "./util/slider-settings";
+import Slider from "react-slick";
 
 class GenreList extends Component {
     componentDidMount() {}
     render() {
         const {genres,  play} = this.props;
-        console.log("genres", genres);
-        console.log("1111111", play);
-
+        const width = getItemRectangleWidth((window.innerWidth > 0) ? window.innerWidth : screen.width);
+        const settings = getSettings(genres.length, 4);
         return (
-            <React.Fragment>
-                {genres.map(genre =>
-                    <div className="cell" key={genre.id}>
-                        <div className="card card-playlist-hover">
-                            <Link to={`/genre/${genre.id}`}>
-                                <img src={genre.picture}
-                                     alt="genre logo"/>
-                            </Link>
-                            <div className="card-playlist-hover-icons">
-                                <button onClick={() => play('genre', genre.id, genre.title)}><i
-                                    className="fas fa-play"/>
-                                </button>
-                            </div>
-                            <div className="card-playlist-hover-details">
-                                <p className="card-playlist-hover-title">{genre.title}</p>
-
-                            </div>
-
-                        </div>
+            <Slider {...settings} variableWidth={false}>
+                {genres.map(genre => <div className="card card-playlist-hover genre slide" key={genre.id}
+                                          style={{width: width}}>
+                    <Link to={`/genre/${genre.id}`}>
+                        <img src={genre.picture}
+                             alt="genre photo"/>
+                    </Link>
+                    <div className="card-playlist-hover-icons">
+                        <button onClick={() => play("genre", genre.id, genre.title)}><i className="fas fa-play"/>
+                        </button>
                     </div>
-                )}
-
-            </React.Fragment>
+                    <div className="card-playlist-hover-details">
+                        <p className="card-playlist-hover-title" style={{fontSize: '1vw'}}>{genre.title}</p>
+                    </div>
+                </div>)}
+            </Slider>
         );
     }
 

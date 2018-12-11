@@ -15,6 +15,7 @@ import {
     setTrackDuration
 } from "../../store/actions/track-actions.js";
 import {toArray} from "../main/MainPage.jsx";
+import {Link} from "react-router-dom";
 
 
 class Player extends Component {
@@ -73,7 +74,10 @@ class Player extends Component {
                             {track && <img className="track__picture" src={track ? track.picture : ""} alt=""/>}
                             <div className="track__info">
                                 <p className="track__title">{track ? track.title : ""}</p>
-                                <p className="album-artist__title">{track ? `${track.album.title} - ${track.artist.name}` : ""}</p>
+                                {track && <p className="album-artist__title">
+                                    <Link to={`/album/${track.album.id}`} className="underline-link">{track.album.title}
+                                    </Link> - <Link to={`/artist/${track.artist.id}`}
+                                                    className="underline-link">{track.artist.name}</Link></p>}
                             </div>
                             <div className="track__lyrics" data-toggle="lyricsPane">
                                 {track && <i className="fas fa-microphone"
