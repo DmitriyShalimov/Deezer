@@ -129,7 +129,7 @@ public class JdbcSongDao implements SongDao {
         long startTime = System.currentTimeMillis();
         if (genres.isEmpty()) {
             List<Song> songs = jdbcTemplate.query(getRecommendedSongsSql, SONG_ROW_MAPPER);
-            logger.info("Finish query to get all recommended songs  from DB. It took {} ms",  System.currentTimeMillis() - startTime);
+            logger.info("Finish query to get all recommended songs  from DB. It took {} ms", System.currentTimeMillis() - startTime);
             return songs;
         } else {
             if (genres.size() == 1) {
@@ -189,6 +189,7 @@ public class JdbcSongDao implements SongDao {
     public void setGetAllSongsByGenresSql(String getAllSongsByGenresSql) {
         this.getAllSongsByGenresSql = getAllSongsByGenresSql;
     }
+
     @Autowired
     public void setGetRecommendedSongsSql(String getRecommendedSongsSql) {
         this.getRecommendedSongsSql = getRecommendedSongsSql;

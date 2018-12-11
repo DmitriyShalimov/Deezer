@@ -1,7 +1,6 @@
 package com.deezer.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +17,13 @@ import javax.sql.DataSource;
         excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
                 pattern = "com\\.deezer\\.web\\.controller.*"))
 public class RootConfig implements WebMvcConfigurer {
+    @Value("${DB_URL}")
+    private String url;
+    @Value("${DB_USERNAME}")
+    private String username;
+    @Value("${DB_PASSWORD}")
+    private String password;
+
     @Bean
     NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
         return new NamedParameterJdbcTemplate(getDataSource());
@@ -29,13 +35,11 @@ public class RootConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    PGSimpleDataSource getDataSource() {
-        PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setPassword("deezerroot");
-        dataSource.setPortNumber(5432);
-        dataSource.setUser("deezer");
-        dataSource.setDatabaseName("deezer");
-        dataSource.setServerName("deezerinstance.c5emamd5bxnb.us-east-1.rds.amazonaws.com");
+    DataSource getDataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 }
