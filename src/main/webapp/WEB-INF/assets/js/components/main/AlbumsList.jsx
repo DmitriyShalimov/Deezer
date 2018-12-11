@@ -1,21 +1,22 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom";
+import Slider from "react-slick";
+import {getItemWidth, getSettings} from "./util/slider-settings";
 
 class AlbumsList extends Component {
 
     render() {
         const {albums, play} = this.props;
-        console.log(albums);
+        const width = getItemWidth((window.innerWidth > 0) ? window.innerWidth : screen.width);
+        const settings = getSettings(albums.length);
         return (
             <div className="artists-playlists">
                 <h3>Albums</h3>
                 <div className="outline-pagination">
                     <div className="underline"/>
-                    <div id="pagination-container-artist"/>
                 </div>
-                <div className="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="album">
-                    {albums.map(album => <div className="cell" key={album.id}>
-                        <div className="card card-playlist-hover">
+                <Slider {...settings}>
+                    {albums.map(album => <div className="card card-playlist-hover slide" key={album.id} style={{width: width}}>
                             <Link to={`/album/${album.id}`}>
                                 <img src={album.picture}
                                      alt="artist photo"/>
@@ -24,16 +25,15 @@ class AlbumsList extends Component {
                                 <button onClick={() => play("album", album.id)}><i className="fas fa-play"/>
                                 </button>
                             </div>
-                            <div className="card-playlist-hover-details">
-                                <p className="card-playlist-hover-title">{album.title}</p>
+                            <div className="card-playlist-hover-details" style={{flexDirection:'column'}}>
+                                <p className="card-playlist-hover-title" style={{fontSize: '1vw'}}>{album.title}</p>
                                 <p className="card-playlist-hover-subtitle">
                                     <Link to={`/artist/${album.artist.id}`}
-                                          className="underline-link">{album.artist.name}</Link>
+                                          className="underline-link" style={{fontSize: '0.9vw'}}>{album.artist.name}</Link>
                                 </p>
                             </div>
-                        </div>
                     </div>)}
-                </div>
+                </Slider>
             </div>
         );
     }

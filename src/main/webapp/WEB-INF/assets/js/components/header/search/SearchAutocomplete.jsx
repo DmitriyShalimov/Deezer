@@ -33,7 +33,6 @@ class SearchAutocomplete extends Component {
     };
 
     onKeyPressed = (event) => {
-        console.log(event.charCode);
         if (event.key === 'Enter') {
             this.generalSearch(this.state.value);
         }
@@ -67,11 +66,6 @@ class SearchAutocomplete extends Component {
             return d
         });
     }
-
-    handleTypeSearch = (event, {suggestion}) => {
-        // this.props.redirect(`/${suggestion.type}/${suggestion.id}`);
-        //typeSearch(suggestion.type, suggestion.id);
-    };
 
 
     render() {

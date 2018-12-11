@@ -1,34 +1,39 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom";
+import Slider from "react-slick";
+import "./css/slick.scss";
+import {getItemWidth, getSettings} from "./util/slider-settings";
+
 
 class ArtistsList extends Component {
     render() {
         const {artists, play} = this.props;
+        const width = getItemWidth((window.innerWidth > 0) ? window.innerWidth : screen.width);
+        const settings = getSettings(artists.length);
         return (
             <div className="artists-playlists">
                 <h3>Artists</h3>
                 <div className="outline-pagination">
                     <div className="underline"/>
-                    <div id="pagination-container-artist"/>
                 </div>
-                <div className="grid-x grid-padding-x small-up-3 medium-up-5 large-up-6" id="artist">
-                    {artists.map(artist => <div className="cell" key={artist.id}>
-                        <div className="card card-playlist-hover artist">
-                            <Link to={`/artist/${artist.id}`} className="playlist__picture" style={{width: '100%'}}>
-                                <img src={artist.picture}
-                                     alt="artist photo"/>
-                            </Link>
-                            <div className="card-playlist-hover-icons">
-                                <button onClick={() => play("artist", artist.id)}><i className="fas fa-play"/></button>
-                            </div>
-                            <div className="card-playlist-hover-details" style={{justifyContent: 'center'}}>
-                                <p className="card-playlist-hover-title">{artist.name}</p>
-                            </div>
+                <Slider {...settings}>
+                    {artists.map(artist => <div className="card card-playlist-hover artist slide" key={artist.id}
+                                                style={{width: width}}>
+                        <Link to={`/artist/${artist.id}`} className="playlist__picture" style={{width: '100%'}}>
+                            <img src={artist.picture}
+                                 alt="artist photo"/>
+                        </Link>
+                        <div className="card-playlist-hover-icons">
+                            <button onClick={() => play("artist", artist.id)}><i className="fas fa-play"/>
+                            </button>
+                        </div>
+                        <div className="card-playlist-hover-details" style={{justifyContent: 'center'}}>
+                            <p className="card-playlist-hover-title" style={{textAlign: 'center',fontSize: '1vw'}}>{artist.name}</p>
                         </div>
                     </div>)}
-                </div>
+                </Slider>
             </div>
-        );
+        )
     }
 }
 

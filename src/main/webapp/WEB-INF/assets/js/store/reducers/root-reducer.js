@@ -8,6 +8,7 @@ import {
     SET_FAVOURITE_PLAYLISTS,
     SET_TOP_PLAYLISTS,
     SET_RECOMMENDED_PLAYLISTS,
+    SET_GENRE_PLAYLISTS,
     SET_PAGE_PLAYLIST_META,
     SET_PAGE_PLAYLIST,
     SET_ARTISTS,
@@ -28,6 +29,7 @@ const initialState = {
     favouritePlaylists: [],
     topPlaylists: [],
     recommendedPlaylists: [],
+    genrePlaylists: [],
     pagePlaylistMeta: {},
     pagePlaylist: [],
     albums: [],
@@ -53,6 +55,8 @@ export const rootReducer = (state = initialState, action) => {
             return {...state, topPlaylists: payload};
         case SET_RECOMMENDED_PLAYLISTS:
             return {...state, recommendedPlaylists: payload};
+        case SET_GENRE_PLAYLISTS:
+            return {...state, genrePlaylists: payload};
         case SET_PAGE_PLAYLIST_META:
             return {...state, pagePlaylistMeta: payload};
         case SET_PAGE_PLAYLIST:

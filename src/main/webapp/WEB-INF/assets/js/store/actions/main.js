@@ -6,6 +6,7 @@ import {
     SET_FAVOURITE_PLAYLISTS,
     SET_TOP_PLAYLISTS,
     SET_RECOMMENDED_PLAYLISTS,
+    SET_GENRE_PLAYLISTS,
     SET_PAGE_PLAYLIST_META,
     SET_PAGE_PLAYLIST,
     SET_ARTISTS,
@@ -68,6 +69,13 @@ const setTopPlaylists = playlists =>{
 const setRecommendedPlaylists = playlists =>{
     return{
         type: SET_RECOMMENDED_PLAYLISTS,
+        payload: playlists
+    }
+};
+
+const setGenrePlaylists = playlists => {
+    return{
+        type: SET_GENRE_PLAYLISTS,
         payload: playlists
     }
 };
@@ -266,6 +274,20 @@ export const getRecommendedPlaylists = ()=>{
         })
             .then(res => res.json())
             .then(res => dispatch(setRecommendedPlaylists(res)));
+    };
+};
+
+export const getGenrePlylists = ()=>{
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}genre`, {
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => res.json())
+            .then(res => dispatch(setGenrePlaylists(res)));
     };
 };
 

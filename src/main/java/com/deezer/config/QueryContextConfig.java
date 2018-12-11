@@ -58,7 +58,7 @@ public class QueryContextConfig {
 
     @Bean
     public String getSongsForSearchSql() {
-        return "select s.id ,s.title, s.picture_link, " +
+        return "select distinct s.id ,s.title, s.picture_link, " +
                 "al.title as album_title, art.name as artist_name " +
                 "from song  s join album al on s.album = al.id " +
                 "join artist  art on al.artist = art.id left join song_user su on su.user = ? and su.song = s.id ";
