@@ -33,6 +33,7 @@ public class JdbcSongDao implements SongDao {
     private String getAllSongsByPlaylistSql;
     private String getSongLikeCountSql;
     private String getAllSongsByGenresSql;
+    private String getRecommendedSongsSql;
 
 
     @Autowired
@@ -126,15 +127,21 @@ public class JdbcSongDao implements SongDao {
     public List<Song> getRecommendedSongForGenre(int userId, List<Integer> genres) {
         logger.info("start receiving recommended songs for user  with id {}", userId);
         long startTime = System.currentTimeMillis();
-        if (genres.size() == 1) {
-            List<Song> songs = jdbcTemplate.query(getAllSongsByGenreSql, SONG_ROW_MAPPER, userId, genres.get(0));
-            logger.info("Finish query to get all songs of genre {} from DB. It took {} ms", genres.get(0), System.currentTimeMillis() - startTime);
+        if (genres.isEmpty()) {
+            List<Song> songs = jdbcTemplate.query(getRecommendedSongsSql, SONG_ROW_MAPPER);
+            logger.info("Finish query to get all recommended songs  from DB. It took {} ms",  System.currentTimeMillis() - startTime);
             return songs;
         } else {
-            List<Song> songs = jdbcTemplate.query(getAllSongsByGenresSql, SONG_ROW_MAPPER, userId, genres.get(0), genres.get(1));
-            logger.info("Finish query to get all songs of genres {} ,{}  from DB. It took {} ms", genres.get(0), genres.get(1),
-                    System.currentTimeMillis() - startTime);
-            return songs;
+            if (genres.size() == 1) {
+                List<Song> songs = jdbcTemplate.query(getAllSongsByGenreSql, SONG_ROW_MAPPER, userId, genres.get(0));
+                logger.info("Finish query to get all songs of genre {} from DB. It took {} ms", genres.get(0), System.currentTimeMillis() - startTime);
+                return songs;
+            } else {
+                List<Song> songs = jdbcTemplate.query(getAllSongsByGenresSql, SONG_ROW_MAPPER, userId, genres.get(0), genres.get(1));
+                logger.info("Finish query to get all songs of genres {} ,{}  from DB. It took {} ms", genres.get(0), genres.get(1),
+                        System.currentTimeMillis() - startTime);
+                return songs;
+            }
         }
     }
 
@@ -181,5 +188,9 @@ public class JdbcSongDao implements SongDao {
     @Autowired
     public void setGetAllSongsByGenresSql(String getAllSongsByGenresSql) {
         this.getAllSongsByGenresSql = getAllSongsByGenresSql;
+    }
+    @Autowired
+    public void setGetRecommendedSongsSql(String getRecommendedSongsSql) {
+        this.getRecommendedSongsSql = getRecommendedSongsSql;
     }
 }

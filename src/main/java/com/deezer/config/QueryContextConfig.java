@@ -294,4 +294,18 @@ public class QueryContextConfig {
                 " group by g.id" +
                 " order by count (g.id) desc limit 2";
     }
+
+    @Bean
+    public String getRecommendedSongsSql() {
+        return "select distinct s.id, s.title, " +
+                "s.track_url, s.picture_link , " +
+                "al.title  as album_title, art.name as artist_name " +
+                ", su.id  as liked, s.lyrics " +
+                "from song s join album al on s.album = al.id " +
+                " join artist art on al.artist = art.id " +
+                "join playlist_song pls on pls.song = s.id " +
+                "join playlist pl on pls.playlist = pl.id " +
+                "left join song_user su  on su.song = s.id " +
+                "where pls.playlist =55";
+    }
 }
