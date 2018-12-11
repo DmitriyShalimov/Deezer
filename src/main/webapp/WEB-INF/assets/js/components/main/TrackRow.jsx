@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
 class TrackRow extends Component {
     render() {
@@ -11,7 +12,8 @@ class TrackRow extends Component {
                 <td>
                     <div className="search-pl-info"><p
                         className="pl-track__title">{track.title}</p>
-                        <p className="pl-album-artist__title">{track.album.title} - {track.artist.name}</p>
+                        <p className="pl-album-artist__title"><Link to={`/album/${track.album.id}`} className="underline-link">{track.album.title}
+                        </Link> - <Link to={`/artist/${track.artist.id}`} className="underline-link">{track.artist.name}</Link></p>
                     </div>
                 </td>
                 <td>

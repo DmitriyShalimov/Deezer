@@ -59,7 +59,8 @@ public class QueryContextConfig {
     @Bean
     public String getSongsForSearchSql() {
         return "select distinct s.id ,s.title, s.picture_link, " +
-                "al.title as album_title, art.name as artist_name " +
+                "al.title as album_title, art.name as artist_name, " +
+                "al.id as album_id, art.id as artist_id " +
                 "from song  s join album al on s.album = al.id " +
                 "join artist  art on al.artist = art.id left join song_user su on su.user = ? and su.song = s.id ";
     }
@@ -199,7 +200,8 @@ public class QueryContextConfig {
     @Bean
     public String getAllSongsByGenreSql() {
         return "select s.id ,s.title, s.track_url,s.picture_link, " +
-                "al.title as album_title, art.name as artist_name  " +
+                "al.title as album_title, art.name as artist_name,  " +
+                " al.id as album_id, art.id as artist_id  " +
                 ", su.id  as liked, s.lyrics " +
                 "from song s join album al on  s.album = al.id " +
                 "join artist art on al.artist= art.id " +
@@ -212,7 +214,8 @@ public class QueryContextConfig {
     public String getAllSongsByArtistSql() {
         return "select s.id ,s.title," +
                 "s.track_url, s.picture_link, " +
-                "al.title as  album_title, art.name as artist_name  " +
+                "al.title as  album_title, art.name as artist_name,  " +
+                " al.id as album_id, art.id as artist_id " +
                 ", su.id as liked , s.lyrics " +
                 "from  song s join album al on s.album = al.id " +
                 "join artist art  on al.artist = art.id " +
@@ -225,6 +228,7 @@ public class QueryContextConfig {
         return "select s.id ,s.title,  " +
                 "s.track_url,  s.picture_link, " +
                 "al.title as album_title,  art.name as artist_name " +
+                ", al.id as album_id, art.id as  artist_id " +
                 ", su.id as liked,   s.lyrics " +
                 "from song s join album al on  s.album = al.id " +
                 "join artist  art on al.artist = art.id " +
@@ -236,6 +240,7 @@ public class QueryContextConfig {
     public String getAllSongsByMaskSql() {
         return "select s.id ,s.title, s.track_url,s.picture_link,  " +
                 " al.title as album_title, art.name as artist_name " +
+                ",  al.id as album_id,  art.id  as  artist_id " +
                 ",su.id as liked, s.lyrics " +
                 "from song s join album al on s.album =al.id " +
                 "join  artist art on al.artist = art.id " +
@@ -247,6 +252,7 @@ public class QueryContextConfig {
     public String getRandomSongs() {
         return "select s.id ,s.title,  s.track_url,s.picture_link , " +
                 "al.title as  album_title, art.name as artist_name " +
+                ",al.id as  album_id, art.id as artist_id " +
                 ",  su.id as liked, s.lyrics " +
                 "from song s join album al on s.album =  al.id " +
                 "join artist art on al.artist  = art.id " +
@@ -258,7 +264,8 @@ public class QueryContextConfig {
     public String getAllSongsByPlaylistSql() {
         return "select distinct s.id, s.title, " +
                 "s.track_url, s.picture_link , " +
-                "al.title  as album_title, art.name as artist_name " +
+                "al.title  as album_title, art.name as artist_name," +
+                " al.id as album_id,  art.id as  artist_id " +
                 ", su.id  as liked, s.lyrics " +
                 "from song s join album al on s.album = al.id " +
                 " join artist art on al.artist = art.id " +
@@ -275,7 +282,8 @@ public class QueryContextConfig {
 
     @Bean
     public String getAllSongsByGenresSql() {
-        return "select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title, art.name as artist_name " +
+        return "select s.id ,s.title, s.track_url,s.picture_link, al.title as album_title, art.name as artist_name, " +
+                "al.id  as album_id,  art.id  as  artist_id " +
                 ", su.id as liked, s.lyrics " +
                 "from song s join album al on s.album = al.id " +
                 "join artist art on al.artist = art.id " +
@@ -288,7 +296,7 @@ public class QueryContextConfig {
     public String getUserLikedGenresSql() {
         return "select g.id  from genre as g " +
                 " join song_genre sg on sg.genre = g.id" +
-                " join song s on s.id=sg.song\n" +
+                " join song s on s.id=sg.song  " +
                 " join song_user as su on su.song=s.id" +
                 " where su.user=:userId " +
                 " group by g.id" +
@@ -298,7 +306,8 @@ public class QueryContextConfig {
     @Bean
     public String getRecommendedSongsSql() {
         return "select distinct s.id, s.title, s.track_url, s.picture_link , " +
-                "al.title  as album_title, art.name as artist_name , su.id  as liked, s.lyrics " +
+                "al.id as album_id,  art.id  as  artist_id," +
+                " al.title  as album_title, art.name as artist_name , su.id  as liked, s.lyrics " +
                 "from song s join album al on s.album = al.id" +
                 " join artist art on al.artist = art.id" +
                 " join playlist_song pls on pls.song = s.id" +

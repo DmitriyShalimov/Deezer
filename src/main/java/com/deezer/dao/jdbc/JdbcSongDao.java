@@ -1,7 +1,6 @@
 package com.deezer.dao.jdbc;
 
 import com.deezer.dao.SongDao;
-import com.deezer.dao.jdbc.mapper.DetailedSongRowMapper;
 import com.deezer.dao.jdbc.mapper.SongRowMapper;
 import com.deezer.entity.Song;
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import java.util.List;
 public class JdbcSongDao implements SongDao {
     private static final String LIKE_SONG_FUNCTION_NAME = "like_song";
     private static final RowMapper<Song> SONG_ROW_MAPPER = new SongRowMapper();
-    private static final RowMapper<Song> DETAILED_SONG_ROW_MAPPER = new DetailedSongRowMapper();
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcCall likeSong;
@@ -46,7 +44,7 @@ public class JdbcSongDao implements SongDao {
     public Song getSong(int id, int userId) {
         logger.info("Start query to get song with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        Song song = jdbcTemplate.queryForObject(getSongByIdSql, DETAILED_SONG_ROW_MAPPER, userId, id);
+        Song song = jdbcTemplate.queryForObject(getSongByIdSql, SONG_ROW_MAPPER, userId, id);
         logger.info("Finish query to get song with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return song;
     }

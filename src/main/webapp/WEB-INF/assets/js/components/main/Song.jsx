@@ -3,7 +3,7 @@ import TrackRow from "./TrackRow.jsx";
 import TrackHeader from "./TrackHeader.jsx";
 import {connect} from "react-redux";
 import {getPagePlaylistMeta, getPagePlaylist} from "../../store/actions/main.js";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 class Song extends Component {
     componentWillMount() {
@@ -71,8 +71,8 @@ const mapDispatchToProps = dispatch => {
         getPagePlaylist: (type, id) => dispatch(getPagePlaylist(type, id))
     };
 };
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(Song);
+)(Song));
 
