@@ -1,12 +1,12 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom";
-import Slider from "react-slick";
 import {getItemRectangleWidth, getSettings} from "./util/slider-settings";
+import Slider from "react-slick";
 
-class GenresList extends Component {
-
+class GenreList extends Component {
+    componentDidMount() {}
     render() {
-        const {genres, play} = this.props;
+        const {genres,  play} = this.props;
         const width = getItemRectangleWidth((window.innerWidth > 0) ? window.innerWidth : screen.width);
         const settings = getSettings(genres.length, 4);
         return (
@@ -18,7 +18,7 @@ class GenresList extends Component {
                              alt="genre photo"/>
                     </Link>
                     <div className="card-playlist-hover-icons">
-                        <button onClick={() => play("genre", genre.id)}><i className="fas fa-play"/>
+                        <button onClick={() => play("genre", genre.id, genre.title)}><i className="fas fa-play"/>
                         </button>
                     </div>
                     <div className="card-playlist-hover-details">
@@ -28,7 +28,10 @@ class GenresList extends Component {
             </Slider>
         );
     }
+
+
+
 }
 
 
-export default GenresList;
+export default GenreList;

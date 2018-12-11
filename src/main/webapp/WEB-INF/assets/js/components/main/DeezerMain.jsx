@@ -1,29 +1,29 @@
 import React, {Component} from "react";
-import {getTopPlaylists, typeSearch, getRecommendedPlaylists, getGenrePlylists} from "../../store/actions/main.js";
+import {getTopPlaylists, getGenres, typeSearch, getRecommendedPlaylists} from "../../store/actions/main.js";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import PlaylistsList from "./PlaylistsList.jsx";
 import {withRouter} from "react-router-dom";
-import GenresList from "./GenresList.jsx";
+import GenreList from "./GenreList.jsx";
 
 class DeezerMain extends Component {
     componentWillMount() {
         this.props.getTopPlaylists();
         this.props.getRecommendedPlaylists();
-        this.props.getGenrePlylists();
+        this.props.getGenres();
     }
 
     render() {
-        const {topPlaylists, typeSearch, likePlaylist, recommendedPlaylists, genrePlaylists} = this.props;
+        const {topPlaylists, typeSearch, likePlaylist, recommendedPlaylists, genres} = this.props;
         return (
             <section id="playlist-section">
                 <div className="genres-playlists">
                     <h3>Explore by genre</h3>
                     <div className="outline-pagination">
                         <div className="underline"/>
+                        {genres.length > 0 &&
+                        <GenreList genres={genres} play={typeSearch}/>}
                     </div>
-                    {genrePlaylists.length > 0 &&
-                    <GenresList genres={genrePlaylists} play={typeSearch}/>}
                 </div>
                 <div className="recommended-playlists">
                     <h3>Recommendations for you</h3>
@@ -42,24 +42,23 @@ class DeezerMain extends Component {
                         <PlaylistsList playlists={topPlaylists} play={typeSearch} like={likePlaylist} showlike/>}
                     </div>
                 </div>
-            </section>
-        );
+            </section>);
     }
 }
 
 const mapStateToProps = state => {
     return {
+        genres: state.rootReducer.genres,
         topPlaylists: state.rootReducer.topPlaylists,
-        recommendedPlaylists: state.rootReducer.recommendedPlaylists,
-        genrePlaylists: state.rootReducer.genrePlaylists
+        recommendedPlaylists: state.rootReducer.recommendedPlaylists
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenres: bindActionCreators(getGenres, dispatch),
         getTopPlaylists: bindActionCreators(getTopPlaylists, dispatch),
         getRecommendedPlaylists: bindActionCreators(getRecommendedPlaylists, dispatch),
-        getGenrePlylists: bindActionCreators(getGenrePlylists, dispatch),
         typeSearch: (type, id, title) => dispatch(typeSearch(type, id, title)),
     };
 };
