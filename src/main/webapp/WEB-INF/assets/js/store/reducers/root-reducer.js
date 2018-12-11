@@ -14,6 +14,7 @@ import {
     SET_ALBUMS,
     NOT_FOUND
 } from "../actions/actionTypes.js";
+import {SET_GENRES} from "../actions/actionTypes";
 
 const initialState = {
     notFound: false,
@@ -32,6 +33,7 @@ const initialState = {
     pagePlaylist: [],
     albums: [],
     artists: [],
+    genres:[]
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -53,6 +55,8 @@ export const rootReducer = (state = initialState, action) => {
             return {...state, topPlaylists: payload};
         case SET_RECOMMENDED_PLAYLISTS:
             return {...state, recommendedPlaylists: payload};
+        case SET_GENRES:
+            return {...state, genres: payload};
         case SET_PAGE_PLAYLIST_META:
             return {...state, pagePlaylistMeta: payload};
         case SET_PAGE_PLAYLIST:

@@ -10,7 +10,8 @@ import {
     SET_PAGE_PLAYLIST,
     SET_ARTISTS,
     SET_ALBUMS,
-    NOT_FOUND
+    NOT_FOUND,
+    SET_GENRES
 } from './actionTypes.js'
 import {push} from 'react-router-redux';
 import {setTrack} from "./track-actions.js";
@@ -44,6 +45,13 @@ const setUserPlaylists = playlists => {
     }
 };
 
+
+const setGenres = genres => {
+    return {
+        type: SET_GENRES,
+        payload: genres
+    }
+};
 const setAllPublicPlaylists = playlists => {
     return {
         type: SET_ALL_PUBLIC_PLAYLISTS,
@@ -58,15 +66,15 @@ const setFavouritePlaylists = playlists => {
     }
 };
 
-const setTopPlaylists = playlists =>{
+const setTopPlaylists = playlists => {
     return {
         type: SET_TOP_PLAYLISTS,
         payload: playlists
     }
 };
 
-const setRecommendedPlaylists = playlists =>{
-    return{
+const setRecommendedPlaylists = playlists => {
+    return {
         type: SET_RECOMMENDED_PLAYLISTS,
         payload: playlists
     }
@@ -180,7 +188,7 @@ export const likeTrack = (id) => {
     };
 };
 
-export const likePlaylist =(id) =>{
+export const likePlaylist = (id) => {
     return dispatch => {
         const token = localStorage.getItem('user-token');
         return fetch(`${URL_PREFIX}playlist/${id}/like`, {
@@ -213,6 +221,20 @@ export const getUserPlaylists = () => {
     };
 };
 
+export const getGenres = () => {
+    return dispatch => {
+        const token = localStorage.getItem('user-token');
+        return fetch(`${URL_PREFIX}genre`, {
+            headers: {
+                [USER_TOKEN_HEADER]:
+                token
+            }
+        })
+            .then(res => res.json())
+            .then(res => dispatch(setGenres(res)));
+    };
+};
+
 export const getAllPublicPlaylists = () => {
     return dispatch => {
         const token = localStorage.getItem('user-token');
@@ -241,7 +263,7 @@ export const getFavouritePlaylists = () => {
     };
 };
 
-export const getTopPlaylists =()=>{
+export const getTopPlaylists = () => {
     return dispatch => {
         const token = localStorage.getItem('user-token');
         return fetch(`${URL_PREFIX}playlist/top`, {
@@ -255,7 +277,7 @@ export const getTopPlaylists =()=>{
     };
 };
 
-export const getRecommendedPlaylists = ()=>{
+export const getRecommendedPlaylists = () => {
     return dispatch => {
         const token = localStorage.getItem('user-token');
         return fetch(`${URL_PREFIX}playlist/recommended`, {

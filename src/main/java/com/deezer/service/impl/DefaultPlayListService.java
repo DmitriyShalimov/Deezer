@@ -120,12 +120,8 @@ public class DefaultPlayListService implements PlayListService {
     @Override
     public List<PlayList> getRecommendedPlayList(int userId) {
         List<Integer> genres = genreDao.getUserLikedGenres(userId);
-        if (genres.isEmpty()) {
-            return getTopPlaylists(userId);
-        } else {
             initSongsForRecommendedPlayList(genres, userId);
             return recommendedPlaylist;
-        }
     }
 
     @Override
@@ -140,7 +136,6 @@ public class DefaultPlayListService implements PlayListService {
     private void initSongsForRecommendedPlayList(List<Integer> genres, int userId) {
         recommendedPlaylistsForUser.remove(userId);
         List<Song> songs;
-
         songs = songDao.getRecommendedSongForGenre(userId, genres);
         int songsInPlaylist = songs.size() / 5 + 1;
         List<List<Song>> songForRecommendedPlayList = ListUtils.partition(songs, songsInPlaylist);
