@@ -8,7 +8,10 @@ import com.deezer.entity.PlayList;
 import com.deezer.entity.Song;
 import com.deezer.service.PlayListService;
 import org.apache.commons.collections4.ListUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +22,7 @@ import java.util.Map;
 
 @Service
 public class DefaultPlayListService implements PlayListService {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final PlayListDao playListDao;
     private final SongDao songDao;
     private final GenreDao genreDao;
@@ -96,6 +100,9 @@ public class DefaultPlayListService implements PlayListService {
 
     @Override
     public PlayList getById(int id, int userId) {
+        if(id < 0){
+            return recommendedPlaylist.stream().filter(playList -> playList.getId() == id).findFirst().orElseThrow(() -> new EmptyResultDataAccessException(1));
+        }
         return playListDao.getById(id, userId);
 
     }
@@ -123,7 +130,10 @@ public class DefaultPlayListService implements PlayListService {
 
     @Override
     public List<Song> getSongsFromRecommendedPlayList(int playListId, int userId) {
-        return recommendedPlaylistsForUser.get(userId).get(playListId);
+        logger.info("Getting songs from playlist {} for user {}", playListId, userId);
+        Map<Integer, List<Song>> userPlaylists = recommendedPlaylistsForUser.get(userId);
+        logger.info("User playlists are {}", userPlaylists.values());
+        return userPlaylists.get(playListId);
     }
 
 

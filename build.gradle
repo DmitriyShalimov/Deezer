@@ -57,6 +57,7 @@ node {
     npmWorkDir = file("${project.buildDir}/react/npm")
     nodeModulesDir = file("${project.projectDir}")
 }
+
 task webpack(type: NodeTask, dependsOn: 'npmInstall') {
     script = project.file('node_modules/.bin/webpack')
 }

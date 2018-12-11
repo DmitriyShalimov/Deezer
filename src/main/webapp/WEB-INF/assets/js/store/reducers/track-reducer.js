@@ -17,8 +17,6 @@ const initialState = {
 };
 
 export const trackReducer = (state = initialState, action) => {
-    if (action.type !== SET_TIME)
-        console.log(action);
     const {payload} = action;
     switch (action.type) {
         case SET_AUDIO:

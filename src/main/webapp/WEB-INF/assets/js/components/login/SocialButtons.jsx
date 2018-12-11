@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './css/index.css'
-import {fbLogin, initGoogleLogin, initFbLogin} from "./util/social-login-functions.js"
+import {initGoogleLogin, initFbLogin} from "./util/social-login-functions.js"
 import {bindActionCreators} from "redux";
 import {signIn, register} from "../../store/actions/login.js";
 import {connect} from "react-redux";
@@ -30,7 +30,7 @@ class SocialButtons extends Component {
         return (
             <div className="login-box-social-section-inner">
                 <a className="login-box-social-button-facebook " id="fb-login"
-                   onClick={() => this.handleFbLogin()}><i
+                   onClick={() => this.fbLogin()}><i
                     className="fab fa-facebook-square"/></a>
                 <a id="google-login" className="login-box-social-button-google">
                     <i className="fab fa-google-plus-g"/>
@@ -39,20 +39,31 @@ class SocialButtons extends Component {
         )
     }
 
-    handleFbLogin() {
-        const {signIn} = this.props;
-        let user = fbLogin();
-        if (user) {
-            this.setState({login: user.login, password: user.password});
-            signIn(user.login, user.password, true);
-        }
-    }
-
     handleGoogleLogin(login, password) {
         const {signIn} = this.props;
         this.setState({login, password});
         signIn(login, password, true);
     }
+
+    fbLogin () {
+        const {signIn} = this.props;
+        FB.login(response => {
+            if (response.authResponse) {
+                let password = response.authResponse.userID; //get FB UID
+                FB.api('/me', response => {
+                    let login = response.name;
+                    this.setState({login, password});
+                    signIn(login, password, true);
+                });
+            } else {
+                //user hit cancel button
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, {
+            scope: 'public_profile,email'
+        });
+    };
+
 }
 
 const mapStateToProps = state => {

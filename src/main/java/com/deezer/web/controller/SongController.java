@@ -49,9 +49,10 @@ public class SongController {
 
     @GetMapping(value = "/playlist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Song> getSongsByPlaylist(@PathVariable int id,AuthPrincipal principal) {
-        logger.info("Start request to get songs from playlist {}", id);
+        int userId = principal.getUser().getId();
+        logger.info("Start request to get songs from playlist {} for user {}", id, userId);
         long start = System.currentTimeMillis();
-        List<Song> songs = songService.getSongsByPlayList(id, principal.getUser().getId());
+        List<Song> songs = songService.getSongsByPlayList(id, userId);
         logger.info("Songs from playlist {} are {}. It took {} ms", id, songs, System.currentTimeMillis() - start);
         return songs;
     }

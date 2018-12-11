@@ -23,7 +23,6 @@ import MusicLibraryPage from "./MusicLibraryPage.jsx";
 import DeezerMain from "./DeezerMain.jsx";
 import AllPlaylists from "./AllPlaylists.jsx";
 
-//TODO:style 404
 class MainPage extends Component {
     componentWillMount() {
         const token = localStorage.getItem("user-token");
@@ -32,7 +31,6 @@ class MainPage extends Component {
             if (redirectOnSuccess === '/login' && redirectOnSuccess === '/registration') {
                 redirectOnSuccess = '/';
             }
-            console.log(redirectOnSuccess);
             this.props.validateToken(token, redirectOnSuccess);
         } else if (!this.props.isAuth) {
             this.props.redirect("/login");
@@ -71,7 +69,7 @@ class MainPage extends Component {
                                            render={props => <SearchPage {...props.match} key={this.props.location.key}
                                                                         handleLike={this.handleLike.bind(this)}
                                                                         playTrack={this.playTrack.bind(this)}/>}/>
-                                    <Route exact path="/playlist/:id(\d+)"
+                                    <Route exact path="/playlist/:id(-?\d+)"
                                            render={props => <Playlist {...props.match}
                                                                       handleLike={this.handleLike.bind(this)}
                                                                       playTrack={this.playTrack.bind(this)}/>}/>
