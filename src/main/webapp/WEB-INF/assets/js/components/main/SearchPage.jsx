@@ -19,6 +19,11 @@ class SearchPage extends Component {
         const {pagePlaylist, artists, albums, handleLike, playTrack, playing, track, currentTime, duration, typeSearch} = this.props;
         return (
             <React.Fragment>
+                {artists.length === 0 && albums.length === 0 && pagePlaylist.length === 0 &&
+                <div className="not-found">
+                    <img src="/assets/img/404.png" alt=""/>
+                    <div className="empty-message">No results for <span>{this.props.params.mask}</span></div>
+                </div>}
                 {artists.length > 0 && <ArtistsList artists={artists} play={typeSearch}/>}
                 {albums.length > 0 && <AlbumsList albums={albums} play={typeSearch}/>}
                 {pagePlaylist.length > 0 &&

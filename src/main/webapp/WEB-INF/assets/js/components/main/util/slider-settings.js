@@ -65,11 +65,11 @@ export const getSettings = (length, max = 6) => {
 
 export const getItemWidth = (deviceWidth) => {
     if (deviceWidth > 1600)
-        return 240;
+        return 250;
     if (deviceWidth > 1400)
-        return 220;
+        return 230;
     if (deviceWidth > 1024)
-        return 200;
+        return 210;
     if (deviceWidth > 800)
         return 180;
     return 150;
@@ -77,7 +77,7 @@ export const getItemWidth = (deviceWidth) => {
 
 export const getItemRectangleWidth = (deviceWidth) =>{
     if (deviceWidth > 1600)
-        return 300;
+        return 305;
     if (deviceWidth > 1024)
         return 250;
     if (deviceWidth > 800)
