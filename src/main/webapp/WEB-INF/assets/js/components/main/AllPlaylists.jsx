@@ -3,17 +3,17 @@ import "./css/music-library.scss";
 import {connect} from "react-redux";
 import PlaylistsList from "./PlaylistsList.jsx";
 import {bindActionCreators} from "redux";
-import {getAllPublicPlaylists, typeSearch} from "../../store/actions/main.js";
+import {getAllPublicPlaylists, typeSearch, setIsAllPlaylists} from "../../store/actions/main.js";
 import {withRouter} from "react-router-dom";
 
 class AllPlaylists extends Component {
     componentWillMount() {
         this.props.getAllPublicPlaylists();
+        this.props.setIsAllPlaylists(true);
     }
 
     render() {
         const {allPublicPlaylists, typeSearch, likePlaylist} = this.props;
-        console.log(allPublicPlaylists);
         return (
             <section>
                 <div className="user-library">
@@ -22,7 +22,8 @@ class AllPlaylists extends Component {
                         </li>
                     </ul>
                     <div className="tabs-content artist-page" data-tabs-content="collapsing-tabs">
-                        <div className="tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-4 large-up-6" id="allPl">
+                        <div className="tabs-panel is-active grid-x grid-padding-x small-up-3 medium-up-4 large-up-6"
+                             id="allPl">
                             {allPublicPlaylists.length > 0 ?
                                 <PlaylistsList playlists={allPublicPlaylists} play={typeSearch} like={likePlaylist}
                                                showlike/> :
@@ -32,6 +33,10 @@ class AllPlaylists extends Component {
                 </div>
             </section>
         )
+    }
+
+    componentWillUnmount() {
+        this.props.setIsAllPlaylists(false);
     }
 }
 
@@ -45,6 +50,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getAllPublicPlaylists: bindActionCreators(getAllPublicPlaylists, dispatch),
         typeSearch: (type, id, title) => dispatch(typeSearch(type, id, title)),
+        setIsAllPlaylists: (isAllPlaylists) => dispatch(setIsAllPlaylists(isAllPlaylists))
     };
 };
 export default withRouter(connect(

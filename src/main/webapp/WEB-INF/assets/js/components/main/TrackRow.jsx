@@ -20,8 +20,10 @@ class TrackRow extends Component {
                     {this.renderTrackTime(track === currentTrack)}
                 </td>
                 <td className="btnLike" onClick={() => handleLike(track)}>
-                    {!track.liked && <i className="far fa-heart top like"/>}
-                    {track.liked && <i className="fas fa-heart top dislike"/>}
+                    {!track.liked && <i className="far fa-heart top like" data-tooltip aria-haspopup="true" tabIndex="1"
+                                        title="Add to favourite tracks"/>}
+                    {track.liked && <i className="fas fa-heart top dislike" data-tooltip aria-haspopup="true" tabIndex="1"
+                                       title="Remove from favourite tracks"/>}
                 </td>
             </tr>
         )

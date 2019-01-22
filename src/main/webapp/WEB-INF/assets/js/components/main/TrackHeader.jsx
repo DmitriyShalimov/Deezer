@@ -6,8 +6,8 @@ const TrackHeader = () => {
         <tr>
             <th/>
             <th>Track</th>
-            <th><i className="far fa-clock"/></th>
-            <th><i className="far fa-heart"/></th>
+            <th><i className="far fa-clock header"/></th>
+            <th><i className="far fa-heart header"/></th>
         </tr>
         </thead>
     )

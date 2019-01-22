@@ -12,7 +12,11 @@ import {
     SET_PAGE_PLAYLIST,
     SET_ARTISTS,
     SET_ALBUMS,
-    NOT_FOUND
+    NOT_FOUND,
+    SET_IS_MUSIC_LIBRARY,
+    SET_IS_ALL_PLAYLISTS,
+    SET_IS_HOME,
+    FAVOURITE_TRACKS_PLAYLIST_ID
 } from "../actions/actionTypes.js";
 import {SET_GENRES} from "../actions/actionTypes";
 
@@ -34,7 +38,11 @@ const initialState = {
     pagePlaylist: [],
     albums: [],
     artists: [],
-    genres:[]
+    genres: [],
+    isMusicLibrary: false,
+    isAllPlaylists: false,
+    isHome: false,
+    favouriteTracksPlId:null
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -70,6 +78,14 @@ export const rootReducer = (state = initialState, action) => {
             return {...state, notFound: payload};
         case ERROR:
             return {...state, errorMessage: payload};
+        case SET_IS_MUSIC_LIBRARY:
+            return {...state, isMusicLibrary: payload};
+        case SET_IS_ALL_PLAYLISTS:
+            return {...state, isAllPlaylists: payload};
+        case SET_IS_HOME:
+            return {...state, isHome: payload};
+        case FAVOURITE_TRACKS_PLAYLIST_ID:
+            return {...state, favouriteTracksPlId: payload};
         default:
             return state;
     }

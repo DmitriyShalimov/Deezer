@@ -7,7 +7,7 @@ const SamplePrevArrow = (props) => {
             className={className}
             style={{...style}}
             onClick={onClick}
-        ><i className="fas fa-arrow-left"/></div>
+        ><div className="arrow-slide"><i className="fas fa-arrow-left"/></div></div>
     );
 };
 
@@ -18,7 +18,7 @@ const SampleNextArrow = (props) => {
             className={className}
             style={{...style}}
             onClick={onClick}
-        ><i className="fas fa-arrow-right"/></div>
+        ><div className="arrow-slide"><i className="fas fa-arrow-right"/></div></div>
     );
 };
 

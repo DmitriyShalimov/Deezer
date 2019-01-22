@@ -23,7 +23,8 @@ class Player extends Component {
         progress: 0,
         volume: 0.8,
         prevVolume: 0.8,
-        showMiniPlaylist: false
+        showMiniPlaylist: false,
+        showVolume: false
     };
 
     constructor(props) {
@@ -71,18 +72,33 @@ class Player extends Component {
                     </div>
                     <div className="ap__inner">
                         <div className="ap__item ap__item--title">
-                            {track && <img className="track__picture" src={track ? track.picture : ""} alt=""/>}
-                            <div className="track__info">
-                                <p className="track__title">{track ? track.title : ""}</p>
-                                {track && <p className="album-artist__title">
-                                    <Link to={`/album/${track.album.id}`} className="underline-link">{track.album.title}
-                                    </Link> - <Link to={`/artist/${track.artist.id}`}
-                                                    className="underline-link">{track.artist.name}</Link></p>}
+                            <div className="flex">
+                                {track && <img className="track__picture" src={track ? track.picture : ""} alt=""/>}
+                                <div className="track__info">
+                                    <p className="track__title">{track ? track.title : ""}</p>
+                                    {track && <p className="album-artist__title">
+                                        <Link to={`/album/${track.album.id}`}
+                                              className="underline-link">{track.album.title}
+                                        </Link> - <Link to={`/artist/${track.artist.id}`}
+                                                        className="underline-link">{track.artist.name}</Link></p>}
+                                </div>
                             </div>
-                            <div className="track__lyrics" data-toggle="lyricsPane">
-                                {track && <i className="fas fa-microphone"
-                                             data-tooltip aria-haspopup="true" tabIndex="1"
-                                             title="Lyrics"/>}
+                            <div className="flex">
+                                <button className="ap__controls ap__controls--playlist" id="addLike"
+                                        onClick={() => handleLike(track)}>
+                                    {track ? !track.liked && <i className="far fa-heart top main-like"
+                                                                data-tooltip aria-haspopup="true" tabIndex="1"
+                                                                title="Add to favourite tracks"/> : ""}
+                                    {track ? track.liked && <i className="fas fa-heart top main-dislike"
+                                                               data-tooltip aria-haspopup="true" tabIndex="1"
+                                                               title="Remove from favourite tracks"/> : ""}
+                                </button>
+                                <button className="ap__controls ap__controls--playlist main-add-to-playlist"
+                                        data-toggle="addToPlaylistMenu">
+                                    <i className="fas fa-plus top has-tip"
+                                       data-tooltip aria-haspopup="true" tabIndex="1"
+                                       title="Add to playlist"/>
+                                </button>
                             </div>
                         </div>
                         <div className="ap__item ap__item--playback">
@@ -106,37 +122,35 @@ class Player extends Component {
                         </div>
 
                         <div className="ap__item ap__item--settings">
-                            <button className="ap__controls ap__controls--playlist" id="addLike"
-                                    onClick={() => handleLike(track)}>
-                                {track ? !track.liked && <i className="far fa-heart top main-like"
-                                                            data-tooltip aria-haspopup="true" tabIndex="1"
-                                                            title="Add to favourites"/> : ""}
-                                {track ? track.liked && <i className="fas fa-heart top main-dislike"
-                                                           data-tooltip aria-haspopup="true" tabIndex="1"
-                                                           title="Cancel like"/> : ""}
-                            </button>
-                            <button className="ap__controls ap__controls--playlist main-add-to-playlist"
-                                    data-toggle="addToPlaylistMenu">
-                                <i className="fas fa-plus top has-tip"
-                                   data-tooltip aria-haspopup="true" tabIndex="1"
-                                   title="Add to playlist"/>
-                            </button>
+                            <div className="track__lyrics" data-toggle="lyricsPane">
+                                {track &&
+                                <img src="/assets/img/lyrics.svg" alt="" data-tooltip aria-haspopup="true" tabIndex="1"
+                                     title="Lyrics"
+                                     className="lyrics-icon"/>}
+                            </div>
                             <div className="ap__controls volume-container">
-                                <button className="volume-btn" onClick={() => this.handleVolumeBtn()}>
+                                <button className="volume-btn" onDoubleClick={() => this.handleVolumeBtn()}
+                                        onClick={() => this.showVolume()}>
                                     {volume !== 0 && <i className="fas fa-volume-up icon-volume-on"/>}
                                     {volume === 0 && <i className="fas fa-volume-off icon-volume-off"/>}
                                 </button>
-                                <div className="volume" onClick={(event) => this.handleVolume(event)}>
+                                <div className={"volume " + this.isVolumeActive()}
+                                     onClick={(event) => this.handleVolume(event)}>
                                     <div className="volume__track">
                                         <div className="volume__bar" style={{height: volume * 100}}/>
                                     </div>
                                 </div>
                             </div>
-                            <button className="ap__controls ap__controls--playlist" id="showPlaylist"
+                            <button className="ap__controls ap__controls--playlist queue" id="showPlaylist"
                                     onClick={() => this.handleMiniPlaylist()}>
-                                <i className="fas fa-music top has-tip"
-                                   data-tooltip aria-haspopup="true" tabIndex="1"
-                                   title="Current queue" style={this.getMiniPlaylistButtonColor()}/>
+                                <div className="queue-button">
+                                    {currentPlaylist[0] ?
+                                        <img className="queue-img" src={currentPlaylist[0].picture} alt=""
+                                             style={{boxShadow: "0 1px 6px rgba(25,25,34,.16)"}}/> :
+                                        <img className="queue-img" src="/assets/img/equalizer.png" alt=""/>}
+                                    <div
+                                        className="queue-title">{currentPlaylistTitle ? currentPlaylistTitle : 'Queue'}  </div>
+                                </div>
                             </button>
 
                         </div>
@@ -179,6 +193,14 @@ class Player extends Component {
         this.props.setTrackTime(this.getTrackTime(currentTime));
     }
 
+    showVolume() {
+        const isVolumeOpen = this.state.showVolume;
+        this.setState({showVolume: !isVolumeOpen})
+    }
+
+    isVolumeActive() {
+        return this.state.showVolume ? "active" : "";
+    }
 
     handleVolumeBtn() {
         const volume = this.state.volume;

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {getTopPlaylists, getGenres, typeSearch, getRecommendedPlaylists} from "../../store/actions/main.js";
+import {getTopPlaylists, getGenres, typeSearch, getRecommendedPlaylists, setIsHome} from "../../store/actions/main.js";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import PlaylistsList from "./PlaylistsList.jsx";
@@ -11,6 +11,7 @@ class DeezerMain extends Component {
         this.props.getTopPlaylists();
         this.props.getRecommendedPlaylists();
         this.props.getGenres();
+        this.props.setIsHome(true);
     }
 
     render() {
@@ -35,14 +36,36 @@ class DeezerMain extends Component {
                     </div>
                 </div>
                 <div className="top-public-playlists">
-                    <h3>Deezer Top 10</h3>
+                    <h3>Top Playlists</h3>
                     <div className="underline"/>
-                    <div className="grid-x grid-padding-x small-up-2 medium-up-4 large-up-5" id="topPlaylist">
+                    <div
+                        className="grid-x grid-padding-x small-up-2 medium-up-3 large-up-4 artist-page top-playlist-cards"
+                        id="topPlaylist">
                         {topPlaylists.length > 0 &&
-                        <PlaylistsList playlists={topPlaylists} play={typeSearch} like={likePlaylist} showlike/>}
+                        <PlaylistsList playlists={this.getTopPlaylists()} play={typeSearch} like={likePlaylist}
+                                       showlike isRectangular/>}
                     </div>
                 </div>
             </section>);
+    }
+
+    getTopPlaylists() {
+        const loadedPl = this.props.topPlaylists;
+        const width = window.innerWidth /
+            parseFloat(getComputedStyle(document.querySelector('body'))['font-size']);
+        if (width > 64) {
+            return loadedPl.slice(0, 8);
+        } else if (width > 40) {
+            return loadedPl.slice(0, 6);
+        } else {
+            return loadedPl;
+        }
+
+
+    }
+
+    componentWillUnmount() {
+        this.props.setIsHome(false);
     }
 }
 
@@ -60,6 +83,7 @@ const mapDispatchToProps = dispatch => {
         getTopPlaylists: bindActionCreators(getTopPlaylists, dispatch),
         getRecommendedPlaylists: bindActionCreators(getRecommendedPlaylists, dispatch),
         typeSearch: (type, id, title) => dispatch(typeSearch(type, id, title)),
+        setIsHome: (isHome) => dispatch(setIsHome(isHome))
     };
 };
 export default withRouter(connect(

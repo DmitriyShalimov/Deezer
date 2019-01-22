@@ -48,7 +48,10 @@ class SearchAutocomplete extends Component {
         let options = SearchAutocomplete.adjustOptions(this.props.searchOptions).filter(option =>
             option.title.toLowerCase().slice(0, inputLength) === inputValue
         ).slice(0, 5);
-        return inputLength === 0 ? [] : options;
+        return inputLength === 0 ? [] : (options.length === 0 ? [{
+            title: '',
+            notFound: `No results for '${value}'`
+        }] : options);
     };
 
     static adjustOptions(data) {
@@ -92,9 +95,12 @@ class SearchAutocomplete extends Component {
     }
 
     renderSuggestion(suggestion) {
-        return <SearchForm picture={suggestion.picture} title={suggestion.title} subtitle={getSubtitle(suggestion)}
-                           type={suggestion.type} id={suggestion.id}
-                           typeSearch={this.props.typeSearch}/>
+        if (suggestion.notFound) {
+            return <div className="empty-message" style={{fontSize:"16px"}}>{suggestion.notFound}</div>
+        } else
+            return <SearchForm picture={suggestion.picture} title={suggestion.title} subtitle={getSubtitle(suggestion)}
+                               type={suggestion.type} id={suggestion.id}
+                               typeSearch={this.props.typeSearch}/>
     };
 
 }

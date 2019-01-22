@@ -21,9 +21,9 @@ class AlbumsList extends Component {
                         <Link to={`/album/${album.id}`}>
                             <img src={album.picture}
                                  alt="artist photo"/>
-                        </Link>
+
                         <div className="card-playlist-hover-icons">
-                            <button onClick={() => play("album", album.id)}><i className="fas fa-play"/>
+                            <button onClick={(e) => this.play("album", album.id, e)}><i className="fas fa-play"/>
                             </button>
                         </div>
                         <div className="card-playlist-hover-details" style={{flexDirection: 'column'}}>
@@ -33,10 +33,15 @@ class AlbumsList extends Component {
                                       className="underline-link" style={{fontSize: '0.9vw'}}>{album.artist.name}</Link>
                             </p>}
                         </div>
+                        </Link>
                     </div>)}
                 </Slider>
             </div>
         );
+    }
+    play(type, id, event) {
+        event.preventDefault();
+        this.props.play(type, id);
     }
 }
 

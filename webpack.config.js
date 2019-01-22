@@ -7,9 +7,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-
+//TODO: change mode before commit!!!!!!!!!!!!!
 module.exports = {
-    mode: 'production',
+    //mode: 'production',
+    mode: "development",
     entry: {
         app: SRC + '/index.jsx'
     },
@@ -18,26 +19,26 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/dist/'
     },
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            title: 'Production'
-        })
-    ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                uglifyOptions: {
-                    compress: false,
-                    ecma: 6,
-                    mangle: true
-                },
-                sourceMap: true
-            })
-        ]
-    },
+    // plugins: [
+    //     new CleanWebpackPlugin(['dist']),
+    //     new HtmlWebpackPlugin({
+    //         title: 'Production'
+    //     })
+    // ],
+    // optimization: {
+    //     minimizer: [
+    //         new UglifyJsPlugin({
+    //             cache: true,
+    //             parallel: true,
+    //             uglifyOptions: {
+    //                 compress: false,
+    //                 ecma: 6,
+    //                 mangle: true
+    //             },
+    //             sourceMap: true
+    //         })
+    //     ]
+    // },
     module: {
         rules: [
             {

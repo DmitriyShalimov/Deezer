@@ -7,13 +7,18 @@ aside.right {
   display: flex;
   flex-direction: column;
   position: fixed;
-  left: 2%;
   z-index: 5;
   cursor: pointer;
+  & a.active{
+    & i{
+      color: #ff5722;
+    }
+  }
 }
 
 .all-playlists {
   margin-top: 20px;
+  padding-left: 20px;
 }
 
 .music-library:hover,
@@ -21,8 +26,16 @@ aside.right {
   opacity: 0.8;
 }
 
-.music-library:active,
-.all-playlists:active {
+a.music-library {
+  margin-top: 20px;
+  padding-left: 20px;
+  &.home {
+    margin-top: 0;
+  }
+}
+
+.music-library:active .aside-nav,
+.all-playlists:active .aside-nav{
   background-color: rgba(255, 87, 34, 0.22);
 }
 
@@ -30,7 +43,7 @@ aside.right {
 .all-playlists i {
   display: flex;
   justify-content: center;
-  color: #ff5722;
+  color: #4b4b4b;
   font-size: 1.5em;
 }
 

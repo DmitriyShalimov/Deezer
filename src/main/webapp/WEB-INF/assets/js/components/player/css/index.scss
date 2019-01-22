@@ -25,27 +25,39 @@ audio {
 
 .ap__item {
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: center;
 }
 
-.ap__item--playback > .ap__controls {
-  flex: 0 25%;
+#btnPrev {
+  margin-right: 35px;
 }
 
-.ap__item--settings > .ap__controls {
-  flex: 0 10%;
+#btnNext {
+  margin-left: 35px;
 }
 
 .ap__item--title {
-  justify-content: flex-start;
+  flex: 1;
+  justify-content: space-between;
   height: 90px !important;
 }
 
+.flex {
+  display: flex;
+}
+
 .ap__item--settings {
-  justify-content: space-evenly;
-  margin-right: 2rem;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.ap__item--playback {
+  margin: 4px 48px 0 48px;
+}
+
+#showPlaylist {
+  padding-right: 40px;
 }
 
 @keyframes fs {
@@ -130,6 +142,7 @@ p.pl-track__title {
     height: 3px;
     border-radius: 3px;
     background-color: transparent;
+
     .progress__bar,
     .progress__preload {
       width: 0;
@@ -151,6 +164,7 @@ p.pl-track__title {
 .progress__bar {
   background: #ff5722;
   z-index: 1;
+
   &::after {
     top: 0;
     right: -10px;
@@ -163,6 +177,7 @@ p.pl-track__title {
     opacity: 0;
     transition: opacity .3s ease;
   }
+
   &:active:after {
     transform: scale(1.4);
 
@@ -231,9 +246,64 @@ p.pl-track__title {
   transition: background .3s ease;
 }
 
+#addLike {
+  margin-right: 35px;
+}
+
+
+.ap__controls--playlist {
+
+  &.queue {
+    &:before {
+      background-color: #dedee3;
+      content: "";
+      height: 32px;
+      left: 0;
+      position: absolute;
+      top: 8px;
+      width: 1px;
+      box-sizing: border-box;
+    }
+
+    .queue-button {
+      display: flex;
+      font-size: 12px;
+      padding: 5px;
+      margin-left: 5px;
+
+      &:hover {
+        background-color: #efeff2;
+      }
+
+      .queue-title {
+        align-self: center;
+        color: #32323d;
+        line-height: 16px;
+        margin-left: 8px;
+      }
+
+      .queue-img {
+        border-radius: 4px;
+        display: inline-block;
+        margin: 0;
+        max-height: 28px;
+        max-width: 28px;
+        overflow: hidden;
+        position: relative;
+        transform: translateZ(0);
+        vertical-align: top;
+      }
+    }
+  }
+}
+
 .ap.active button:active i,
 .ap.active .track__lyrics:active i {
   color: #ff5722;
+}
+
+button.ap__controls.ap__controls--playlist.main-add-to-playlist {
+  margin-right: 25px;
 }
 
 .main-pause,
@@ -314,7 +384,7 @@ p.pl-track__title {
   border-top: 7px solid #ccc;
 }
 
-.volume-container:hover .volume {
+.volume.active {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
@@ -353,18 +423,8 @@ p.pl-track__title {
 .ap__controls.volume-container {
   display: flex;
   justify-content: center;
+  margin: 0 35px;
 }
-
-/*
-.main-dislike,
-.dislike,
-.main-like,
-.like,
-.pl-like,
-.pl-dislike {
-  display: none;
-}
-*/
 
 .pl-like,
 .pl-dislike {
@@ -380,3 +440,4 @@ p.pl-track__title {
   justify-content: space-between;
   padding-right: 10%;
 }
+

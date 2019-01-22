@@ -2,7 +2,7 @@
 
 .slick-slider {
   position: relative;
-  display: block;
+  display: flex;
   box-sizing: border-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -69,12 +69,16 @@
   float: left;
   height: inherit;
   min-height: 1px;
+  padding-left: 17px;
+
   [dir="rtl"] & {
     float: right;
   }
+
   img {
     display: block;
   }
+
   &.slick-loading img {
     display: none;
   }
@@ -105,29 +109,33 @@
 }
 
 /* Arrows */
-
-.slick-prev,
-.slick-next {
+.slick-arrow {
   position: absolute;
-  display: block;
-  height: 25px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
   width: 25px;
-  line-height: 0px;
+  line-height: 0;
   cursor: pointer;
   color: #6e6e6e;
-  background-color: #e2e2e2;
-  border-radius: 50%;
-  top: 40%;
-  -webkit-transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-  border: none;
-  outline: none;
-  &:hover, &:focus {
-    opacity: 0.8;
+
+  .arrow-slide {
+    height: 25px;
+    background-color: #e2e2e2;
+    border-radius: 50%;
+    top: 40%;
+    border: none;
+    outline: none;
 
   }
+
+  &:hover, &:focus {
+    opacity: 0.8;
+  }
+
 }
+
 
 .fa-arrow-right,
 .fa-arrow-left {
@@ -137,6 +145,7 @@
 
 .slick-prev {
   left: -35px;
+
   [dir="rtl"] & {
     left: auto;
     right: -35px;
@@ -145,6 +154,7 @@
 
 .slick-next {
   right: -35px;
+
   [dir="rtl"] & {
     left: -35px;
     right: auto;

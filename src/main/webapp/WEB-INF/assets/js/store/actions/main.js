@@ -11,13 +11,46 @@ import {
     SET_ARTISTS,
     SET_ALBUMS,
     NOT_FOUND,
-    SET_GENRES
+    SET_GENRES,
+    SET_IS_MUSIC_LIBRARY,
+    SET_IS_ALL_PLAYLISTS,
+    SET_IS_HOME,
+    FAVOURITE_TRACKS_PLAYLIST_ID
 } from './actionTypes.js'
 import {push} from 'react-router-redux';
 import {setTrack} from "./track-actions.js";
 
 const URL_PREFIX = '/api/v1/';
 const USER_TOKEN_HEADER = 'User-Token';
+
+export const setIsHome = isHome => {
+    return {
+        type: SET_IS_HOME,
+        payload: isHome
+    }
+};
+
+export const setIsMusicLibrary = isMusicLibrary => {
+    return {
+        type: SET_IS_MUSIC_LIBRARY,
+        payload: isMusicLibrary
+    }
+};
+
+export const setIsAllPlaylists = isAllPlaylists => {
+    return {
+        type: SET_IS_ALL_PLAYLISTS,
+        payload: isAllPlaylists
+    }
+};
+
+
+const setFavouriteTracksPlId = id =>{
+    return {
+        type: FAVOURITE_TRACKS_PLAYLIST_ID,
+        payload: id
+    }
+};
 
 const setNotFound = isNotFound => {
     return {
@@ -217,7 +250,13 @@ export const getUserPlaylists = () => {
             }
         })
             .then(res => res.json())
-            .then(res => dispatch(setUserPlaylists(res)));
+            .then(res => {
+                dispatch(setUserPlaylists(res));
+                const favPl = res.filter(pl => pl.title === 'Favourites')[0];
+                if (favPl) {
+                    dispatch(setFavouriteTracksPlId(favPl.id))
+                }
+            });
     };
 };
 

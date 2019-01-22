@@ -38,15 +38,17 @@ class MainPage extends Component {
     }
 
     render() {
-        const {isAuth, logout, notFound, getRandom} = this.props;
+        const {isAuth, logout, notFound, getRandom, isMusicLibrary, isAllPlaylists, isHome} = this.props;
         if (isAuth) {
             return (
                 <React.Fragment>
                     <Header logout={logout}/>
                     <main>
+                        <RandomSong playRandomSong={getRandom}/>
+                        <MusicLibrary isMusicLibrary={isMusicLibrary} isAllPlaylists={isAllPlaylists}
+                                      isHome={isHome} />
                         <div className="grid-container">
-                            <RandomSong playRandomSong={getRandom}/>
-                            <MusicLibrary/>
+
                             {notFound ? <NotFound/> :
                                 <React.Fragment>
                                     <Route exact path="/genre/:id(\d+)"
@@ -75,12 +77,15 @@ class MainPage extends Component {
                                                                       playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/music-library"
                                            render={() => <MusicLibraryPage key={this.props.location.key}
-                                               likePlaylist={this.likePlaylist.bind(this)}/>}/>
+                                               likePlaylist={this.likePlaylist.bind(this)}
+                                                                           handleLike={this.handleLike.bind(this)}
+                                                                           playTrack={this.playTrack.bind(this)}/>}/>
                                     <Route exact path="/all-playlists"
                                            render={() => <AllPlaylists key={this.props.location.key}
                                                                            likePlaylist={this.likePlaylist.bind(this)}/>}/>
                                     <Route exact path="/"
-                                           render={() => <DeezerMain key={this.props.location.key} likePlaylist={this.likePlaylist.bind(this)}/>}/>
+                                           render={() => <DeezerMain key={this.props.location.key}
+                                                                     likePlaylist={this.likePlaylist.bind(this)}/>}/>
                                 </React.Fragment>
                             }
                         </div>
@@ -158,7 +163,11 @@ const mapStateToProps = state => {
         pagePlaylist: state.rootReducer.pagePlaylist,
         track: state.trackReducer.track,
         playing: state.trackReducer.playing,
-        audio: state.trackReducer.audio
+        audio: state.trackReducer.audio,
+        isMusicLibrary: state.rootReducer.isMusicLibrary,
+        isAllPlaylists: state.rootReducer.isAllPlaylists,
+        isHome: state.rootReducer.isHome,
+
     };
 };
 

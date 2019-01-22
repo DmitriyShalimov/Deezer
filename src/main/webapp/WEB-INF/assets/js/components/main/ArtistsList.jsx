@@ -22,18 +22,24 @@ class ArtistsList extends Component {
                         <Link to={`/artist/${artist.id}`} className="playlist__picture" style={{width: '100%'}}>
                             <img src={artist.picture}
                                  alt="artist photo"/>
+
+                            <div className="card-playlist-hover-icons">
+                                <button onClick={(e) => this.play("artist", artist.id, e)}><i className="fas fa-play"/>
+                                </button>
+                            </div>
+                            <div className="card-playlist-hover-details" style={{justifyContent: 'center'}}>
+                                <p className="card-playlist-hover-title"
+                                   style={{textAlign: 'center', fontSize: '1vw'}}>{artist.name}</p>
+                            </div>
                         </Link>
-                        <div className="card-playlist-hover-icons">
-                            <button onClick={() => play("artist", artist.id)}><i className="fas fa-play"/>
-                            </button>
-                        </div>
-                        <div className="card-playlist-hover-details" style={{justifyContent: 'center'}}>
-                            <p className="card-playlist-hover-title" style={{textAlign: 'center',fontSize: '1vw'}}>{artist.name}</p>
-                        </div>
                     </div>)}
                 </Slider>
             </div>
         )
+    }
+    play(type, id, event) {
+        event.preventDefault();
+        this.props.play(type, id);
     }
 }
 
